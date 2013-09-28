@@ -1,0 +1,134 @@
+﻿@charset "utf-8";
+
+/* ---------------------------------------- event ------------------------------------------ */
+div.event0 {
+	color:            rgb(128,128,128);
+	border-color:     rgb(255,160,160);
+	background-color: #FFFFFF;
+}
+
+div.event1, div.event2, div.event3 {
+	color:            rgb(180,0,0);
+	border-color:     rgb(255,160,160);
+	background-color: #FFFFFF;
+}
+
+div.event4, div.event5, div.event6 {
+	border-color:     rgb(255, 170, 170);
+	background-color: rgb(255, 170, 170);
+}
+
+div.event7, div.event8, div.event9, div.event10 {
+	border-color:     rgb(180,0,0);
+	background-color: rgb(255, 130, 130);
+}
+/* ---------------------------------------- othersEvent ------------------------------------------ */
+div.othersEvent0 {
+	color:            rgb(128,128,128);
+	border-color:     rgb(160,160,160);
+	background-color: #FFFFFF;
+}
+
+div.othersEvent1, div.othersEvent2, div.othersEvent3 {
+	color:            rgb(64,64,64);
+	border-color:     rgb(160,160,160);
+	background-color: #FFFFFF;
+}
+
+div.othersEvent4, div.othersEvent5, div.othersEvent6 {
+	border-color:     rgb(190, 190, 190);
+	background-color: rgb(190, 190, 190);
+}
+
+div.othersEvent7, div.othersEvent8, div.othersEvent9, div.othersEvent10 {
+	border-color:     rgb(24,24,24);
+	background-color: rgb(170, 170, 170);
+}
+/* ---------------------------------------- note ------------------------------------------ */
+div.note0 {
+	color:            rgb(128,128,128);
+	border-color:     rgb(160,160,255);
+	background-color: #FFFFFF;
+}
+
+div.note1, div.note2, div.note3 {
+	color:            rgb(0,0,220);
+	border-color:     rgb(160,160,255);
+	background-color: #FFFFFF;
+}
+
+div.note4, div.note5, div.note6 {
+	border-color:     rgb(170, 170, 255);
+	background-color: rgb(170, 170, 255);
+}
+
+div.note7, div.note8, div.note9, div.note10 {
+	border-color:     rgb(24,24,255);
+	background-color: rgb(150, 150, 255);
+}
+/* ---------------------------------------- friend ------------------------------------------ */
+div.friend0 {
+	color:             rgb(160,160,160);
+	border-color:      rgb(220,220,0);
+	background-color:  #FFFFFF;
+}
+
+div.friend1, div.friend2, div.friend3 {
+	color:             rgb(70,70,0);
+	border-color:      rgb(220,220,0);
+	background-color:  #FFFFFF;
+}
+
+div.friend4, div.friend5, div.friend6 {
+	border-color:      rgb(255, 255, 100);
+	background-color:  rgb(255, 255, 100);
+}
+
+div.friend7, div.friend8, div.friend9, div.friend10 {
+	border-color:      rgb(220,220,0);
+	background-color:  rgb(255, 255, 60);
+}
+/* ---------------------------------------- tag ------------------------------------------ */
+div.tag0 {
+	color:             rgb(180,180,180);
+	border-color:      rgb(192,192,192);
+	background-color:  #FFFFFF;
+}
+
+div.tag1, div.tag2, div.tag3 {
+	color:             rgb(128,128,128);
+	border-color:      rgb(160,160,160);
+	background-color:  #FFFFFF;
+}
+
+div.tag4, div.tag5, div.tag6 {
+	border-color:      rgb(220, 220, 220);
+	background-color:  rgb(220, 220, 220);
+}
+
+div.tag7, div.tag8, div.tag9, div.tag10 {
+	border-color:      rgb(0,0,0);
+	background-color:  rgb(192, 192, 192);
+}
+/* ---------------------------------------- diary ------------------------------------------ */
+div.diary0 {
+	color:            rgb(128,128,128);
+	border-color:     rgb(160,255,160);
+	background-color: #FFFFFF;
+}
+
+div.diary1, div.diary2, div.diary3 {
+	color:            rgb(0,140,0);
+	border-color:     rgb(160,255,160);
+	background-color: #FFFFFF;
+}
+
+div.diary4, div.diary5, div.diary6 {
+	border-color:     rgb(160, 255, 160);
+	background-color: rgb(160, 255, 160);
+}
+
+div.diary7, div.diary8, div.diary9, div.diary10 {
+	border-color:     rgb(0,160,0);
+	background-color: rgb(130, 255, 130);
+}

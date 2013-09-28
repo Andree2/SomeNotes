@@ -1,0 +1,300 @@
+﻿@charset "utf-8";
+
+html, body, table {
+	font-family: Arial, Verdana,Sans-Serif;
+	font-size:   10pt;
+}
+
+/* ---------------------------------------- a ------------------------------------------ */
+a {
+	text-decoration: none;
+	color:          #000000;
+}
+
+a.nav {
+	padding:      2px;
+	font-weight:  bold;
+	display:      block;
+}
+
+a.nav:hover {
+	background-color: #E4E4E4;
+}
+a.button {
+	background-color: #FFFFFF;
+	border-color:     #A0A0A0;
+	border-style:     solid;
+	border-width:     1px;
+	font-weight:      bold;
+	padding:          4px;
+	text-align:       center;
+	vertical-align:   middle;	
+}
+
+a.button:hover {
+	background-color: #E4E4E4;
+}
+/* ---------------------------------------- body ------------------------------------------ */
+
+body.main {
+	padding:            0px;
+	margin:             0px;
+}
+/* ---------------------------------------- div ------------------------------------------ */
+
+div.absolute {
+	position:  absolute;
+}
+
+div.boxView {
+	position:  relative;
+	width:     200px;
+}
+div.dayBodyNew {
+	font-size:         11px;
+	color:             #444400;
+	background-color:  #F4F400;
+}
+div.dayBody {
+	height:     100%;
+	overflow:   hidden;
+}
+
+div.dayView {
+	position:   relative;
+	height:     100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+div.itemBar {
+	background-color:   #E0E0E0;
+	border-color:       #B0B0B0;
+	border-style:       solid;
+	border-width:       1px;	
+}
+
+div.itemBarItems {
+	max-height:         800px;
+	overflow-x:         hidden;
+	overflow-y:         auto;
+}
+
+div.mainView {
+	height:             100%;
+}
+
+div.monthBar {
+	height:             100%;
+}
+
+div.monthBarOneMonth {
+	overflow:    hidden;
+	width:       36px;
+	padding:     0px;
+	margin:      0px;
+}
+div.monthBarText {
+	-webkit-transform: rotate(-90deg);
+	-moz-transform:    rotate(-90deg);
+	-o-transform:      rotate(-90deg);
+}
+div.smallBox {
+	margin-top:    1px;
+	cursor:        pointer;
+	border-width:  1px;
+	border-style:  solid;
+	z-index:       201; 
+	overflow:      hidden;
+}
+div.selectedDayBody {
+	border-color:     #BB0000;
+	border-style:     none solid solid solid;
+	border-width:     2px;	
+}
+div.dayContent {
+	overflow:         visible;
+	z-index:          100;
+	width:            100%;
+	position:         absolute;
+	top:              0px;
+	left:             0px;
+}
+
+
+
+/* ---------------------------------------- event ---------------------------------------- */
+table.event, td.event, div.event {
+	background-color: #FFD0D0;
+}
+/* ---------------------------------------- note ----------------------------------------- */
+table.note, td.note, div.note {
+	background-color: #D0D0FF;
+}
+/* ---------------------------------------- person ------------------------------------------ */
+table.person, td.person, div.person {
+	background-color: #E4E400;
+}
+/* ---------------------------------------- tag ------------------------------------------ */
+table.tag, td.tag, div.tag {
+	background-color: #F0F0F0;
+}
+/* ----------------------------------- table ----------------------------------------- */
+table.noSpaces {
+	border-width:      0px;
+	border-color:      #A0FFA0;
+	border-spacing:    0px; 
+	border-collapse:   collapse;
+}
+
+table.noSpaces td{
+	padding:           0px;
+	margin:            0px;
+}
+
+table.window {
+	padding:            0px;
+	margin:             0px;
+	background-color:   #E0E0E0;
+	border-color:       #A0A0A0;
+	border-style:       solid;
+	border-collapse:    collapse;
+	border-width:       1px;
+}
+
+table.main {
+	height:            100%;
+	width:             100%;
+}
+
+table.navigation {
+	height:            100%;
+	width:             100%;
+}
+table.navigation, div.monthBarTopFill {
+	background-color:  #909090;
+}
+
+table.view {
+	padding:          0px;
+	height:           100%;
+	width :           100%;
+	margin:           0px;
+	table-layout:     fixed;
+	border-width:     0px;	
+	border-color:     #A00000;
+	border-style:     solid;
+	border-collapse:  collapse;
+}
+
+table.sortable {
+	border-color:    #A0A0A0;
+	border-style:    solid;
+	border-width:    1px;
+	border-collapse: collapse;
+}
+
+table.sortable thead {
+	background-color:  #D0D0D0;
+    cursor:            pointer;
+}
+/* --------------------------------------- tr ------------------------------------------------ */
+
+tr.windowBar {
+	height:           32px;
+}
+
+tr.weekBody td {
+	vertical-align:  top;
+	border-color:    #BBBBBB;
+	border-style:    solid;
+	border-collapse: collapse;
+	border-width:    1px;
+	border-style:    none solid solid solid;
+}
+
+tr.weekBody td:first-child {
+	border-style:      none solid solid none;
+
+}
+tr.weekBody td:last-child {
+	border-style:      none none solid solid;
+}
+
+tr.weekDayHeader {
+	background-color: #BBBBFF;
+	height:           16px;
+}
+tr.weekDayHeader td {
+	padding:          1px 0px 1px 4px;
+}
+
+tr.weekDateHeader {
+	height:           16px;
+}
+tr.weekDateHeader td {
+	padding:          1px 0px 1px 4px;
+}
+/* ---------------------------------------- td ----------------------------------------------- */
+
+/* -- day bodies -- */
+td.dayBodyWeekend {
+	background-color: #F0F0F0;
+}
+td.dayBodyToday {
+	background-color: #FFFFB0;
+}
+
+/* -- day headers -- */
+
+td.dayHeader {
+	border-color:  #BBBBBB;
+	border-style:  none;
+	height:        16px;
+}
+
+td.dayHeaderSomeDay {
+	background-color: #CCCCCC;
+}
+
+td.dayHeaderToday {
+	background-color: #A0A0A0;
+}
+
+td.dayHeaderOtherMonth {
+	background-color: #E7E7E7;
+	color:            #606060;
+}
+
+td.navigation {
+	width:            260px;
+}
+td.windowBar, td.window {
+	margin:               0px;
+	background-color:     #D0D0D0;
+	border-color:         #A0A0A0;
+	border-style:         none none solid none;
+	border-width:         1px;
+}
+td.windowBar {
+	padding: 2px;
+}
+td.window {
+	padding: 0px;
+}
+
+/* --------------------------------------------------------------------------------------- */
+
+input, textarea {
+	font-family:       Arial, Verdana,Sans-Serif;
+	font-size:         10pt;
+	border-style:      solid;
+	border-color:      #888888;
+	border-width:      1px;
+	background-color:  white;
+}
+
+input.readonly {
+	color:              #333333;
+	background-color:   #DDDDDD;
+}
