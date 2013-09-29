@@ -7,13 +7,13 @@ require_once('tables/class_note.php');
 require_once('tables/class_person.php');
 require_once('tables/class_tag.php');
 
-define(EVENT,   'event');
-define(LINK,    'link');
-define(NOTE,    'note');
-define(PERSON,  'person');
-define(TAG,     'tag');
+define('EVENT',   'event');
+define('LINK',    'link');
+define('NOTE',    'note');
+define('PERSON',  'person');
+define('TAG',     'tag');
 
-define(ONEDAY, 	 '86400'); //24 * 60 * 60
+define('ONEDAY',   '86400'); //24 * 60 * 60
 
 global $TABLE;
 $TABLE = array();
@@ -30,5 +30,5 @@ $TABLE_FROM_ID[$TABLE[LINK]->GetID()]   = LINK;
 $TABLE_FROM_ID[$TABLE[NOTE]->GetID()]   = NOTE;
 $TABLE_FROM_ID[$TABLE[PERSON]->GetID()] = PERSON;
 $TABLE_FROM_ID[$TABLE[TAG]->GetID()]    = TAG;
-  
+
 ?>

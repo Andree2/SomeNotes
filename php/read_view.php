@@ -1,5 +1,4 @@
 <?php
-require_once('functions.php');
 require_once('constants.php');
 require_once('db.php');
 
@@ -8,7 +7,6 @@ $dateEnd = $_GET['dateEnd'];
 
 $dateStartSQL = Timestamp2SQLDate($dateStart);
 $dateEndSQL = Timestamp2SQLDate($dateEnd);
-
 
 XMLHeader();
 echo '<row>';

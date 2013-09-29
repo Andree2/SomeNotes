@@ -32,7 +32,7 @@ $date = date("d.m.Y", $timeStamp);
 			{
 				var divView = document.getElementById('divView');
 
-				// Add mouse wheel event, according to the evetns supported by the browser.
+				// Add mouse wheel event, according to the events supported by the browser.
 				if(window.addEventListener) {
 					if (My.IsEventSupported('mousewheel')) {
 						divView.addEventListener('mousewheel', View.OnEventMouseScroll, false);
