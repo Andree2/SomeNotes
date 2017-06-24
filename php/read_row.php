@@ -7,19 +7,14 @@ $table = $_GET['table'];
 $id = $_GET['id'];
 
 $tableNameTemp = $TABLE[$table]->GetTableName();
-$query = "SELECT * FROM $tableNameTemp WHERE id = $id";
+$query =  $TABLE[$table]->GetQueryReadRow($id);
 $result = mysql_query($query);
 
 XMLHeader();
-echo '<row>';
-echo '<item>';
-echo '<id>'. $id .'</id><table>'. $table .'</table>';
 
-while($row = mysql_fetch_row($result)){
-	echo "<last_changed>". $row[1] ."</last_changed>";
-	$TABLE[$table]->EchoXMLRow($row);
-}
-echo '</item>';
-echo '</row>';
+// ID is unique, there should only be one result.
+$row = mysql_fetch_assoc($result);
+$TABLE[$table]->EchoXMLRow($row);
+
 mysql_close();
 ?> 

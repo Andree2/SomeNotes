@@ -8,44 +8,44 @@ global $gQueryID;
 global $gDate;
 
 function startElement($parser, $name, $attributes) 
-{	
-	global $gItemContent;
-	$gItemContent = '';
-	
-	if ($name == 'ROW') {
-		global $gQueryTable;
-		$gQueryTable = $attributes['TABLE'];
-	}
+{
+    global $gItemContent;
+    $gItemContent = '';
+    
+    if ($name == 'ROW') {
+        global $gQueryTable;
+        $gQueryTable = $attributes['TABLE'];
+    }
 }
 
 function endElement($parser, $name) 
 {
-	global $gValueList;
-	global $gColumnList;
-	global $gQueryTable;	
-	global $TABLE;
-	global $query;
-		
-	if ($name == 'ROW') {
-		// Insert row (ID will be generated where necessary).
-		$query = 'INSERT INTO '. $TABLE["$gQueryTable"]->GetTableName()." (LAST_CHANGED$gColumnList) VALUES (NOW()$gValueList)";
-		mysql_query($query);
-	}
-	else {
-		global $gItemContent;
-		global $gDate;
-		$gColumnList .= ",".$name;
-		$gValueList .= ",".$TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);	
-		if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
-			$gDate = $gItemContent;
-		}		
-	}
+    global $gValueList;
+    global $gColumnList;
+    global $gQueryTable;	
+    global $TABLE;
+    global $query;
+        
+    if ($name == 'ROW') {
+        // Insert row (ID will be generated where necessary).
+        $query = 'INSERT INTO '. $TABLE["$gQueryTable"]->GetTableName()." (CREATED,LAST_CHANGED$gColumnList) VALUES (NOW(),NOW()$gValueList)";
+        mysql_query($query);
+    }
+    else {
+        global $gItemContent;
+        global $gDate;
+        $gColumnList .= ",".$name;
+        $gValueList .= ",".$TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);	
+        if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
+            $gDate = $gItemContent;
+        }		
+    }
 }
 
 function characterData($parser, $data)
 {
-	global $gItemContent;
-	$gItemContent .= $data;
+    global $gItemContent;
+    $gItemContent .= $data;
 }
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
@@ -57,9 +57,8 @@ echo '<row table="'.$gQueryTable.'" id="'.mysql_insert_id().'"';
 if ($gDate != '') {
   echo ' date="'.$gDate.'"';	
 }
-echo '></row>';
+echo '/>';
 
 mysql_close();
 
-// ------------------------------------------------------------------------------------------------
 ?>

@@ -32,13 +32,13 @@ sorttable = {
     
     sorttable.DATE_RE = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d)$/;
     /*
-	 // Not needed currently, we will call makeSortable manually for each table
+     // Not needed currently, we will call makeSortable manually for each table
     forEach(document.getElementsByTagName('table'), function(table) {
       if (table.className.search(/\bsortable\b/) != -1) {
         sorttable.makeSortable(table);
       }
     });
-	 
+     
     */
   },
     
@@ -251,10 +251,10 @@ sorttable = {
   },
   
   sortByColumn: function(table, column, ascending) {
-	sorttable.sortColumn(table.tHead.rows[0].cells[column]);
-	if (ascending) {
-		sorttable.sortColumn(table.tHead.rows[0].cells[column]);		
-	}
+    sorttable.sortColumn(table.tHead.rows[0].cells[column]);
+    if (ascending) {
+        sorttable.sortColumn(table.tHead.rows[0].cells[column]);		
+    }
   },
   
   reverse: function(tbody) {
