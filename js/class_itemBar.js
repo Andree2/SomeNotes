@@ -42,7 +42,7 @@
         // Create boxes for a certain day
         return '<div class="smallBox '+ Categories.GetCategories(table)[category].mCSSName + importance
             +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
-            +'" onmouseup="View.OnMouseUpBox(\''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
+            +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };
     // -------------------------------------------------------------------------------------------
     function InitItemsTable()
