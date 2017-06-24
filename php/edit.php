@@ -26,11 +26,12 @@ function endElement($parser, $name)
     global $gQueryTable;
     global $gDate;
     global $TABLE;
+    global $DBLink;
     
     if ($name == 'ROW') {
         global $gQueryID;
         $query = 'UPDATE '.$TABLE["$gQueryTable"]->GetTableName()." SET last_changed=NOW()$gQueryList WHERE id = $gQueryID";
-        mysql_query($query);
+        mysqli_query($DBLink, $query);
     }
     else {
         global $gItemContent;
@@ -60,6 +61,6 @@ if ($gDate != '') {
 echo '/>';
 
 
-mysql_close();
+mysqli_close($DBLink);
 
 ?>

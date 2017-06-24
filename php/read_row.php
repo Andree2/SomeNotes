@@ -8,13 +8,13 @@ $id = $_GET['id'];
 
 $tableNameTemp = $TABLE[$table]->GetTableName();
 $query =  $TABLE[$table]->GetQueryReadRow($id);
-$result = mysql_query($query);
+$result = mysqli_query($DBLink, $query);
 
 XMLHeader();
 
 // ID is unique, there should only be one result.
-$row = mysql_fetch_assoc($result);
+$row = mysqli_fetch_assoc($result);
 $TABLE[$table]->EchoXMLRow($row);
 
-mysql_close();
+mysqli_close($DBLink);
 ?> 
