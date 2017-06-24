@@ -1,59 +1,51 @@
 <?php
 class Tag extends Table
-{	
-    
-    /**
-     * @brief Returns the names of all columns except <id> and <last_changed>.
-     */
-    public function GetColumns()
-    {
-    	return array('TITLE', 'TEXT', 'IMPORTANCE', 'CATEGORY');
-    }
-    
+{
     public function GetColumnDisplayText()
     {
-    	return 'TITLE';
+        return 'TITLE';
     }
     
     public function GetName()
     {
-    	return 'tag';
+        return 'tag';
     }
     
     public function GetID()
     {
-    	return 6;
+        return 6;
     }
     
-	public function GetPostDataSQLFormat($value, $column, $tableGlobals)
-	{
-		if (   $column == 'IMPORTANCE'
-		    || $column == 'CATEGORY') {
-			if ($value == '') {
-				return 'NULL';
-			}
-			else {
-				return $value;
-			}
-		}
-		return '\''.addslashes($value).'\'';
-	}
+    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    {
+        if (   $column == 'IMPORTANCE'
+            || $column == 'CATEGORY') {
+            if ($value == '') {
+                return 'NULL';
+            }
+            else {
+                return $value;
+            }
+        }
+        return '\''.addslashes($value).'\'';
+    }
     
     public function GetTableName()
     {
-    	return 'lifelog_tags';
+        return 'lifelog_tags';
     }
-
-    // ---------------------------------------- Other ----------------------------------------
+    
+    public function GetQueryReadRow($id)
+    {
+        return "SELECT id,created,last_changed,title,text,importance,category FROM ". $this->GetTableName() ." WHERE id = $id";
+    }
+    
     public function EchoXMLRow($row)
     {
-		echo "<title>". htmlspecialchars ($row[2], ENT_QUOTES, "UTF-8") ."</title>";
-		echo "<text>". htmlspecialchars ($row[3], ENT_QUOTES, "UTF-8") ."</text>";
-		echo "<importance>" . $row[4] . "</importance>";
-    echo "<category>" . $row[5] . "</category>";
+        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'">';
+        echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
+        echo "<text>" . htmlspecialchars($row['text'], ENT_QUOTES, "UTF-8") . "</text>";
+        echo "</row>";
     }
-
-    // ---------------------------------------- Other ----------------------------------------
-    
-}	
+}
 ?>

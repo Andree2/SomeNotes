@@ -1,74 +1,60 @@
 <?php
 class Note extends Table
-{	
-    
-    // ---------------------------------------- Getter ----------------------------------------
-    /**
-     * @brief Returns the names of all columns except <id> and <last_changed>.
-     */
-    public function GetColumns()
-    {
-    	return array('TITLE', 'TEXT', 'DATE', 'TIME', 'IMPORTANCE', 'CATEGORY');
-    }
-    
+{
     public function GetColumnDate()
     {
-    	return 'DATE';
+        return 'DATE';
     }
     
     public function GetColumnDisplayText()
     {
-    	return 'TITLE';
+        return 'TITLE';
     }
     
     public function GetName()
     {
-    	return 'note';
+        return 'note';
     }
     
     public function GetID()
     {
-    	return 2;
+        return 2;
     }
 
-	public function GetPostDataSQLFormat($value, $column, $tableGlobals)
-	{					
-		if (   $column == 'IMPORTANCE'
-		    || $column == 'CATEGORY') {
-			if ($value == '') {
-				return 'NULL';
-			}
-			else {
-				return $value;
-			}
-		}	
-		elseif ($column == 'TIME') {
-			$value = $value.':00';
-		}
-		
-		return '\''.addslashes($value).'\'';
-	}
-	
+    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    {
+        if (   $column == 'IMPORTANCE'
+            || $column == 'CATEGORY') {
+            if ($value == '') {
+                return 'NULL';
+            }
+            else {
+                return $value;
+            }
+        }
+        elseif ($column == 'TIME') {
+            $value = $value.':00';
+        }
+        
+        return '\''.addslashes($value).'\'';
+    }
+    
     public function GetTableName()
     {
-    	return 'lifelog_notes';
+        return 'lifelog_notes';
     }
-
-    // ---------------------------------------- SQL Queries ----------------------------------------
     
-    public function GetQueryReadView($dateStartSQL, $dateEndSQL)
+    public function GetQueryReadRow($id)
     {
-    	return "SELECT id,date,title,importance,category FROM ". $this->GetTableName() ." WHERE date BETWEEN ". $dateStartSQL ." AND ". $dateEndSQL;
+        return "SELECT id,created,last_changed,title,text,date,time,importance,category FROM ". $this->GetTableName() ." WHERE id = $id";
     }
-    // ---------------------------------------- Other ----------------------------------------
+    
     public function EchoXMLRow($row)
     {
-		echo "<title>". htmlspecialchars ($row[2], ENT_QUOTES, "UTF-8") ."</title>";
-		echo "<text>". htmlspecialchars ($row[3], ENT_QUOTES, "UTF-8") ."</text>";
-		echo "<date>" . $row[4] . "</date>";
-		echo "<time>" . $row[5] . "</time>";
-		echo "<importance>" . $row[6] . "</importance>";
-    echo "<category>" . $row[7] . "</category>";
+        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" date="'. $row['date'] .'" time="'. $row['time'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'">';
+        echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
+        echo "<text>". htmlspecialchars ($row['text'], ENT_QUOTES, "UTF-8") ."</text>";
+        echo "</row>";
     }
 }
 ?>

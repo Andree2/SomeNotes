@@ -8,43 +8,43 @@ global $gQueryID;
 global $gDate;
 
 function startElement($parser, $name, $attributes) 
-{	
-	global $gItemContent;
-	$gItemContent = '';
-	
-	if ($name == 'ROW') {
-		global $gQueryID;
-		global $gQueryTable;
-		$gQueryTable = $attributes['TABLE'];
-		$gQueryID = $attributes['ID'];
-	}
+{
+    global $gItemContent;
+    $gItemContent = '';
+    
+    if ($name == 'ROW') {
+        global $gQueryID;
+        global $gQueryTable;
+        $gQueryTable = $attributes['TABLE'];
+        $gQueryID = $attributes['ID'];
+    }
 }
 
 function endElement($parser, $name) 
 {
-	global $gQueryList;
-	global $gQueryTable;
-	global $gDate;
-	global $TABLE;
-	
-	if ($name == 'ROW') {
-		global $gQueryID;
-		$query = 'UPDATE '.$TABLE["$gQueryTable"]->GetTableName()." SET last_changed=NOW()$gQueryList WHERE id = $gQueryID";
-		mysql_query($query);
-	}
-	else {
-		global $gItemContent;
-		$gQueryList .= ",$name=".$TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);
-		if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
-			$gDate = $gItemContent;
-		}
-	}
+    global $gQueryList;
+    global $gQueryTable;
+    global $gDate;
+    global $TABLE;
+    
+    if ($name == 'ROW') {
+        global $gQueryID;
+        $query = 'UPDATE '.$TABLE["$gQueryTable"]->GetTableName()." SET last_changed=NOW()$gQueryList WHERE id = $gQueryID";
+        mysql_query($query);
+    }
+    else {
+        global $gItemContent;
+        $gQueryList .= ",$name=".$TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);
+        if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
+            $gDate = $gItemContent;
+        }
+    }
 }
 
 function characterData($parser, $data)
 {
-	global $gItemContent;
-	$gItemContent .= $data;
+    global $gItemContent;
+    $gItemContent .= $data;
 }
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
@@ -55,12 +55,11 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 XMLHeader();
 echo '<row table="'.$gQueryTable.'" id="'.$gQueryID.'"';
 if ($gDate != '') {
-	echo ' date="'.$gDate.'"';	
+    echo ' date="'.$gDate.'"';
 }
-echo '></row>';
+echo '/>';
 
 
 mysql_close();
 
-// ------------------------------------------------------------------------------------------------
 ?>

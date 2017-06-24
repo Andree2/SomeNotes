@@ -1,58 +1,45 @@
 <?php
 abstract class Table
-{	
+{
     // ---------------------------------------- Getter ----------------------------------------
-    /**
-     * @brief Returns the names of all columns except <id> and <last_changed>.
-     */
-    public function GetColumns()
-    {
-    	return '';
-    }
-    
     public function GetColumnDate()
     {
-    	return '';
+        return '';
     }
     
     public function GetColumnDisplayText()
     {
-    	return '';
+        return '';
     }
     
     public function GetName()
     {
-    	return '';
+        return '';
     }
     
     public function GetID()
     {
-    	return 0;
+        return 0;
     }
     
-	public function GetPostDataSQLFormat($value, $column, $tableGlobals)
-	{
-    	return '';
-	}
-	
+    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    {
+        return '';
+    }
+    
     public function GetTableName()
     {
-    	return '';
+        return '';
     }
-
-    // ---------------------------------------- SQL Queries ----------------------------------------
-
-    public function GetQueryReadView($dateStartSQL, $dateEndSQL)
+    
+    public function GetQueryReadRow($id)
     {
-    	return '';
+        return '';
     }
     
     public function EchoXMLRow($row)
     {
-    	return '';
+        return '';
     }
-	
-    // ---------------------------------------- Other ----------------------------------------
-	
-}	
+}
 ?>

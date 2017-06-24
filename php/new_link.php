@@ -42,7 +42,7 @@ function endElement($parser, $name)
     global $TABLE;
     global $gValueList;
     global $query;
-    $query = 'INSERT INTO '. $TABLE[LINK]->GetTableName()." (LAST_CHANGED,TABLE1_ID,TABLE1_ITEM_ID,TABLE2_ID,TABLE2_ITEM_ID) VALUES (NOW(),$gValueList)";
+    $query = 'INSERT INTO '. $TABLE[LINK]->GetTableName()." (CREATED,LAST_CHANGED,TABLE1_ID,TABLE1_ITEM_ID,TABLE2_ID,TABLE2_ITEM_ID) VALUES (NOW(),NOW(),$gValueList)";
     mysql_query($query);
   }
 }
@@ -59,5 +59,4 @@ XMLHeader();
 
 mysql_close();
 
-// ------------------------------------------------------------------------------------------------
 ?>
