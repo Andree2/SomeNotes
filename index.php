@@ -17,6 +17,7 @@ $date = date("d.m.Y", $timeStamp);
     <script type="text/JavaScript" src="js/tables/class_event.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_note.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_person.js" charset="utf-8"></script>
+    <script type="text/JavaScript" src="js/tables/class_place.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_tag.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_slider.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/categories.js" charset="utf-8"></script>

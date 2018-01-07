@@ -48,7 +48,7 @@ class Event extends Table
     
     public function GetQueryReadRow($id)
     {
-        return "SELECT id,created,last_changed,title,text,from_date,from_time,from_minus,to_date,to_time,to_plus,importance,category FROM ". $this->GetTableName() ." WHERE id = $id";
+        return "SELECT id,created,last_changed,importance,category,title,text,from_date,from_time,from_minus,to_date,to_time,to_plus FROM ". $this->GetTableName() ." WHERE id = $id";
     }
     
     public function EchoXMLRow($row)

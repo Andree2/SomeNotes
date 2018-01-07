@@ -129,6 +129,30 @@ div.friend7, div.friend8, div.friend9, div.friend10 {
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,60);
 }
+/* ---------------------------------------- place: general place ------------------------------------------ */
+div.place0 {
+    color:            rgb(128,128,128);
+    border-color:     rgb(64,220,64);
+    background-color: rgb(255,255,255);
+}
+
+div.place1, div.place2, div.place3 {
+    color:            rgb(0,140,0);
+    border-color:     rgb(64,220,64);
+    background-color: rgb(255,255,255);
+}
+
+div.place4, div.place5, div.place6 {
+    color:            rgb(0,0,0);
+    border-color:     rgb(64,220,64);
+    background-color: rgb(64,220,64);
+}
+
+div.place7, div.place8, div.place9, div.place10 {
+    color:            rgb(0,0,0);
+    border-color:     rgb(0,160,0);
+    background-color: rgb(120,220,120);
+}
 /* ---------------------------------------- tag: tag ------------------------------------------ */
 div.tag0 {
     color:            rgb(180,180,180);

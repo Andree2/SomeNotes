@@ -37,7 +37,11 @@
     mCategories['note'] = new Array();
     mCategories['note'][200] = new CategoryProperty(200, 'note', 'Note');
     mCategories['note'][201] = new CategoryProperty(201, 'diary', 'Diary');
-    
+    	
+    mCategories['place'] = new Array();
+    mCategories['place'][800] = new CategoryProperty(800, 'place', 'General  Place');
+    mCategories['place'][801] = new CategoryProperty(801, 'bar', 'Bar / Pub');
+  
     mCategories['person'] = new Array();
     mCategories['person'][300] = new CategoryProperty(300, 'friend', 'Friend');
     

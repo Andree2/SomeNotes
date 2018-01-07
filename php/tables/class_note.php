@@ -46,7 +46,7 @@ class Note extends Table
     
     public function GetQueryReadRow($id)
     {
-        return "SELECT id,created,last_changed,title,text,date,time,importance,category FROM ". $this->GetTableName() ." WHERE id = $id";
+        return "SELECT id,created,last_changed,importance,category,title,text,date,time FROM ". $this->GetTableName() ." WHERE id = $id";
     }
     
     public function EchoXMLRow($row)

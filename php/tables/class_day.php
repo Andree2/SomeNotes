@@ -42,7 +42,7 @@ class Day extends Table
     
     public function GetQueryReadRow($id)
     {
-        return "SELECT id,created,last_changed,from_date,to_date,category FROM ". $this->GetTableName() ." WHERE id = $id";
+        return "SELECT id,created,last_changed,category,from_date,to_date FROM ". $this->GetTableName() ." WHERE id = $id";
     }
     
     public function EchoXMLRow($row)

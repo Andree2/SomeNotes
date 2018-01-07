@@ -41,7 +41,7 @@ class Person extends Table
     
     public function GetQueryReadRow($id)
     {
-        return "SELECT id,created,last_changed,display_name,first_name,middle_name,last_name,birthday_day,birthday_month,birthday_year,text,importance,category FROM ". $this->GetTableName() ." WHERE id = $id";
+        return "SELECT id,created,last_changed,importance,category,display_name,first_name,middle_name,last_name,birthday_day,birthday_month,birthday_year,text FROM ". $this->GetTableName() ." WHERE id = $id";
     }
     
     public function EchoXMLRow($row)

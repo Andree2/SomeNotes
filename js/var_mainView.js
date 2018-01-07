@@ -4,6 +4,7 @@ Table['day'] = new Day();
 Table['event'] = new Event();
 Table['note'] = new Note();
 Table['person'] = new Person();
+Table['place'] = new Place();
 Table['tag'] = new Tag();
 
 var Slider = new Slider();
