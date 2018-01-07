@@ -1,8 +1,6 @@
 <?php
-	$DBServer="localhost";
-	$DBUsername="root";
-	$DBPassword="";
-	$DBDatabase="lifelog";
+	require_once('../../passes.php');
+	
 	$DBLink= mysqli_connect($DBServer, $DBUsername, $DBPassword);
 
 	if (mysqli_connect_errno()) {
