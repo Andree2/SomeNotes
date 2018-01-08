@@ -35,15 +35,10 @@
             +       Slider.BuildHTML('input_event_importance', importance)
             +"    </td>"
             +"    <td colspan='2'>"
-            +"      <select id='input_event_category' name='input_event_category' size='1'>"
-            var categories = Categories.GetCategories('event');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
-            return output
-            +"      </select>"
+            +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";
+            return output;
     };
     
     // =============================================================================================
@@ -93,7 +88,6 @@
                +'  <to_time>'+    toDatetimeParts[1] +'</to_time>'
                +'  <to_plus>'+    document.getElementById('input_event_to_plus').value +'</to_plus>'
                +'  <importance>'+ document.getElementById('input_event_importance').value +'</importance>'
-               +'  <category>'+   document.getElementById('input_event_category').value +'</category>'
                +'</row>';
         
         return xml;

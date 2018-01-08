@@ -1,15 +1,25 @@
 ﻿@charset "utf-8";
 
-/* ---------------------------------------- day: free ------------------------------------------ */
-div.free {
+
+/* ---------------------------------------- day_free ------------------------------------------ */
+div.day_free {
     color:            rgb(128,128,128);
     border-color:     transparent;
     background-color: transparent;
 }
-td.free {
+td.day_free {
     background-color: rgb(232,232,232);
 }
-/* ---------------------------------------- event: event ------------------------------------------ */
+/* ---------------------------------------- day_school_holidays ------------------------------------------ */
+div.day_school_holidays {
+    color:            rgb(128,128,128);
+    border-color:     transparent;
+    background-color: transparent;
+}
+td.day_school_holidays {
+    background-color: rgb(232,255,232);
+}
+/* ---------------------------------------- event ------------------------------------------ */
 div.event0 {
     color:            rgb(128,128,128);
     border-color:     rgb(255,160,160);
@@ -33,26 +43,26 @@ div.event7, div.event8, div.event9, div.event10 {
     border-color:     rgb(180,0,0);
     background-color: rgb(255,130,130);
 }
-/* ---------------------------------------- event: othersEvent ------------------------------------------ */
-div.othersEvent0 {
+/* ---------------------------------------- event_others ------------------------------------------ */
+div.event_others0 {
     color:            rgb(160,128,170);
     border-color:     rgb(192,128,204);
     background-color: rgb(255,255,255);
 }
 
-div.othersEvent1, div.othersEvent2, div.othersEvent3 {
+div.event_others1, div.event_others2, div.event_others3 {
     color:            rgb(128,64,160);
     border-color:     rgb(192,160,224);
     background-color: rgb(255,255,255);
 }
 
-div.othersEvent4, div.othersEvent5, div.othersEvent6 {
+div.event_others4, div.event_others5, div.event_others6 {
     color:            rgb(0,0,0);
     border-color:     rgb(224,190,240);
     background-color: rgb(224,190,240);
 }
 
-div.othersEvent7, div.othersEvent8, div.othersEvent9, div.othersEvent10 {
+div.event_others7, div.event_others8, div.event_others9, div.event_others10 {
     color:            rgb(0,0,0);
     border-color:     rgb(80,24,112);
     background-color: rgb(200,170,224);
@@ -81,74 +91,74 @@ div.note7, div.note8, div.note9, div.note10 {
     border-color:     rgb(24,24,255);
     background-color: rgb(150,150,255);
 }
-/* ---------------------------------------- note: diary ------------------------------------------ */
-div.diary0 {
+/* ---------------------------------------- note_diary ------------------------------------------ */
+div.note_diary0 {
     color:            rgb(128,128,128);
     border-color:     rgb(160,255,160);
     background-color: rgb(255,255,255);
 }
 
-div.diary1, div.diary2, div.diary3 {
+div.note_diary1, div.note_diary2, div.note_diary3 {
     color:            rgb(0,140,0);
     border-color:     rgb(160,255,160);
     background-color: rgb(255,255,255);
 }
 
-div.diary4, div.diary5, div.diary6 {
+div.note_diary4, div.note_diary5, div.note_diary6 {
     color:            rgb(0,0,0);
     border-color:     rgb(160,255,160);
     background-color: rgb(160,255,160);
 }
 
-div.diary7, div.diary8, div.diary9, div.diary10 {
+div.note_diary7, div.note_diary8, div.note_diary9, div.note_diary10 {
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
     background-color: rgb(130,255,130);
 }
-/* ---------------------------------------- person: friend ------------------------------------------ */
-div.friend0 {
+/* ---------------------------------------- person ------------------------------------------ */
+div.person0 {
     color:            rgb(160,160,160);
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,255);
 }
 
-div.friend1, div.friend2, div.friend3 {
+div.person1, div.person2, div.person3 {
     color:            rgb(70,70,0);
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,255);
 }
 
-div.friend4, div.friend5, div.friend6 {
+div.person4, div.person5, div.person6 {
     color:            rgb(0,0,0);
     border-color:     rgb(255,255,100);
     background-color: rgb(255,255,100);
 }
 
-div.friend7, div.friend8, div.friend9, div.friend10 {
+div.person7, div.person8, div.person9, div.person10 {
     color:            rgb(0,0,0);
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,60);
 }
-/* ---------------------------------------- place: general place ------------------------------------------ */
-div.place0 {
+/* ---------------------------------------- place_general ------------------------------------------ */
+div.place_general0 {
     color:            rgb(128,128,128);
     border-color:     rgb(64,220,64);
     background-color: rgb(255,255,255);
 }
 
-div.place1, div.place2, div.place3 {
+div.place_general1, div.place_general2, div.place_general3 {
     color:            rgb(0,140,0);
     border-color:     rgb(64,220,64);
     background-color: rgb(255,255,255);
 }
 
-div.place4, div.place5, div.place6 {
+div.place_general4, div.place_general5, div.place_general6 {
     color:            rgb(0,0,0);
     border-color:     rgb(64,220,64);
     background-color: rgb(64,220,64);
 }
 
-div.place7, div.place8, div.place9, div.place10 {
+div.place_general7, div.place_general8, div.place_general9, div.place_general10 {
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
     background-color: rgb(120,220,120);

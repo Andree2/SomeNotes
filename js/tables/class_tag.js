@@ -20,15 +20,10 @@
             +       Slider.BuildHTML('input_tag_importance', importance)
             +"    </td>"
             +"    <td>"
-            +"      <select id='input_tag_category' name='input_tag_category' size='1'>"
-            var categories = Categories.GetCategories('tag');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
-            return output
-            +"      </select>"
+            +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";
+            return output;
     };
     // =============================================================================================
     // ================================= Privileged ================================================
@@ -62,7 +57,6 @@
         xml +=  '  <title>'+      My.HtmlSpecialChars(document.getElementById('input_tag_title').value) +'</title>'
                +'  <text>'+       My.HtmlSpecialChars(document.getElementById('input_tag_text').value) +'</text>'
                +'  <importance>'+ document.getElementById('input_tag_importance').value +'</importance>'
-               +'  <category>'+   document.getElementById('input_tag_category').value +'</category>'
                +'</row>';
         
         return xml;

@@ -25,8 +25,7 @@ class Event extends Table
     {
         if (   $column == 'FROM_MINUS' 
             || $column == 'TO_PLUS'
-            || $column == 'IMPORTANCE'
-            || $column == 'CATEGORY') {
+            || $column == 'IMPORTANCE') {
             if ($value == '') {
                 return 'NULL';
             }

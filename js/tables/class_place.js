@@ -28,15 +28,10 @@ function Place()
             +       Slider.BuildHTML('input_place_importance', importance)
             +"    </td>"
             +"    <td>"
-            +"      <select id='input_place_category' name='input_place_category' size='1'>"
-            var categories = Categories.GetCategories('place');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
-            return output
-            +"      </select>"
+            +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";
+            return output;
     };
     
     // =============================================================================================
@@ -76,7 +71,6 @@ function Place()
                +'  <latitude>'+       document.getElementById('input_place_latitude').value +'</latitude>'
                +'  <longitude>'+       document.getElementById('input_place_longitude').value +'</longitude>'
                +'  <importance>'+ document.getElementById('input_place_importance').value +'</importance>'
-               +'  <category>'+   document.getElementById('input_place_category').value +'</category>'
                +'</row>';
         
         return xml;

@@ -39,15 +39,10 @@
             +        Slider.BuildHTML('input_person_importance', importance)
             +"    </td>"
             +"    <td>"
-            +"      <select id='input_person_category' name='input_person_category' size='1'>"
-            var categories = Categories.GetCategories('person');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
-            return output
-            +"      </select>"
+            +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";
+            return output;
     };
     
     // =============================================================================================
@@ -94,7 +89,6 @@
                +'  <birthday_year>'+  document.getElementById('input_person_birthday_year').value +'</birthday_year>'
                +'  <text>'+           My.HtmlSpecialChars(document.getElementById('input_person_text').value) +'</text>'
                +'  <importance>'+     document.getElementById('input_person_importance').value +'</importance>'
-               +'  <category>'+       document.getElementById('input_person_category').value +'</category>'
                +'</row>';
         
         return xml;

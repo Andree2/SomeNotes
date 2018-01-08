@@ -22,16 +22,7 @@ class Day extends Table
     }
 
     public function GetPostDataSQLFormat($value, $column, $tableGlobals)
-    {
-        if ( $column == 'CATEGORY') {
-            if ($value == '') {
-                return 'NULL';
-            }
-            else {
-                return $value;
-            }
-        }
-        
+    {        
         return '\''.addslashes($value).'\'';
     }
     

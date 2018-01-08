@@ -18,8 +18,7 @@ class Tag extends Table
     
     public function GetPostDataSQLFormat($value, $column, $tableGlobals)
     {
-        if (   $column == 'IMPORTANCE'
-            || $column == 'CATEGORY') {
+        if (   $column == 'IMPORTANCE') {
             if ($value == '') {
                 return 'NULL';
             }

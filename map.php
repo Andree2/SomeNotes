@@ -3,7 +3,6 @@ require_once('../passes.php');
 ?>
 <html>
     <link rel="icon" href="images/favicon.ico" />
-    <script type="text/JavaScript" src="js/categories.js" charset="utf-8"></script>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -112,12 +111,10 @@ require_once('../passes.php');
               //text.textContent = address
               //infowincontent.appendChild(text);
 
-              //var label = Categories.GetCategories('place')[category].mDisplayText || {};
-
               var marker = new google.maps.Marker({
                 map: map,
                 position: point,
-                label: ''
+                label: category
               });
               marker.addListener('click', function() {
                 infoWindow.setContent(infowincontent);

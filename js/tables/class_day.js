@@ -13,10 +13,11 @@ function Day()
             +"    <td colspan='2'><input id='input_day_to_date' name='input_day_to_date' type='date' value='"+ toDate +"' maxLength='12' size='7'/></td>"
             +"    <td>"
             +"      <select id='input_day_category' name='input_day_category' size='18'>";
-            var categories = Categories.GetCategories('day');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
+            var categories = My.GetDayCategoriesDisplayTextAndStyle();
+            for(key in categories){
+                var diplayTextAndStyle = categories[key];
+                output += "        <option value='"+ key +"' " + (category == key ? "selected='selected'" : "") + ">" + diplayTextAndStyle[0] + "</option>"
+              };
             return output
             +"      </select>"
             +"    </td>"

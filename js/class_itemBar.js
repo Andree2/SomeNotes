@@ -40,7 +40,7 @@
     function BuildSmallBox(table, id, text, importance, category, width, maxHeight)
     {
         // Create boxes for a certain day
-        return '<div class="smallBox '+ Categories.GetCategories(table)[category].mCSSName + importance
+        return '<div class="smallBox '+ category + importance
             +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
             +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };

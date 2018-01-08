@@ -22,8 +22,7 @@ class Person extends Table
         if (   $column == 'BIRTHDAY_DAY' 
             || $column == 'BIRTHDAY_MONTH'
             || $column == 'BIRTHDAY_YEAR'
-            || $column == 'IMPORTANCE'
-            || $column == 'CATEGORY') {
+            || $column == 'IMPORTANCE') {
             if ($value == '') {
                 return 'NULL';
             }

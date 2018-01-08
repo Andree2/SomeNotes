@@ -24,15 +24,10 @@
             +       Slider.BuildHTML('input_note_importance', importance)
             +"    </td>"
             +"    <td>"
-            +"      <select id='input_note_category' name='input_note_category' size='1'>"
-            var categories = Categories.GetCategories('note');
-            categories.forEach(function(c) {
-                output += "        <option value='"+ c.mCategory +"' " + (category == c.mCategory ? "selected='selected'" : "") + ">" + c.mDisplayText + "</option>"
-            });
-            return output
-            +"      </select>"
+            +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";
+            return output;
     };
     
     // =============================================================================================
@@ -73,7 +68,6 @@
                +'  <date>'+       datetimeParts[0] +'</date>'
                +'  <time>'+       datetimeParts[1] +'</time>'
                +'  <importance>'+ document.getElementById('input_note_importance').value +'</importance>'
-               +'  <category>'+   document.getElementById('input_note_category').value +'</category>'
                +'</row>';
         
         return xml;

@@ -19,7 +19,6 @@ class Place extends Table
     public function GetPostDataSQLFormat($value, $column, $tableGlobals)
     {
         if (   $column == 'IMPORTANCE'
-            || $column == 'CATEGORY'
             || $column == 'LATITUDE'
             || $column == 'LONGITUDE') {
             if ($value == '') {

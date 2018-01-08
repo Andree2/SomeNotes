@@ -80,7 +80,7 @@
     function BuildSmallBox (table, id, text, importance, category, width, maxHeight)
     {
         // Create boxes for a certain day
-        return '<div class="smallBox '+ Categories.GetCategories(table)[category].mCSSName + importance
+        return '<div class="smallBox '+ category + importance
             +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
             +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };
@@ -481,12 +481,12 @@
                             var endIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date")) - dateStart) / mOneDay;
                             startIndex = Math.max(startIndex, 0);
                             endIndex = Math.min(endIndex, mNumRows * 7 - 1);
-                            var colorScheme = Categories.GetCategories('day')[category].mCSSName;
-                            var displayText = Categories.GetCategories('day')[category].mDisplayText;
+                            var dayCagegoryDisplayTextAndStyle = My.GetDayCategoriesDisplayTextAndStyle()[category];
+                            var categoryStyle = dayCagegoryDisplayTextAndStyle[1];
                             // Fill code for relevant days.
                             for (var k = startIndex; k <= endIndex; ++k) {
-                                dayTdClass[k] = colorScheme; 
-                                dayCode[k][0] += BuildSmallBox(tableName, id, displayText, "", category, '100%', maxBoxHeight);
+                                dayTdClass[k] = categoryStyle; 
+                                dayCode[k][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayTextAndStyle[0], "", categoryStyle, '100%', maxBoxHeight);
                             }
                         }    
                         break;
