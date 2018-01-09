@@ -77,10 +77,10 @@
              + "   </table>";
     };
 
-    function BuildSmallBox (table, id, text, importance, category, width, maxHeight)
+    function BuildSmallBox (table, id, text, style, width, maxHeight)
     {
         // Create boxes for a certain day
-        return '<div class="smallBox '+ category + importance
+        return '<div class="smallBox '+ style
             +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
             +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };
@@ -218,13 +218,14 @@
         if (mThis.GetDivEditVisible()) {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return;
+            if (mThis.mDivEditTable == null) return;
             if (table == mThis.mDivEditTable && itemID == mThis.mDivEditItemID) {
                 alert('Link to itself not allowed.');
                 return;
             }
             // Build parameter string.
             var xml = '<?xml version="1.0" encoding="utf-8"?>'
-                     + '<row table1_id="' + table + '" table1_item_id="' + itemID + '" table2_id="' + mThis.mDivEditTable + '" table2_item_id="' + mThis.mDivEditItemID + '"/>';
+                     + '<row table1="' + table + '" table1_item_id="' + itemID + '" table2="' + mThis.mDivEditTable + '" table2_item_id="' + mThis.mDivEditItemID + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/new_link.php", xml, OnStateChangedSubmitNewLink);
         }
     };
@@ -481,12 +482,11 @@
                             var endIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date")) - dateStart) / mOneDay;
                             startIndex = Math.max(startIndex, 0);
                             endIndex = Math.min(endIndex, mNumRows * 7 - 1);
-                            var dayCagegoryDisplayTextAndStyle = My.GetDayCategoriesDisplayTextAndStyle()[category];
-                            var categoryStyle = dayCagegoryDisplayTextAndStyle[1];
+                            var dayCagegoryDisplayText = My.GetDayCategoriesDisplayText()[category];
                             // Fill code for relevant days.
                             for (var k = startIndex; k <= endIndex; ++k) {
-                                dayTdClass[k] = categoryStyle; 
-                                dayCode[k][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayTextAndStyle[0], "", categoryStyle, '100%', maxBoxHeight);
+                                dayTdClass[k] = category; 
+                                dayCode[k][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
                             }
                         }    
                         break;
@@ -510,7 +510,7 @@
                             endIndex = Math.min(endIndex, mNumRows * 7 - 1);
                             // Fill code for relevant days.
                             for (var k = startIndex; k <= endIndex; ++k) {
-                                dayCode[k][1] += BuildSmallBox(tableName, id, text, importance, category, '100%', maxBoxHeight);
+                                dayCode[k][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
                             }
                         }
                         break;
@@ -525,7 +525,7 @@
                                 alert(dateStart)
                                 alert(items[j].getAttribute("date"))
                             }
-                            dayCode[dateIndex][2] += BuildSmallBox(tableName, id, text, importance, category, '100%', maxBoxHeight);    
+                            dayCode[dateIndex][2] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);    
                         }
                         break;
                     case "note":
@@ -534,7 +534,7 @@
                             var importance = items[j].getAttribute("importance");
                             var text = items[j].childNodes[0].firstChild.nodeValue;
                             // Fill code for relevant day.
-                            dayCode[dateIndex][3] += BuildSmallBox(tableName, id, text, importance, category, '100%', maxBoxHeight);    
+                            dayCode[dateIndex][3] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);    
                         }
                         break;
                 }

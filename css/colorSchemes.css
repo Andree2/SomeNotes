@@ -1,13 +1,46 @@
 ﻿@charset "utf-8";
 
-
-/* ---------------------------------------- day_free ------------------------------------------ */
-div.day_free {
+/* ---------------------------------------- day_* ------------------------------------------ */
+div.day_holiday,
+div.day_flextime,
+div.day_new_year,
+div.day_three_wise_men,
+div.day_good_friday,
+div.day_easter_monday,
+div.day_workers_day,
+div.day_ascension_day,
+div.day_pentecost,
+div.day_corpus_christi,
+div.day_german_unity_day,
+div.day_all_saints_day,
+div.day_december_25,
+div.day_december_26,
+div.day_medical_leave,
+div.day_christmas_eve,
+div.day_new_years_eve,
+div.day_reformation_day {
     color:            rgb(128,128,128);
     border-color:     transparent;
     background-color: transparent;
 }
-td.day_free {
+td.day_holiday,
+td.day_flextime,
+td.day_new_year,
+td.day_three_wise_men,
+td.day_good_friday,
+td.day_easter_monday,
+td.day_workers_day,
+td.day_ascension_day,
+td.day_pentecost,
+td.day_corpus_christi,
+td.day_german_unity_day,
+td.day_all_saints_day,
+td.day_december_25,
+td.day_december_26,
+td.day_medical_leave,
+td.day_christmas_eve,
+td.day_new_years_eve,
+td.day_reformation_day {
     background-color: rgb(232,232,232);
 }
 /* ---------------------------------------- day_school_holidays ------------------------------------------ */
@@ -67,7 +100,7 @@ div.event_others7, div.event_others8, div.event_others9, div.event_others10 {
     border-color:     rgb(80,24,112);
     background-color: rgb(200,170,224);
 }
-/* ---------------------------------------- note: note ------------------------------------------ */
+/* ---------------------------------------- note ------------------------------------------ */
 div.note0 {
     color:            rgb(128,128,128);
     border-color:     rgb(160,160,255);
@@ -139,31 +172,47 @@ div.person7, div.person8, div.person9, div.person10 {
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,60);
 }
-/* ---------------------------------------- place_general ------------------------------------------ */
-div.place_general0 {
+/* ---------------------------------------- place_* ------------------------------------------ */
+div.place0,
+div.place_home0,
+div.place_bar0,
+div.place_restaurant0,
+div.place_club0  {
     color:            rgb(128,128,128);
     border-color:     rgb(64,220,64);
     background-color: rgb(255,255,255);
 }
 
-div.place_general1, div.place_general2, div.place_general3 {
+div.place1,            div.place2,              div.place3,
+div.place_home1,       div.place_home2,         div.place_home3,
+div.place_bar1,        div.place_bar2,          div.place_bar3,
+div.place_restaurant1, div.place_restaurant2,   div.place_restaurant3,
+div.place_club1,       div.place_club2,         div.place_club3 {
     color:            rgb(0,140,0);
     border-color:     rgb(64,220,64);
     background-color: rgb(255,255,255);
 }
 
-div.place_general4, div.place_general5, div.place_general6 {
+div.place4,            div.place5,              div.place6,
+div.place_home4,       div.place_home5,         div.place_home6,
+div.place_bar4,        div.place_bar5,          div.place_bar6,
+div.place_restaurant4, div.place_restaurant5,   div.place_restaurant6,
+div.place_club4,       div.place_club5,         div.place_club6{
     color:            rgb(0,0,0);
     border-color:     rgb(64,220,64);
     background-color: rgb(64,220,64);
 }
 
-div.place_general7, div.place_general8, div.place_general9, div.place_general10 {
+div.place7,            div.place8,              div.place9,             div.place10,              
+div.place_home7,       div.place_home8,         div.place_home9,        div.place_home10,             
+div.place_bar7,        div.place_bar8,          div.place_bar9,         div.place_bar10,              
+div.place_restaurant7, div.place_restaurant8,   div.place_restaurant9,  div.place_restaurant10,       
+div.place_club7,       div.place_club8,         div.place_club9         div.place_club10,             {
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
     background-color: rgb(120,220,120);
 }
-/* ---------------------------------------- tag: tag ------------------------------------------ */
+/* ---------------------------------------- tag ------------------------------------------ */
 div.tag0 {
     color:            rgb(180,180,180);
     border-color:     rgb(192,192,192);

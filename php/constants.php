@@ -23,20 +23,22 @@ global $TABLE;
 $TABLE = array();
 $TABLE[DAY]     = new Day();
 $TABLE[EVENT]   = new Event();
-$TABLE[LINK]    = new Link();
 $TABLE[NOTE]    = new Note();
 $TABLE[PERSON]  = new Person();
 $TABLE[PLACE]   = new Place();
 $TABLE[TAG]     = new Tag();
 
-global $TABLE_FROM_ID;
-$TABLE_FROM_ID = array();
-$TABLE_FROM_ID[$TABLE[DAY]->GetID()]    = DAY;
-$TABLE_FROM_ID[$TABLE[EVENT]->GetID()]  = EVENT;
-$TABLE_FROM_ID[$TABLE[LINK]->GetID()]   = LINK;
-$TABLE_FROM_ID[$TABLE[NOTE]->GetID()]   = NOTE;
-$TABLE_FROM_ID[$TABLE[PERSON]->GetID()] = PERSON;
-$TABLE_FROM_ID[$TABLE[PLACE]->GetID()]  = PLACE;
-$TABLE_FROM_ID[$TABLE[TAG]->GetID()]    = TAG;
+global $TABLE_LINK;
+$TABLE_LINK    = new Link();
+
+global $TABLE_NAME_FROM_ID;
+$TABLE_NAME_FROM_ID = array();
+$TABLE_NAME_FROM_ID[$TABLE[DAY]->GetID()]    = DAY;
+$TABLE_NAME_FROM_ID[$TABLE[EVENT]->GetID()]  = EVENT;
+$TABLE_NAME_FROM_ID[$TABLE[NOTE]->GetID()]   = NOTE;
+$TABLE_NAME_FROM_ID[$TABLE[PERSON]->GetID()] = PERSON;
+$TABLE_NAME_FROM_ID[$TABLE[PLACE]->GetID()]  = PLACE;
+$TABLE_NAME_FROM_ID[$TABLE[TAG]->GetID()]    = TAG;
+$TABLE_NAME_FROM_ID[$TABLE_LINK->GetID()]   = LINK;
 
 ?>

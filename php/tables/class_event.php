@@ -52,9 +52,10 @@ class Event extends Table
     
     public function EchoXMLRow($row)
     {
-        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" from_date="'. $row['from_date'] .'" from_time="'. $row['from_time'] .'" from_minus="'. $row['from_minus'] .'" to_date="'. $row['to_date'] .'" to_time="'. $row['to_time'] .'" to_plus="'. $row['to_plus'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'">';
-        echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
-        echo "<text>". htmlspecialchars ($row['text'], ENT_QUOTES, "UTF-8") ."</text>";
+        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" from_date="'. $row['from_date'] .'" from_time="'. $row['from_time'] .'" from_minus="'. $row['from_minus'] .'" to_date="'. $row['to_date'] .'" to_time="'. $row['to_time'] .'" to_plus="'. $row['to_plus'] .'" importance="'. $row['importance'] .'">';
+        echo "  <title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
+        echo "  <text>". htmlspecialchars ($row['text'], ENT_QUOTES, "UTF-8") ."</text>";
+        echo "  <category>". htmlspecialchars ($row['category'], ENT_QUOTES, "UTF-8") ."</category>";
         echo "</row>";
     }
 }

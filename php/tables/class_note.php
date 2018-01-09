@@ -50,9 +50,10 @@ class Note extends Table
     
     public function EchoXMLRow($row)
     {
-        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" date="'. $row['date'] .'" time="'. $row['time'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'">';
-        echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
-        echo "<text>". htmlspecialchars ($row['text'], ENT_QUOTES, "UTF-8") ."</text>";
+        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" date="'. $row['date'] .'" time="'. $row['time'] .'" importance="'. $row['importance'] .'">';
+        echo "  <title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
+        echo "  <text>". htmlspecialchars ($row['text'], ENT_QUOTES, "UTF-8") ."</text>";
+        echo "  <category>". htmlspecialchars ($row['category'], ENT_QUOTES, "UTF-8") ."</category>";
         echo "</row>";
     }
 }

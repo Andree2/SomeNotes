@@ -43,9 +43,10 @@ class Place extends Table
     
     public function EchoXMLRow($row)
     {
-        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'" latitude="'. $row['latitude'] .'" longitude="'. $row['longitude'] .'">';
-        echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
-        echo "<address>" . htmlspecialchars($row['address'], ENT_QUOTES, "UTF-8") . "</address>";
+        echo '<row id="'. $row['id'] .'" table="'. $this->GetName() .'" created="'. $row['created'] .'" last_changed="'. $row['last_changed'] .'" importance="'. $row['importance'] .'" latitude="'. $row['latitude'] .'" longitude="'. $row['longitude'] .'">';
+        echo "  <title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
+        echo "  <address>" . htmlspecialchars($row['address'], ENT_QUOTES, "UTF-8") . "</address>";
+        echo "  <category>". htmlspecialchars ($row['category'], ENT_QUOTES, "UTF-8") ."</category>";
         echo "</row>";
     }
 }

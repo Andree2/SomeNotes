@@ -3,7 +3,7 @@
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
-    function BuildEditTable(title, text, importance, category)
+    function BuildEditTable(title, text, importance, category, induced_category)
     {
         var output = ""
             +"  <tr>"
@@ -13,6 +13,10 @@
             +"  <tr>"
             +"    <td>Text</td>"
             +"    <td colspan='5'><textarea id='input_tag_text' name='input_tag_text' type='text' cols='80' rows='20'>"+ My.HtmlSpecialChars(text) +"</textarea></td>"
+            +"  </tr>"
+            +"  <tr>"
+            +"    <td>Induced Category</td>"
+            +"    <td colspan='5'><input id='input_tag_induced_category' name='input_tag_induced_category' type='text' maxLength='255' value='"+ My.HtmlSpecialChars(induced_category) +"' size='79'/></td>"
             +"  </tr>"
             +"  <tr>"
             +"    <td>Importance</td>"
@@ -31,15 +35,16 @@
     // ---------------------------------------------------------------------------------------------    
     this.BuildEditFromXML = function (item)
     {
-        return BuildEditTable(item.getElementsByTagName("title")[0].childNodes[0].nodeValue,
-                              My.NodeValuesToString(item.getElementsByTagName("text")[0].childNodes),
+        return BuildEditTable(My.FirstChildNodeValuesToString(item.getElementsByTagName("title")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("text")),
                               item.getAttribute("importance"),
-                              item.getAttribute("category"));
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("category")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("induced_category")));
     };
     // ---------------------------------------------------------------------------------------------    
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "", 1, 400);
+        return BuildEditTable("", "", 1, "", "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function()
@@ -53,10 +58,11 @@
     // ---------------------------------------------------------------------------------------------
     this.GetRow = function(id)
     {
-        xml = '<row table="tag"' + (id == '' ? '' : ' id="'+ id +'"') + '>';
-        xml +=  '  <title>'+      My.HtmlSpecialChars(document.getElementById('input_tag_title').value) +'</title>'
+        xml =   '<row table="tag"' + (id == '' ? '' : ' id="'+ id +'"') + '>'
+               +'  <title>'+      My.HtmlSpecialChars(document.getElementById('input_tag_title').value) +'</title>'
                +'  <text>'+       My.HtmlSpecialChars(document.getElementById('input_tag_text').value) +'</text>'
                +'  <importance>'+ document.getElementById('input_tag_importance').value +'</importance>'
+               +'  <induced_category>'+ My.HtmlSpecialChars(document.getElementById('input_tag_induced_category')).value +'</induced_category>'
                +'</row>';
         
         return xml;

@@ -9,10 +9,10 @@ $id = $_GET['id'];
 XMLHeader();
 echo '<row>';
 // ------------------------- Read links ----------------------------->
-$query = "SELECT table2_id, table2_item_id FROM ". $TABLE[LINK]->GetTableName() 
+$query = "SELECT table2_id, table2_item_id FROM ". $TABLE_LINK->GetTableName() 
          ." WHERE table1_id = ". $TABLE[$table]->GetID() ." AND table1_item_id = $id";
 $result = mysqli_query($DBLink, $query);
-$query = "SELECT table1_id, table1_item_id FROM ". $TABLE[LINK]->GetTableName() 
+$query = "SELECT table1_id, table1_item_id FROM ". $TABLE_LINK->GetTableName() 
          ." WHERE table2_id = ". $TABLE[$table]->GetID() ." AND table2_item_id = $id";
 $result2 = mysqli_query($DBLink, $query);
 
@@ -35,7 +35,7 @@ if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
                 continue;
             }
         }
-        $tableLinkName = $TABLE_FROM_ID[$row[0]];
+        $tableLinkName = $TABLE_NAME_FROM_ID[$row[0]];
         
         $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
         

@@ -150,8 +150,9 @@
     /*
     *	Returns an empty string if the variable is undefined or the variable itself otherwise.
     */
-    this.NodeValuesToString = function(childNodes)
+    this.FirstChildNodeValuesToString = function(item)
     {
+        var childNodes = item[0].childNodes;
         // If the text is longer than 4096, Firefox will split it into multiple
         // childNodes.
         if (childNodes.length == 0) return '';
@@ -162,28 +163,28 @@
         return text;
     };
     // -------------------------------------------------------------------------------------------	
-    this.GetDayCategoriesDisplayTextAndStyle = function()
+    this.GetDayCategoriesDisplayText = function()
     {        
         var categories = {
-            day_holiday: ["Urlaub", "day_free"],
-            day_flextime: ["Gleitzeit", "day_free"],
-            day_new_year: ["Neujahr", "day_free"],
-            day_three_wise_men: ["Heilige Drei Koenige", "day_free"],
-            day_good_friday: ["Karfreitag", "day_free"],
-            day_easter_monday: ["Ostermontag", "day_free"],
-            day_workers_day: ["Maifeiertag", "day_free"],
-            day_ascension_day: ["Christi Himmelfahrt", "day_free"],
-            day_pentecost: ["Pfingstmontag", "day_free"],
-            day_corpus_christi: ["Fronleichnam", "day_free"],
-            day_german_unity_day: ["Tag der Deutschen Einheit", "day_free"],
-            day_all_saints_day: ["Allerheiligen", "day_free"],
-            day_december_25: ["1. Weihnachtsfeiertag", "day_free"],
-            day_december_26: ["2. Weihnachtsfeiertag", "day_free"],
-            day_medical_leave: ["Krankgeschrieben", "day_free"],
-            day_christmas_eve: ["Heiligabend (Urlaub)", "day_free"],
-            day_new_years_eve: ["Sylvester (Urlaub)", "day_free"],
-            day_reformation_day: ["Reformationstag", "day_free"],
-            day_school_holidays: ["Schulferien", "day_school_holidays"],
+            day_holiday: "Urlaub",
+            day_flextime: "Gleitzeit",
+            day_new_year: "Neujahr",
+            day_three_wise_men: "Heilige Drei Koenige",
+            day_good_friday: "Karfreitag",
+            day_easter_monday: "Ostermontag",
+            day_workers_day: "Maifeiertag",
+            day_ascension_day: "Christi Himmelfahrt",
+            day_pentecost: "Pfingstmontag",
+            day_corpus_christi: "Fronleichnam",
+            day_german_unity_day: "Tag der Deutschen Einheit",
+            day_all_saints_day: "Allerheiligen",
+            day_december_25: "1. Weihnachtsfeiertag",
+            day_december_26: "2. Weihnachtsfeiertag",
+            day_medical_leave: "Krankgeschrieben",
+            day_christmas_eve: "Heiligabend (Urlaub)",
+            day_new_years_eve: "Silvester (Urlaub)",
+            day_reformation_day: "Reformationstag",
+            day_school_holidays: "Schulferien"
         };
         return categories;
     }

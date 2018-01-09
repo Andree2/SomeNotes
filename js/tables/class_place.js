@@ -40,17 +40,17 @@ function Place()
     // ---------------------------------------------------------------------------------------------    
     this.BuildEditFromXML = function(item)
     {
-        return BuildEditTable(item.getElementsByTagName("title")[0].childNodes[0].nodeValue,
-                              My.NodeValuesToString(item.getElementsByTagName("address")[0].childNodes),
+        return BuildEditTable(My.FirstChildNodeValuesToString(item.getElementsByTagName("title")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("address")),
                               item.getAttribute("latitude"),
                               item.getAttribute("longitude"),
                               item.getAttribute("importance"),
-                              item.getAttribute("category"));
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("category")));
     };
     // ---------------------------------------------------------------------------------------------    
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "", 0, 0, 1, 800);
+        return BuildEditTable("", "", 0, 0, 1, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function()
@@ -64,9 +64,8 @@ function Place()
     // ---------------------------------------------------------------------------------------------
     this.GetRow = function(id)
     {
-        xml = '<row table="place"' + (id == '' ? '' : ' id="'+ id +'"') + '>';
-        
-        xml +=  '  <title>'+      My.HtmlSpecialChars(document.getElementById('input_place_title').value) +'</title>'
+        xml =   '<row table="place"' + (id == '' ? '' : ' id="'+ id +'"') + '>'       
+               +'  <title>'+      My.HtmlSpecialChars(document.getElementById('input_place_title').value) +'</title>'
                +'  <address>'+       My.HtmlSpecialChars(document.getElementById('input_place_address').value) +'</address>'
                +'  <latitude>'+       document.getElementById('input_place_latitude').value +'</latitude>'
                +'  <longitude>'+       document.getElementById('input_place_longitude').value +'</longitude>'

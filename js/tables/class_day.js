@@ -13,10 +13,9 @@ function Day()
             +"    <td colspan='2'><input id='input_day_to_date' name='input_day_to_date' type='date' value='"+ toDate +"' maxLength='12' size='7'/></td>"
             +"    <td>"
             +"      <select id='input_day_category' name='input_day_category' size='18'>";
-            var categories = My.GetDayCategoriesDisplayTextAndStyle();
+            var categories = My.GetDayCategoriesDisplayText();
             for(key in categories){
-                var diplayTextAndStyle = categories[key];
-                output += "        <option value='"+ key +"' " + (category == key ? "selected='selected'" : "") + ">" + diplayTextAndStyle[0] + "</option>"
+                output += "        <option value='"+ key +"' " + (category == key ? "selected='selected'" : "") + ">" + categories[key] + "</option>"
               };
             return output
             +"      </select>"
@@ -32,12 +31,12 @@ function Day()
     {
         return BuildEditTable(item.getAttribute("from_date"),
                               item.getAttribute("to_date"),
-                              item.getAttribute("category"));
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("category")));
     };
     // ---------------------------------------------------------------------------------------------    
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable(date, date, 700);
+        return BuildEditTable(date, date, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function()
@@ -47,8 +46,8 @@ function Day()
     // ---------------------------------------------------------------------------------------------
     this.GetRow = function(id)
     {
-        xml = '<row table="day"' + (id == '' ? '' : ' id="'+ id +'"') + '>';        
-        xml +=  '  <from_date>'+       document.getElementById('input_day_from_date').value +'</from_date>'
+        xml =   '<row table="day"' + (id == '' ? '' : ' id="'+ id +'"') + '>'        
+               +'  <from_date>'+       document.getElementById('input_day_from_date').value +'</from_date>'
                +'  <to_date>'+       document.getElementById('input_day_to_date').value +'</to_date>'
                +'  <category>'+   document.getElementById('input_day_category').value +'</category>'
                +'</row>';

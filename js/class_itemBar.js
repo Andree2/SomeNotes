@@ -37,10 +37,10 @@
         return code;
     };
     // -------------------------------------------------------------------------------------------
-    function BuildSmallBox(table, id, text, importance, category, width, maxHeight)
+    function BuildSmallBox(table, id, text, style, width, maxHeight)
     {
         // Create boxes for a certain day
-        return '<div class="smallBox '+ category + importance
+        return '<div class="smallBox '+ style
             +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
             +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };
@@ -125,7 +125,7 @@
             var category = nodes[j].getAttribute("category");
 
             code += "  <td>";
-            code += BuildSmallBox(table, id, text, importance, category, '170px', 16);
+            code += BuildSmallBox(table, id, text, category + importance, '170px', 16);
             code += "  </td>";
             code += "</tr>";
             

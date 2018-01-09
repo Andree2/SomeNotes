@@ -51,21 +51,21 @@
     // ---------------------------------------------------------------------------------------------	
     this.BuildEditFromXML = function (item)
     {
-        return BuildEditTable(item.getElementsByTagName("display_name")[0].childNodes[0].nodeValue,
-                              My.NodeValuesToString(item.getElementsByTagName("first_name")[0].childNodes),
-                              My.NodeValuesToString(item.getElementsByTagName("middle_name")[0].childNodes),
-                              My.NodeValuesToString(item.getElementsByTagName("last_name")[0].childNodes),
+        return BuildEditTable(My.FirstChildNodeValuesToString(item.getElementsByTagName("display_name")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("first_name")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("middle_name")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("last_name")),
                               item.getAttribute("birthday_day"),
                               item.getAttribute("birthday_month"),
                               item.getAttribute("birthday_year"),
-                              My.NodeValuesToString(item.getElementsByTagName("text")[0].childNodes),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("text")),
                               item.getAttribute("importance"),
-                              item.getAttribute("category"));
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("category")));
     };
     // ---------------------------------------------------------------------------------------------	
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "","","","","","","",1,300);
+        return BuildEditTable("", "", "", "", "", "", "", "", 1, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function(form)
@@ -79,8 +79,8 @@
     // ---------------------------------------------------------------------------------------------
     this.GetRow = function(id)
     {
-        xml = '<row table="person"' + (id == '' ? '' : ' id="'+ id +'"') + '>';
-        xml +=  '  <display_name>'+   My.HtmlSpecialChars(document.getElementById('input_person_display_name').value) +'</display_name>'
+        xml =   '<row table="person"' + (id == '' ? '' : ' id="'+ id +'"') + '>'
+               +'  <display_name>'+   My.HtmlSpecialChars(document.getElementById('input_person_display_name').value) +'</display_name>'
                +'  <first_name>'+     My.HtmlSpecialChars(document.getElementById('input_person_first_name').value) +'</first_name>'
                +'  <middle_name>'+    My.HtmlSpecialChars(document.getElementById('input_person_middle_name').value) +'</middle_name>'
                +'  <last_name>'+      My.HtmlSpecialChars(document.getElementById('input_person_last_name').value) +'</last_name>'

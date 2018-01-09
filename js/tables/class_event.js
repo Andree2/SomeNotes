@@ -47,8 +47,8 @@
     // ---------------------------------------------------------------------------------------------        
     this.BuildEditFromXML = function (item)
     {
-        return BuildEditTable(item.getElementsByTagName("title")[0].childNodes[0].nodeValue,
-                              My.NodeValuesToString(item.getElementsByTagName("text")[0].childNodes),
+        return BuildEditTable(My.FirstChildNodeValuesToString(item.getElementsByTagName("title")),
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("text")),
                               item.getAttribute("from_date"),
                               item.getAttribute("from_time"),
                               item.getAttribute("from_minus"),
@@ -56,12 +56,12 @@
                               item.getAttribute("to_time"),
                               item.getAttribute("to_plus"),
                               item.getAttribute("importance"),
-                              item.getAttribute("category"));
+                              My.FirstChildNodeValuesToString(item.getElementsByTagName("category")));
     };
     // ---------------------------------------------------------------------------------------------    
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "", date, "00:00", 0, date, "00:00", 0, 1, 100);
+        return BuildEditTable("", "", date, "00:00", 0, date, "00:00", 0, 1, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function()
@@ -75,11 +75,10 @@
     // ---------------------------------------------------------------------------------------------
     this.GetRow = function(id)
     {
-        xml = '<row table="event"' + (id == '' ? '' : ' id="'+ id +'"') + '>';
-        
         fromDatetimeParts = document.getElementById('input_event_from_datetime').value.split("T");
         toDatetimeParts = document.getElementById('input_event_to_datetime').value.split("T");
-        xml +=  '  <title>'+      My.HtmlSpecialChars(document.getElementById('input_event_title').value) +'</title>'
+        xml =   '<row table="event"' + (id == '' ? '' : ' id="'+ id +'"') + '>'      
+               +'  <title>'+      My.HtmlSpecialChars(document.getElementById('input_event_title').value) +'</title>'
                +'  <text>'+       My.HtmlSpecialChars(document.getElementById('input_event_text').value) +'</text>'
                +'  <from_date>'+  fromDatetimeParts[0] +'</from_date>'
                +'  <from_time>'+  fromDatetimeParts[1] +'</from_time>'

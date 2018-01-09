@@ -12,11 +12,11 @@ echo '<row>';
 
 while($rowTags = mysqli_fetch_row($resultTags)) {
 	// ------------------------- linked persons ----------------------------->
-	$query = "SELECT table2_item_id FROM ". $TABLE[LINK]->GetTableName() 
+	$query = "SELECT table2_item_id FROM ". $TABLE_LINK->GetTableName() 
 			." WHERE table1_id = ". $TABLE[TAG]->GetID() ." AND table1_item_id = $rowTags[0]"
 			." AND table2_id = ". $TABLE[PERSON]->GetID();
 	$result = mysqli_query($DBLink, $query);
-	$query = "SELECT table1_item_id FROM ". $TABLE[LINK]->GetTableName() 
+	$query = "SELECT table1_item_id FROM ". $TABLE_LINK->GetTableName() 
 			." WHERE table2_id = ". $TABLE[TAG]->GetID() ." AND table2_item_id = $rowTags[0]"
 			." AND table1_id = ". $TABLE[PERSON]->GetID();
 	$result2 = mysqli_query($DBLink, $query);

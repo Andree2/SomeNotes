@@ -1,7 +1,6 @@
 <?php
 abstract class Table
 {
-    // ---------------------------------------- Getter ----------------------------------------
     public function GetColumnDate()
     {
         return '';
