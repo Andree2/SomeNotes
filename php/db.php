@@ -1,7 +1,7 @@
 <?php
-	require_once('../../passes.php');
+	require_once('../passes.php');
 	
-	$DBLink= mysqli_connect($DBServer, $DBUsername, $DBPassword);
+	$DBLink = mysqli_connect($DBServer, $DBUsername, $DBPassword);
 
 	if (mysqli_connect_errno()) {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();

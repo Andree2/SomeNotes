@@ -1,8 +1,8 @@
 <?php
-require_once('../passes.php');
+require_once('passes.php');
 ?>
 <html>
-    <link rel="icon" href="images/favicon.ico" />
+  <link rel="icon" href="images/favicon.ico" />
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -112,9 +112,9 @@ require_once('../passes.php');
               //infowincontent.appendChild(text);
 
               var marker = new google.maps.Marker({
+                icon: 'images/' + category + '.png',
                 map: map,
-                position: point,
-                label: category
+                position: point
               });
               marker.addListener('click', function() {
                 infoWindow.setContent(infowincontent);
