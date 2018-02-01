@@ -494,8 +494,12 @@
                         {
                             // EVENT table has additional options for the end date
                             // size = endDate - startDate in days
-                            var importance = items[j].getAttribute("importance");
+                            var importance = items[j].getAttribute("importance");  
                             var text = items[j].childNodes[0].firstChild.nodeValue;
+                            // If this is linked to a place, add a marker symbol.
+                            if (items[j].getAttribute("has_place")) {
+                                text = "● " + text;
+                            }
                             // Get date indices
                             var startIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date")) - dateStart) / mOneDay;
                             var endIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date")) - dateStart) / mOneDay;

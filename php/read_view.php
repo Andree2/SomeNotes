@@ -50,7 +50,14 @@ $result = mysqli_query($DBLink, $query);
 
 echo '<table name="'. EVENT .'">';
 while($row = mysqli_fetch_assoc($result)) {
-    echo '<item id="'. $row['id'] .'" from_date="'. $row['from_date'] .'" to_date="'. $row['to_date']  .'" to_time="'. $row['to_time'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'">';
+    // Check if the event has a linked place.
+    $eventLinkQuery = "SELECT table1_id, table1_item_id FROM " . $TABLE_LINK->GetTableName()
+    .' WHERE (table1_id='. $TABLE[EVENT]->GetID() .' AND table1_item_id='. $row['id'] .' AND table2_id='. $TABLE[PLACE]->GetID() .') OR'
+    .'       (table2_id='. $TABLE[EVENT]->GetID() .' AND table2_item_id='. $row['id'] .' AND table1_id='. $TABLE[PLACE]->GetID() .')';
+    $eventLinkResult = mysqli_query($DBLink, $eventLinkQuery);
+    $hasPlace = mysqli_num_rows($eventLinkResult) > 0;
+    
+    echo '<item id="'. $row['id'] .'" from_date="'. $row['from_date'] .'" to_date="'. $row['to_date']  .'" to_time="'. $row['to_time'] .'" importance="'. $row['importance'] .'" category="'. $row['category'] .'" has_place="'.$hasPlace .'">';
     echo "<title>". htmlspecialchars ($row['title'], ENT_QUOTES, "UTF-8") ."</title>";
     echo "</item>";
 }

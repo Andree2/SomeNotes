@@ -11,4 +11,4 @@ var Slider = new Slider();
 var View = new MainView();
 
 var ItemBarLinks   = new ItemBar('ItemBarLinks', 'divLinks', true, 0, 0, false, View.OnEnterKeyLinks);
-var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', true, 1, -1, true, View.OnEnterKeySearch)
+var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', true, 0, -1, true, View.OnEnterKeySearch)
