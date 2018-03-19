@@ -3,7 +3,7 @@
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
-    function BuildEditTable(title, text, fromDate, fromTime, fromMinus, toDate, toTime, toPlus, importance, category)
+    function BuildEditTable(title, text, fromDate, fromTime, toDate, toTime, importance, category)
     {
         var output = ""
             +"  <tr>"
@@ -21,14 +21,6 @@
             +"    <td><input id='input_event_to_datetime' name='input_event_to_datetime' type='datetime-local' value="+ toDate +"T"+ toTime +" maxLength='12' size='7'/></td>"
             +"    <td></td>"
             +"    <td></td>"
-            +"  <tr>"
-            +"    <td align='right'>-</td>"
-            +"    <td><input id='input_event_from_minus' name='input_event_from_minus' type='text' value='"+ fromMinus +"' maxLength='3' size='7'/></td>"
-            +"    <td align='right'>+</td>"
-            +"    <td><input id='input_event_to_plus' name='input_event_to_plus' type='text' value='"+ toPlus +"' maxLength='3' size='7'/></td>"
-            +"    <td></td>"
-            +"    <td></td>"
-            +"  </tr>"
             +"  <tr>"
             +"    <td>Importance</td>"
             +"    <td colspan='3'>"
@@ -51,17 +43,15 @@
                               My.FirstChildNodeValuesToString(item.getElementsByTagName("text")),
                               item.getAttribute("from_date"),
                               item.getAttribute("from_time"),
-                              item.getAttribute("from_minus"),
                               item.getAttribute("to_date"),
                               item.getAttribute("to_time"),
-                              item.getAttribute("to_plus"),
                               item.getAttribute("importance"),
                               My.FirstChildNodeValuesToString(item.getElementsByTagName("category")));
     };
     // ---------------------------------------------------------------------------------------------    
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "", date, "00:00", 0, date, "00:00", 0, 1, "");
+        return BuildEditTable("", "", date, "00:00", date, "00:00", 1, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function()
@@ -82,10 +72,8 @@
                +'  <text>'+       My.HtmlSpecialChars(document.getElementById('input_event_text').value) +'</text>'
                +'  <from_date>'+  fromDatetimeParts[0] +'</from_date>'
                +'  <from_time>'+  fromDatetimeParts[1] +'</from_time>'
-               +'  <from_minus>'+ document.getElementById('input_event_from_minus').value +'</from_minus>'
                +'  <to_date>'+    toDatetimeParts[0] +'</to_date>'
                +'  <to_time>'+    toDatetimeParts[1] +'</to_time>'
-               +'  <to_plus>'+    document.getElementById('input_event_to_plus').value +'</to_plus>'
                +'  <importance>'+ document.getElementById('input_event_importance').value +'</importance>'
                +'</row>';
         
