@@ -1,8 +1,8 @@
 ﻿﻿function MainView()
 {
     // public
-    this.mDivEditTable = null;
-    this.mDivEditItemID = 0;
+    this.mEditElementTable = null;
+    this.mEditElementItemID = 0;
     
     // private    
     var mActiveCell = '';
@@ -13,7 +13,7 @@
     var mNumRows = 7;
     var mSelectedDate;
     var mBoxHeight = 16;
-    var mDivEditVisible = false;
+    var mEditElementVisible = false;
     
     var mThis = this; // For acces to 'this' in private function ('this' is not set correctly there).
     
@@ -55,23 +55,27 @@
         return "   <table class='window'>"
              + "   <tr class='windowBar'>"
              + switchNewCode
-             + "       <td class='windowBar' align='right'>"
-             + "         <a class='button closeButton' onclick='return View.SetDivEditVisible(false)' href='#'>X</a>"
-             + "       </td>"
              + "     </tr>"
              + "     <tr>"
              + "       <td class='window' colspan='6'>"
-             + "         <table class='" + table + "'>"+ Table[table].BuildNew(date, time) + "</table>"
+             + "         <table class='" + table + " fillWidth'>"+ Table[table].BuildNew(date, time) + "</table>"
              + "       </td>"
              + "     </tr>"
              + "     <tr class='windowBar'>"
-             + "       <td class='windowBar' colspan='2' align='right'>"
-             + "       </td>"
-             + "       <td class='windowBar' colspan='2' align='right'>"
-             + "         <a class='button' onclick='return View.SubmitNew(\"" + table + "\", false)' href='#'>Save</a>"
-             + "       </td>"
-             + "       <td class='windowBar' colspan='2' align='right'>"
-             + "         <a class='button' onclick='return View.SubmitNew(\"" + table + "\", true)' href='#'>Save & Close</a>"
+             + "       <td class='windowBar' colspan='6' align='right'>"
+             + "         <table>"
+             + "           <tr>"
+             + "             <td class='windowBar' align='right'>"
+             + "               <a class='button' onclick='return View.SubmitNew(\"" + table + "\", false)' href='#'>Save</a>"
+             + "             </td>"
+             + "             <td class='windowBar' align='right'>"
+             + "               <a class='button' onclick='return View.SubmitNew(\"" + table + "\", true)' href='#'>Save & Close</a>"
+             + "             </td>"
+             + "             <td class='windowBar' align='right'>"
+             + "               <a class='button closeButton' onclick='return View.SetEditElementVisible(false)' href='#'>Cancel</a>"
+             + "             </td>"
+             + "           </tr>"
+             + "         </table>"
              + "       </td>"
              + "     </tr>"
              + "   </table>";
@@ -135,15 +139,15 @@
             var xmlDoc = this.responseXML;
 
             //alert((new XMLSerializer()).serializeToString(xmlDoc.documentElement));
-            var objDivEditContent = document.getElementById('divEditContent');
-            objDivEditContent.innerHTML = View.BuildEdit(xmlDoc);
+            var objEditElementContent = document.getElementById('editElementContent');
+            objEditElementContent.innerHTML = View.BuildEdit(xmlDoc);
                     
             var item = xmlDoc.firstChild; // xmlDoc -> row
-            View.mDivEditTable = item.getAttribute("table");
-            View.mDivEditItemID = item.getAttribute("id");
+            View.mEditElementTable = item.getAttribute("table");
+            View.mEditElementItemID = item.getAttribute("id");
             
-            View.SetDivEditVisible(true);
-            View.LoadLinks(View.mDivEditTable, View.mDivEditItemID);
+            View.SetEditElementVisible(true);
+            View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
             //alert((new XMLSerializer()).serializeToString(xmlDoc));
         }
     };
@@ -186,7 +190,7 @@
                 date = My.DateDDMMYYYYToDate(date);
             }
             */
-            View.SetDivEditVisible(false);
+            View.SetEditElementVisible(false);
             View.LoadView();
             View.LoadSearch();
         }
@@ -204,8 +208,8 @@
             //alert((new XMLSerializer()).serializeToString(xmlDoc));
             // Update divLink
             View.SetStatusBar('Link added.');
-            if (View.GetDivEditVisible()) {
-                View.LoadLinks(View.mDivEditTable, View.mDivEditItemID);
+            if (View.GetEditElementVisible()) {
+                View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
             }
         }
     };
@@ -215,17 +219,17 @@
      */
     function SubmitNewLinkCurrentEdit(table, itemID)
     {
-        if (mThis.GetDivEditVisible()) {
+        if (mThis.GetEditElementVisible()) {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return;
-            if (mThis.mDivEditTable == null) return;
-            if (table == mThis.mDivEditTable && itemID == mThis.mDivEditItemID) {
+            if (mThis.mEditElementTable == null) return;
+            if (table == mThis.mEditElementTable && itemID == mThis.mEditElementItemID) {
                 alert('Link to itself not allowed.');
                 return;
             }
             // Build parameter string.
             var xml = '<?xml version="1.0" encoding="utf-8"?>'
-                     + '<row table1="' + table + '" table1_item_id="' + itemID + '" table2="' + mThis.mDivEditTable + '" table2_item_id="' + mThis.mDivEditItemID + '"/>';
+                     + '<row table1="' + table + '" table1_item_id="' + itemID + '" table2="' + mThis.mEditElementTable + '" table2_item_id="' + mThis.mEditElementItemID + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/new_link.php", xml, OnStateChangedSubmitNewLink);
         }
     };
@@ -263,54 +267,41 @@
         var code = Table[table].BuildEditFromXML(item);
 
         return   "  <table class='window'>"
-               + "    <tr class='windowBar'>"
-               + "      <td class='windowBar' colspan='6' align='right'>"
-               + "      </td>"
-               + "      <td class='windowBar' align='right'>"
-               + "        <a class='button closeButton' onclick='return View.SetDivEditVisible(false)' href='#'>X</a>"
-               + "      </td>"
-               + "    </tr>"
                + "    <tr>"
                + "      <td class='window' colspan='9'>"
-               + "        <table class='"
-               + table
-               + "'>"
-               + code
+               + "        <table class='" + table + " fillWidth'>"
+               +           code
                + "        </table>"
                + "      </td>"
                + "    </tr>"
                + "    <tr class='windowBar'>"
                + "      <td class='windowBar' align='right'>ID</td>"
-               + "      <td class='windowBar'><input name='editID' type='text' class='readonly' readonly value='"
-               + id
-               + "' size='3'/></td>"
+               + "      <td class='windowBar'><input name='editID' type='text' class='readonly' readonly value='" + id + "' size='3'/></td>"
                + "      <td class='windowBar' align='right'>Created</td>"
-               + "      <td class='windowBar'><input name='editCreated' type='text' class='readonly' readonly value='"
-               + created + "' size='16'/></td>"
+               + "      <td class='windowBar'><input name='editCreated' type='text' class='readonly' readonly value='" + created + "' size='16'/></td>"
                + "      <td class='windowBar' rowspan='2'>"
-               + "        <a class='button' onclick='return View.SubmitDelete(\""
-               + table + "\", " + id + ")' href='#'>Delete</a>"
+               + "        <a class='button' onclick='return View.SubmitDelete(\"" + table + "\", " + id + ")' href='#'>Delete</a>"
                + "      </td>"
                + "      <td class='windowBar' align='right' rowspan='2'>"
-               + "        <a class='button' onclick='return View.SubmitEdit(\""
-               + table + "\", " + id + ", false)' href='#'>Save</a>"
+               + "        <a class='button' onclick='return View.SubmitEdit(\"" + table + "\", " + id + ", false)' href='#'>Save</a>"
                + "      </td>"
                + "      <td class='windowBar' align='right' rowspan='2'>"
-               + "        <a class='button' onclick='return View.SubmitEdit(\""
-               + table + "\", " + id + ", true)' href='#'>Save & Close</a>"
+               + "        <a class='button' onclick='return View.SubmitEdit(\"" + table + "\", " + id + ", true)' href='#'>Save & Close</a>"
+               + "      </td>"
+               + "      <td class='windowBar' align='right' rowspan='2'>"
+               + "        <a class='button closeButton' onclick='return View.SetEditElementVisible(false)' href='#'>Cancel</a>"
                + "      </td>"
                + "    </tr>"
                + "    <tr class='windowBar'>"
                + "      <td class='windowBar' colspan='3' align='right'>Last changed</td>"
-               + "      <td class='windowBar'><input name='editLastChanged' type='text' class='readonly' readonly value='"
-               + lastChanged + "' size='16'/></td>"
+               + "      <td class='windowBar'><input name='editLastChanged' type='text' class='readonly' readonly value='" + lastChanged + "' size='16'/></td>"
                + "    </tr>"
                + "  </table>";
     };
 
-    this.GetDivEditVisible = function()
+    this.GetEditElementVisible = function()
     {        
-        return mDivEditVisible;
+        return mEditElementVisible;
     };
 
     this.LoadLinks = function(table, id)
@@ -404,7 +395,7 @@
 
     this.OnEnterKeySearch = function(table, id)
     {
-        if (View.GetDivEditVisible()) {
+        if (View.GetEditElementVisible()) {
             SubmitNewLinkCurrentEdit(table, id);
         }
         else {
@@ -426,7 +417,7 @@
             rightClick = (event.button == 2);
         }
         if (rightClick) {
-            if (View.GetDivEditVisible()) {
+            if (View.GetEditElementVisible()) {
                 // Directly add link for current item
                 SubmitNewLinkCurrentEdit(table, id);
             }
@@ -646,10 +637,10 @@
         divView.innerHTML = code;
     };
 
-    this.SetDivEditVisible = function(visible)
+    this.SetEditElementVisible = function(visible)
     {
-        var obj = document.getElementById('divEdit');
-        mDivEditVisible = visible;
+        var obj = document.getElementById('editElement');
+        mEditElementVisible = visible;
         
         // Hide links and search bar. They will be loaded again when an edit 
         // view is shown.
@@ -659,7 +650,7 @@
             obj.style.visibility = 'visible';
         }
         else {
-            obj.style.visibility = 'hidden';
+            obj.style.visibility = 'collapse';
             if (mActiveCell != '') {
                 mActiveCell.style.backgroundColor = mActiveCellBackground;
             }
@@ -699,10 +690,10 @@
         mActiveCellBackground = mActiveCell.style.backgroundColor;
         mActiveCell.style.backgroundColor = '#F4F400';
         // Show edit box.
-        this.mDivEditItemID = 0;
-        var obj = document.getElementById('divEditContent');
+        this.mEditElementItemID = 0;
+        var obj = document.getElementById('editElementContent');
         obj.innerHTML = BuildNew("note", date, time);
-        View.SetDivEditVisible(true);
+        View.SetEditElementVisible(true);
     };
 
     this.SubmitDelete = function(table, id)
@@ -755,7 +746,7 @@
 
     this.SwitchNew = function(table, date, time)
     {
-        var obj = document.getElementById('divEditContent');
+        var obj = document.getElementById('editElementContent');
         obj.innerHTML = BuildNew(table, date, time);
         return false; // Do not follow href after this.
     };

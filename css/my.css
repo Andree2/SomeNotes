@@ -77,7 +77,7 @@ div.itemBar {
     border-color:       #B0B0B0;
     border-style:       solid;
     border-width:       1px;
-    height: 100%;
+    height:             100%;
     overflow-y:         auto;
 }
 
@@ -169,6 +169,11 @@ table.window {
     border-style:       solid;
     border-collapse:    collapse;
     border-width:       1px;
+    width:             100%;
+}
+
+table.fillWidth {
+    width:             100%;
 }
 
 table.main {
@@ -288,6 +293,12 @@ td.windowBar {
 td.window {
     padding: 0px;
 }
+td.noWrap {
+    white-space: nowrap;
+}
+td.fillTable {
+    width: 100%;
+}
 
 /* --------------------------------------------------------------------------------------- */
 
@@ -298,6 +309,21 @@ input, textarea {
     border-color:      #888888;
     border-width:      1px;
     background-color:  white;
+}
+
+input.fillCell {
+    display: table-cell;
+    width:   100%;
+}
+
+select.fillCell {
+    display: table-cell;
+    width:   100%;
+}
+
+textarea.fillCell {
+    display: table-cell;
+    width:   100%;
 }
 
 input.readonly {

@@ -62,7 +62,15 @@ $date = date("d.m.Y", $timeStamp);
             }
         </script>
         <table class="main noSpaces">
-            <tr>
+            <tr style="height: 0px; visibility: collapse" id="editElement" >               
+                <td>
+                    <div id="divLinks" class="itemBar">
+                    </div>
+                </td>
+                <td colspan="2" id="editElementContent">
+                </td>
+            </tr>
+            <tr style="height: 65%">
                 <td width="260px">
                     <table class="navigation noSpaces">
                         <tr>
@@ -101,21 +109,5 @@ $date = date("d.m.Y", $timeStamp);
                 </td>
             </tr>
         </table>
-        <div id="divEdit" style="visibility: hidden; position: absolute; left: 260px; top: 5%; z-index: 1000; height: 400px;">
-            <table class="navigation noSpaces">
-                <tr>
-                    <td style="vertical-align: top; height: 100%;">
-                        <div id="divLinks" class="itemBar" style="visibility: hidden; width: 260px;">
-                            ERROR: innerHTML of divLinks not set
-                        </div>
-                    </td>
-                    <td style="vertical-align: top" rowspan="2">
-                        <div id="divEditContent">
-                            ERROR: innerHTML of divEditContent not set
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
     </body>
 </html>

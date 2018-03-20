@@ -8,11 +8,11 @@ function Day()
         var output = ""
             +"  <tr>"
             +"    <td>From</td>"
-            +"    <td><input id='input_day_from_date' name='input_day_from_date' type='date' value='"+ fromDate +"' maxLength='12' size='7'/></td>"
+            +"    <td><input id='input_day_from_date' name='input_day_from_date' type='date' value='"+ fromDate +"' maxLength='12'/></td>"
             +"    <td>To</td>"
-            +"    <td colspan='2'><input id='input_day_to_date' name='input_day_to_date' type='date' value='"+ toDate +"' maxLength='12' size='7'/></td>"
-            +"    <td>"
-            +"      <select id='input_day_category' name='input_day_category' size='18'>";
+            +"    <td colspan='2'><input id='input_day_to_date' name='input_day_to_date' type='date' value='"+ toDate +"' maxLength='12'/></td>"
+            +"    <td class='fillTable'>"
+            +"      <select id='input_day_category' name='input_day_category' size='18' class='fillCell'>";
             var categories = My.GetDayCategoriesDisplayText();
             for(key in categories){
                 output += "        <option value='"+ key +"' " + (category == key ? "selected='selected'" : "") + ">" + categories[key] + "</option>"
