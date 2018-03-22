@@ -51,8 +51,8 @@ $date = date("d.m.Y", $timeStamp);
                 View.LoadSearch();
             }
         </script>
-
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" /> 
     </head>
     <body class="main">
         <script type="text/javascript">
@@ -62,19 +62,24 @@ $date = date("d.m.Y", $timeStamp);
             }
         </script>
         <table class="main noSpaces">
+            <tr style="height: 0px; visibility: collapse"> 
+                <td class='links'></td>
+                <td class='months'></td>
+                <td style="width: 100%;"></td>
+            </tr>
             <tr style="height: 0px; visibility: collapse" id="editElement" >               
                 <td>
                     <div id="divLinks" class="itemBar">
                     </div>
                 </td>
-                <td colspan="2" id="editElementContent">
+                <td id="editElementContent" colspan='2'>
                 </td>
             </tr>
-            <tr style="height: 65%">
-                <td width="260px">
+            <tr style="height: 70%">
+                <td>
                     <table class="navigation noSpaces">
                         <tr>
-                            <td>
+                            <td width="100%">
                                 <input id="viewDate" type='hidden' value='<?php echo $date; ?>'/>
                                 <script type='text/Javascript'>
                                     function ShowDate(page)
@@ -85,12 +90,11 @@ $date = date("d.m.Y", $timeStamp);
                                     JACS.next(ShowDate,'index.php');
                                 </script>
                                 <div id='divStatusBar'></div>
-                                <br/>
                             </td>
                         </tr>
                         <tr height="100%">
-                            <td>
-                                <div id="divSearch" class="itemBar"  style="width: 100%;">
+                            <td width="100%">
+                                <div id="divSearch" class="itemBar" style="width: 100%;">
                                         ERROR: innerHTML of divSearch not set
                                 </div>
                             </td>

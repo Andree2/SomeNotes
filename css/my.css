@@ -1,6 +1,6 @@
 ﻿@charset "utf-8";
 
-html, body, table {
+html, body, table, input, textarea, select {
     font-family: Arial, Verdana,Sans-Serif;
     font-size:   10pt;
 }
@@ -26,14 +26,11 @@ a.button {
     border-style:     solid;
     border-width:     1px;
     font-weight:      bold;
-    padding:          16px;
+    padding-top:      16px;
+    padding-bottom:   16px;
     text-align:       center;
-    vertical-align:   middle;
     display:          inline-block;
-}
-
-a.closeButton {
-    width: 100px;  
+    width:            100%;
 }
 
 a.button:hover {
@@ -51,12 +48,7 @@ div.absolute {
     position:  absolute;
 }
 
-div.boxView {
-    position:  relative;
-    width:     200px;
-}
 div.dayBodyNew {
-    font-size:         11px;
     color:             #444400;
     background-color:  #F4F400;
 }
@@ -86,15 +78,17 @@ div.mainView {
 }
 
 div.monthBar {
-    height:             100%;
+    height:      100%;
+    width:       100%;
 }
 
 div.monthBarOneMonth {
     overflow:    hidden;
-    width:       36px;
     padding:     0px;
     margin:      0px;
+    width:       24px;
 }
+
 div.monthBarText {
     -webkit-transform: rotate(-90deg);
     -moz-transform:    rotate(-90deg);
@@ -149,6 +143,11 @@ table.tag, td.tag, div.tag {
     background-color: #E0E0E0;
 }
 /* ----------------------------------- table ----------------------------------------- */
+table.editMetaData {
+    font-size:         8pt;
+    color:             #606060;
+}
+
 table.noSpaces {
     border-width:      0px;
     border-color:      #A0FFA0;
@@ -179,11 +178,13 @@ table.fillWidth {
 table.main {
     height:            100%;
     width:             100%;
+    table-layout:      fixed;
 }
 
 table.navigation {
     height:            100%;
     width:             100%;
+    table-layout:      fixed;
 }
 table.navigation, div.monthBarTopFill {
     background-color:  #909090;
@@ -280,6 +281,14 @@ td.dayHeaderOtherMonth {
     color:            #606060;
 }
 
+td.links {
+    width: 240px;
+}
+
+td.months {
+    width: 24px;
+}
+
 td.windowBar, td.window {
     margin:               0px;
     background-color:     #D0D0D0;
@@ -299,12 +308,17 @@ td.noWrap {
 td.fillTable {
     width: 100%;
 }
+/* ---------------------------------------- th ----------------------------------------------- */
+
+th.dateHeader {
+    min-width: 60px;
+    width: 60px; 
+}
 
 /* --------------------------------------------------------------------------------------- */
 
 input, textarea {
     font-family:       Arial, Verdana,Sans-Serif;
-    font-size:         10pt;
     border-style:      solid;
     border-color:      #888888;
     border-width:      1px;
@@ -329,4 +343,37 @@ textarea.fillCell {
 input.readonly {
     color:              #333333;
     background-color:   #DDDDDD;
+}
+
+/* --------------------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 600px) {
+    html, body, table, input, textarea, select {
+        font-size:   6pt;
+    }
+    
+    a.button {
+        padding-top:      12px;
+        padding-bottom:   12px;
+    }
+    table.editMetaData {
+        font-size:        3pt;
+    }
+
+    td.links {
+        width: 128px;
+    }
+
+    td.months {
+        width: 16px;
+    }
+
+    th.dateHeader {
+        min-width: 30px;
+        width: 30px; 
+    }
+    
+    div.monthBarOneMonth {
+        width: 16px;
+    }
 }

@@ -12,7 +12,7 @@
             +"  </tr>"
             +"  <tr>"
             +"    <td>Text</td>"
-            +"    <td colspan='5' class='fillTable'><textarea id='input_note_text' name='input_note_text' type='text' rows='20' class='fillCell'>"+ My.HtmlSpecialChars(text) +"</textarea></td>"
+            +"    <td colspan='5' class='fillTable'><textarea id='input_note_text' name='input_note_text' type='text' rows='10' class='fillCell'>"+ My.HtmlSpecialChars(text) +"</textarea></td>"
             +"  </tr>"
             +"  <tr>"
             +"    <td>Date</td>"

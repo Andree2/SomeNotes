@@ -28,7 +28,7 @@
                 +"     <table class='sortable' id='"+ mDivTableId + "' style='width: 100%;'>"
                 +"     <tr>";
         if (mHasDate) {
-            code += "       <th style='min-width: 60px; width: 60px; '>Date</th>";
+            code += "       <th class='dateHeader'>Date</th>";
         }
         code += "       <th>Item</th>";
         code += "     </tr>";
@@ -37,12 +37,12 @@
         return code;
     };
     // -------------------------------------------------------------------------------------------
-    function BuildSmallBox(table, id, text, style, width, maxHeight)
+    function BuildSmallBox(table, id, text, divClass, width, maxHeight)
     {
         // Create boxes for a certain day
-        return '<div class="smallBox '+ style
-            +'" style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
-            +'" onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
+        return '<div class="smallBox '+ divClass + '"'
+            +' style="width: '+ width +'; max-height: '+  maxHeight +'px;"'
+            +' onmouseup="View.OnMouseUpBox(event, \''+ table +'\', '+ id +')">'+ My.HtmlSpecialChars(text) +'</div>';
     };
     // -------------------------------------------------------------------------------------------
     function InitItemsTable()
@@ -113,7 +113,7 @@
 
             code += "<tr>";
             if (mHasDate) {
-                code +=  "  <td style='font-size: 75%; color: #404040;'>"
+                code +=  "  <td style='font-size: 75%; color: #404040; width: 25%;'>"
                         + nodes[j].getAttribute("date")
                         + "  </td>";
             }
@@ -124,8 +124,8 @@
             }
             var category = nodes[j].getAttribute("category");
 
-            code += "  <td>";
-            code += BuildSmallBox(table, id, text, category + importance, '170px', 16);
+            code += "  <td style='width: 75%'>";
+            code += BuildSmallBox(table, id, text, category + importance, '98%', 16);
             code += "  </td>";
             code += "</tr>";
             

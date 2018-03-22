@@ -12,7 +12,7 @@ function Day()
             +"    <td>To</td>"
             +"    <td colspan='2'><input id='input_day_to_date' name='input_day_to_date' type='date' value='"+ toDate +"' maxLength='12'/></td>"
             +"    <td class='fillTable'>"
-            +"      <select id='input_day_category' name='input_day_category' size='18' class='fillCell'>";
+            +"      <select id='input_day_category' name='input_day_category' size='13' class='fillCell'>";
             var categories = My.GetDayCategoriesDisplayText();
             for(key in categories){
                 output += "        <option value='"+ key +"' " + (category == key ? "selected='selected'" : "") + ">" + categories[key] + "</option>"
