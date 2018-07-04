@@ -175,7 +175,6 @@
         if (this.readyState == 4) {
             // Update view
             var xmlDoc = this.responseXML;
-            // For testing xmlDoc
             /*
             // Go to date of new item
             var item = xmlDoc.firstChild; // xmlDoc -> row
@@ -196,12 +195,7 @@
     function OnStateChangedSubmitNewLink()
     {
         if (this.readyState == 4) {
-            // For testing xmlDoc
-            //var xmlDoc = this.responseXML;
-            //alert(xmlDoc);
-            //alert((new XMLSerializer()).serializeToString(xmlDoc));
             // Update divLink
-            View.SetStatusBar('Link added.');
             if (View.GetEditElementVisible()) {
                 View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
             }
@@ -280,7 +274,7 @@
                + "            <td class='noWrap'>" + created + "</td>"
                + "          </tr>"
                + "          <tr>"
-               + "            <td class='noWrap'>Last changed:</td>"
+               + "            <td class='noWrap'>Changed:</td>"
                + "            <td class='noWrap'>" + lastChanged + "</td>"
                + "          </tr>"
                + "        </table>"
@@ -407,7 +401,7 @@
 
     this.OnMouseUpBox = function(event, table, id)
     {
-	event = event || window.event;
+        event = event || window.event;
         
         var rightClick = false;
         if (event.which) {
@@ -660,12 +654,6 @@
         return false; // Do not follow href after this.
     };
 
-    this.SetStatusBar = function(text)
-    {
-        var divStatusBar = document.getElementById('divStatusBar');
-        divStatusBar.innerHTML = text;
-    };
-
     this.ShowEdit = function(table, id)
     {
         var xmlHttp = My.GetXMLHttpObject();
@@ -753,14 +741,3 @@
         return false; // Do not follow href after this.
     };
 };
-
-
-
-// =============================================================================================
-// ================================= Public ====================================================
-// =============================================================================================
-// ---------------------------------------------------------------------------------------------
-//MainView.prototype.ExamplePublicFunction = function(table, id)
-//{
-//}
-//---------------------------------------------------------------------------------------------

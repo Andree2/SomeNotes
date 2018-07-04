@@ -19,7 +19,6 @@ $date = date("d.m.Y", $timeStamp);
     <script type="text/JavaScript" src="js/tables/class_person.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_place.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_tag.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/class_slider.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/my.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/jacs.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/sorttable.js"></script>
@@ -67,7 +66,7 @@ $date = date("d.m.Y", $timeStamp);
                 <td class='months'></td>
                 <td style="width: 100%;"></td>
             </tr>
-            <tr style="height: 0px; visibility: collapse" id="editElement" >               
+            <tr style="height: 0px; visibility: collapse" id="editElement" >
                 <td>
                     <div id="divLinks" class="itemBar">
                     </div>
@@ -89,7 +88,6 @@ $date = date("d.m.Y", $timeStamp);
                                     JACS.show(document.getElementById('viewDate'));
                                     JACS.next(ShowDate,'index.php');
                                 </script>
-                                <div id='divStatusBar'></div>
                             </td>
                         </tr>
                         <tr height="100%">

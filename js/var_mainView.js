@@ -7,7 +7,6 @@ Table['person'] = new Person();
 Table['place'] = new Place();
 Table['tag'] = new Tag();
 
-var Slider = new Slider();
 var View = new MainView();
 
 var ItemBarLinks   = new ItemBar('ItemBarLinks', 'divLinks', true, 0, 0, false, View.OnEnterKeyLinks);

@@ -36,7 +36,7 @@
             +"  <tr>"
             +"    <td>Importance</td>"
             +"    <td colspan='3'>"
-            +        Slider.BuildHTML('input_person_importance', importance)
+            +"      <input id='input_person_importance' type='number' min='0' max='10' value='"+ importance +"'/>"
             +"      <span style='border:1px solid #888888; padding:2px;'>" + category + "</span>"
             +"    </td>"
             +"  </tr>";

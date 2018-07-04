@@ -1,4 +1,4 @@
-﻿﻿function ItemBar(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, enterKeyFunc)
+﻿﻿function ItemBar(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction)
 {
     var mXMLDoc = null;
     var mMinImportance = minImportance;
@@ -8,7 +8,7 @@
     var mVariableName = variableName;
     var mInitialSortColumn = initialSortColumn;
     var mInitialSortAscending = initialSortAscending;
-    var mEnterKeyFunc = enterKeyFunc;
+    var mFirstItemAction = firstItemAction;
 
     var mDivID = divID;
     var mDivTableId = mDivID + 'Table';
@@ -17,7 +17,6 @@
     var mDivItems;
     var mDivFilterText;
     var mDivFilterImportance;
-    var mDivFilterImportanceDisplay;
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
@@ -61,16 +60,16 @@
     {
         var onInput = mVariableName + '.RedrawItems()';
         var onKeyPress = mVariableName + '.OnKeyPress(event)';
+        var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
 
         var divItemsId = mDivID + 'Items';
         var divFilterTextId = mDivID + 'FilterText';
         var divFilterImportanceId = mDivID + 'FilterImportance';
-        var divFilterImportanceDisplayId = mDivID + 'FilterImportanceDisplay';
 
         var code = "<div>"
-              + "<input id ='"+ divFilterTextId + "' type='search' oninput='"+ onInput +";' onkeypress='" + onKeyPress + ";' style='width:60%;'/>"
-              + "<input id='"+ divFilterImportanceId + "' type='range' min='0' max='10' value='"+ mMinImportance +"' onchange='"+ onInput +";' style='width:20%;'/>"
-              + "<span id='"+ divFilterImportanceDisplayId + "' style='width: 6%'>"+ mMinImportance +"</span>"
+              + "  <input id ='"+ divFilterTextId + "' type='search' oninput='"+ onInput +";' onkeypress='" + onKeyPress + ";' style='width:55%;'/>"
+              + "  <span><a class='button' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
+              + "  <input id='"+ divFilterImportanceId + "' type='number' min='0' max='10' value='"+ mMinImportance +"' onchange='"+ onInput +";' style='width: 15%;'/>"
               + "</div>"
               + "<div id='" + divItemsId + "'>"
               + BuildHTMLItems()
@@ -82,7 +81,6 @@
         mDivItems = document.getElementById(divItemsId);
         mDivFilterText = document.getElementById(divFilterTextId);
         mDivFilterImportance = document.getElementById(divFilterImportanceId);
-        mDivFilterImportanceDisplay = document.getElementById(divFilterImportanceDisplayId);
 
         InitItemsTable();
     };
@@ -163,7 +161,6 @@
     {
         mFilterTexts = mDivFilterText.value.split(" ");
         mMinImportance = mDivFilterImportance.value;
-        mDivFilterImportanceDisplay.innerHTML = mMinImportance;
         mDivItems.innerHTML = BuildHTMLItems();
         InitItemsTable();
     };
@@ -173,10 +170,21 @@
      */
     this.OnKeyPress = function (event)
     {
-        if (event.keyCode == 13 && mFirstItem != null) {
-            mEnterKeyFunc(mFirstItem[0], mFirstItem[1]);
-            mDivFilterText.value = '';
-            this.RedrawItems();
+        // When 'Enter' is pressed, call the 'EnterKeyFunc'.
+        if (event.keyCode == 13) {
+            this.ExecuteFirstItemAction();
         }
+    };
+    // ---------------------------------------------------------------------------------------------
+    /**
+     * @brief Executes the given first item action for the first element in the box.
+     */
+    this.ExecuteFirstItemAction = function ()
+    {
+        if (mFirstItem == null) return;
+
+        mFirstItemAction(mFirstItem[0], mFirstItem[1]);
+        mDivFilterText.value = '';
+        this.RedrawItems();
     };
 }
