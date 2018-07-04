@@ -184,7 +184,8 @@
             day_christmas_eve: "Heiligabend (Urlaub)",
             day_new_years_eve: "Silvester (Urlaub)",
             day_reformation_day: "Reformationstag",
-            day_school_holidays: "Schulferien"
+            day_school_holidays: "Schulferien",
+            day_parental_leave: "Elternzeit"
         };
         return categories;
     }

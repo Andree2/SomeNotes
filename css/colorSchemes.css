@@ -18,7 +18,8 @@ div.day_december_26,
 div.day_medical_leave,
 div.day_christmas_eve,
 div.day_new_years_eve,
-div.day_reformation_day
+div.day_reformation_day,
+div.day_parental_leave
 {
     color:            rgb(128,128,128);
     border-color:     transparent;
@@ -41,7 +42,8 @@ td.day_december_26,
 td.day_medical_leave,
 td.day_christmas_eve,
 td.day_new_years_eve,
-td.day_reformation_day
+td.day_reformation_day,
+td.day_parental_leave
 {
     background-color: rgb(232,232,232);
 }
