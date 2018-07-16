@@ -8,7 +8,17 @@ html, body, table, input, textarea, select {
 /* ---------------------------------------- a ------------------------------------------ */
 a {
     text-decoration: none;
-    color:          #000000;
+    color:           #000000;
+}
+
+a.delete {
+    color:         #808080;
+    padding-left:  2px;
+    padding-right: 2px;
+}
+
+a.delete:hover {
+    color:         #000000;
 }
 
 a.nav {

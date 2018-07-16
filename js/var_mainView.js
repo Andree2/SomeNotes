@@ -9,5 +9,5 @@ Table['tag'] = new Tag();
 
 var View = new MainView();
 
-var ItemBarLinks   = new ItemBar('ItemBarLinks', 'divLinks', true, 0, 0, false, View.OnEnterKeyLinks);
+var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', true, 0, 0, false, View.OnEnterKeyLinks);
 var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', true, 0, -1, true, View.OnEnterKeySearch)

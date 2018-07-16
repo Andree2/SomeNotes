@@ -22,7 +22,9 @@ $date = date("d.m.Y", $timeStamp);
     <script type="text/JavaScript" src="js/my.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/jacs.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/sorttable.js"></script>
+    <script type="text/JavaScript" src="js/class_itemBarBase.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBar.js" charset="utf-8"></script>
+    <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_mainView.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/var_mainView.js" charset="utf-8"></script>
     <head>

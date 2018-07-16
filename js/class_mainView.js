@@ -95,27 +95,6 @@
     /**
      * @note \p this object is the xmlHttp object.
      */
-    function OnStateChangedLoadLinks()
-    {
-        if (this.readyState == 4) {
-            ItemBarLinks.SetXMLDoc(this.responseXML);
-            ItemBarLinks.SetVisible(true);
-        }
-    };
-
-    /**
-     * @note \p this object is the xmlHttp object.
-     */
-    function OnStateChangedLoadSearch()
-    {
-        if (this.readyState == 4) {
-            ItemBarSearch.SetXMLDoc(this.responseXML);
-        }
-    };
-
-    /**
-     * @note \p this object is the xmlHttp object.
-     */
     function OnStateChangedLoadView()
     {
         if (this.readyState == 4) {
@@ -190,35 +169,30 @@
     };
 
     /**
-     * @note \p this object is the xmlHttp object.
-     */
-    function OnStateChangedSubmitNewLink()
-    {
-        if (this.readyState == 4) {
-            // Update divLink
-            if (View.GetEditElementVisible()) {
-                View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
-            }
-        }
-    };
-
-    /**
      * @brief Creates a link directly between the given item and the currently edited item
      */
-    function SubmitNewLinkCurrentEdit(table, itemID)
+    function SubmitNewLinkCurrentEdit(table, id)
     {
         if (mThis.GetEditElementVisible()) {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return;
             if (mThis.mEditElementTable == null) return;
-            if (table == mThis.mEditElementTable && itemID == mThis.mEditElementItemID) {
+            if (table == mThis.mEditElementTable && id == mThis.mEditElementItemID) {
                 alert('Link to itself not allowed.');
                 return;
             }
             // Build parameter string.
             var xml = '<?xml version="1.0" encoding="utf-8"?>'
-                     + '<row table1="' + table + '" table1_item_id="' + itemID + '" table2="' + mThis.mEditElementTable + '" table2_item_id="' + mThis.mEditElementItemID + '"/>';
-            My.SendPOSTRequest(xmlHttp, "./php/new_link.php", xml, OnStateChangedSubmitNewLink);
+                     + '<row table1="' + table + '" table1_item_id="' + id + '" table2="' + mThis.mEditElementTable + '" table2_item_id="' + mThis.mEditElementItemID + '"/>';
+            My.SendPOSTRequest(xmlHttp, "./php/new_link.php", xml, function ()
+            {
+                if (xmlHttp.readyState == 4) {
+                    // Update divLink
+                    if (View.GetEditElementVisible()) {
+                        View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
+                    }
+                }
+            });
         }
     };
 
@@ -309,7 +283,13 @@
         url = url + "?table=" + table;
         url = url + "&id=" + id;
         url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = OnStateChangedLoadLinks;
+        xmlHttp.onreadystatechange = function()
+        {
+            if (xmlHttp.readyState == 4) {
+                ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
+                ItemBarLinks.SetVisible(true);
+            }
+        };
         xmlHttp.open("GET", url, true);
         //window.open(url) //For testing XML output
         xmlHttp.send(null);
@@ -322,7 +302,12 @@
             return;
         var url = "php/read_items.php";
         url = url + "?sid=" + Math.random();
-        xmlHttp.onreadystatechange = OnStateChangedLoadSearch;
+        xmlHttp.onreadystatechange = function ()
+        {
+            if (xmlHttp.readyState == 4) {
+                ItemBarSearch.SetXMLDoc(xmlHttp.responseXML);
+            }
+        };
         xmlHttp.open("GET", url, true);
         //window.open(url); //For testing XML output
         xmlHttp.send(null);
@@ -694,6 +679,26 @@
             if (xmlHttp == null) return false;
             var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/delete.php", xml, OnStateChangedSubmitClose);
+        }
+        return false; // Do not follow href after this.
+    };
+
+    this.SubmitDeleteLink = function(table1, id1, table2, id2)
+    {
+        var confirmDelete = confirm("Really delete link?");
+        if (confirmDelete) {
+            var xmlHttp = My.GetXMLHttpObject();
+            if (xmlHttp == null) return false;
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table1="' + table1 + '" id1="' + id1 + '" table2="' + table2 + '" id2="' + id2 + '"/>';
+            My.SendPOSTRequest(xmlHttp, "./php/delete_link.php", xml, function ()
+            {
+                if (xmlHttp.readyState == 4) {
+                    // Update divLink
+                    if (View.GetEditElementVisible()) {
+                        View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
+                    }
+                }
+            });
         }
         return false; // Do not follow href after this.
     };

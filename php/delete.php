@@ -40,5 +40,5 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 mysqli_close($DBLink);
 
 XMLHeader();
-echo '<row table="'.$queryTable.'" id="'.$queryID.'"/>';
+echo '<row table="'.$gQueryTable.'" id="'.$gQueryID.'"/>';
 ?>
