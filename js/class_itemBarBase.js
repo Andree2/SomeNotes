@@ -109,7 +109,7 @@
                     mFirstItem = [table, id];
                 }
                 var category = nodes[j].getAttribute("category");
-                code += buildRow(table, id, text, category + importance, '98%', 16);
+                code += buildRow(table, id, text, category + importance, '98%', 32);
                 code += "</tr>";
                 if (nodes[j].hasChildNodes()) {
                     code += BuildBoxList(nodes[j].childNodes);

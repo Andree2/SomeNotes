@@ -79,6 +79,13 @@ $date = date("d.m.Y", $timeStamp);
             <tr style="height: 70%">
                 <td>
                     <table class="navigation noSpaces">
+                        <tr height="100%">
+                            <td width="100%">
+                                <div id="divSearch" class="itemBar" style="width: 100%;">
+                                        ERROR: innerHTML of divSearch not set
+                                </div>
+                            </td>
+                        </tr>
                         <tr>
                             <td width="100%">
                                 <input id="viewDate" type='hidden' value='<?php echo $date; ?>'/>
@@ -90,13 +97,6 @@ $date = date("d.m.Y", $timeStamp);
                                     JACS.show(document.getElementById('viewDate'));
                                     JACS.next(ShowDate,'index.php');
                                 </script>
-                            </td>
-                        </tr>
-                        <tr height="100%">
-                            <td width="100%">
-                                <div id="divSearch" class="itemBar" style="width: 100%;">
-                                        ERROR: innerHTML of divSearch not set
-                                </div>
                             </td>
                         </tr>
                     </table>
