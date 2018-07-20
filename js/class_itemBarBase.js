@@ -26,10 +26,10 @@
                 + "     <table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
                 + "     <tr>";
             if (mHasDate) {
-                code += "       <th class='dateHeader'>Date</th>";
+                code += "       <th class='itemBarDateHeader'>Date</th>";
             }
-            code += "       <th>Item</th>";
-            code += "       <th></th>";
+            code += "       <th class='itemBarItemHeader'>Item</th>";
+            code += "       <th class='itemBarDeleteLinkHeader'></th>";
             code += "     </tr>";
             code += BuildBoxList(mXMLDoc.firstChild.childNodes);
             code += "</table>";
@@ -99,7 +99,7 @@
                     continue;
                 code += "<tr>";
                 if (mHasDate) {
-                    code += "  <td style='font-size: 75%; color: #404040; width: 25%;'>"
+                    code += "  <td style='font-size: 75%; color: #404040;'>"
                         + nodes[j].getAttribute("date")
                         + "  </td>";
                 }
@@ -109,7 +109,7 @@
                     mFirstItem = [table, id];
                 }
                 var category = nodes[j].getAttribute("category");
-                code += buildRow(table, id, text, category + importance, '98%', 32);
+                code += buildRow(table, id, text, category + importance);
                 code += "</tr>";
                 if (nodes[j].hasChildNodes()) {
                     code += BuildBoxList(nodes[j].childNodes);

@@ -1,0 +1,47 @@
+﻿
+@media only screen and (max-width: 600px) {
+    html, body, table, input, textarea, select {
+        font-size:   6pt;
+    }
+    
+    a.button {
+        padding-top:      12px;
+        padding-bottom:   12px;
+    }
+
+    div.itemBarItem {
+        height:      16px;
+        width:       98%;
+    }
+
+    table.editMetaData {
+        font-size:        3pt;
+    }
+
+    td.links {
+        width: 128px;
+    }
+
+    td.months {
+        width: 16px;
+    }
+
+    th.itemBarDateHeader {
+        min-width: 30px;
+        width: 30px; 
+    }
+
+    th.itemBarItemHeader {
+        min-width: 88px;
+        width: 88px; 
+    }
+
+    th.itemBarDeleteLinkHeader {
+        min-width: 10px;
+        width: 10px; 
+    }
+    
+    div.monthBarOneMonth {
+        width: 16px;
+    }
+}

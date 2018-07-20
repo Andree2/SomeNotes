@@ -11,9 +11,8 @@
             firstItemAction,
             function (table, id, text, divClass, width, height) {
                 // Create boxes for a certain day
-                return '  <td style="width: 75%">'
-                    + '<div class="smallBox ' + divClass + '"'
-                    + ' style="width: ' + width + '; height: ' + height + 'px;"'
+                return "  <td style='width: 160px;'>"
+                    + '<div class="smallBox itemBarItem ' + divClass + '"'
                     + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ')">' + My.HtmlSpecialChars(text) + '</div>'
                     + "  </td>"
                     + "  <td></td>";

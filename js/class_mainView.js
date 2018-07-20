@@ -6,7 +6,6 @@
     
     // private    
     var mActiveCell = '';
-    var mActiveCellBackground;
     var mDateStart;
     var mDateEnd;
     var mOneDay = 24 * 60 * 60 * 1000;
@@ -216,6 +215,11 @@
         }
         return uri;
     };
+
+    function BuildShowNewCall(currentDate, currentTimestamp, todayTimestamp, currentTime) {
+        return 'View.ShowNew(\'' + My.GetFullDate(currentDate) + '\',\''
+            + ((currentTimestamp == todayTimestamp) ? currentTime : '12:00') + '\');';
+    }
     // =============================================================================================
     // ================================= Privileged ================================================
     // =============================================================================================
@@ -522,63 +526,60 @@
                 + "<tr class='weekDayHeader'>"
                 + "<td>Mo</td><td>Di</td><td>Mi</td><td>Do</td><td>Fr</td><td>Sa</td><td>So</td>"
                 + "</tr>";
-        var currentTimestamp = dateStart;
+
         for (var week = 0; week < mNumRows; week++) {
             code += "<tr class='weekDateHeader'>";
-            var tempTimestamp = currentTimestamp;
+
             for (var day = 0; day < 7; day++) {
                 var dateIndex = week * 7 + day;
-                var tempDate = new Date(tempTimestamp);
-                
-                var tdHeaderClass = (tempTimestamp == todayTimestamp) ? 'dayHeaderToday' : 'dayHeaderSomeDay';
-                
-                code += (tempDate.getMonth() == mSelectedDate.getMonth() ? '<td class="dayHeader '+ tdHeaderClass +'">' : '<td class="dayHeader dayHeaderOtherMonth">');
-                
-                dateDay = tempDate.getDate();
+                var dayTimestamp = dateStart + mOneDay * dateIndex;
+                var dayDate = new Date(dayTimestamp);
+                var tdHeaderClass = (dayTimestamp == todayTimestamp) ? 'dayHeaderToday' : 'dayHeaderSomeDay';
+                var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
+
+                code += (dayDate.getMonth() == mSelectedDate.getMonth()
+                    ? '<td class="dayHeader '+ tdHeaderClass +'" onclick="'+showNewCode+'">'
+                    : '<td class="dayHeader dayHeaderOtherMonth" onclick="'+showNewCode+'">');
+                dateDay = dayDate.getDate();
                 code += dateDay;
                 if (dateDay == 1 || day == 0 && week == 0) {
-                    code += " " + monthNames[tempDate.getMonth()];
+                    code += " " + monthNames[dayDate.getMonth()];
                 }
                 // The month bar sizes have the following format: (month index, dateIndex, year).
                 // The #day and height for the preceding month is set when the next month starts
                 if (day == 0 && week == 0) {
-                    monthBarSizes[0] = new Array(tempDate.getMonth(), 0, tempDate.getFullYear());
+                    monthBarSizes[0] = new Array(dayDate.getMonth(), 0, dayDate.getFullYear());
                 }
                 else if (dateDay == 1) {
-                    monthBarSizes[monthBarSizes.length] = new Array(tempDate.getMonth(), dateIndex, tempDate.getFullYear());
+                    monthBarSizes[monthBarSizes.length] = new Array(dayDate.getMonth(), dateIndex, dayDate.getFullYear());
                 }
                 code += "</td>";
-                tempTimestamp += mOneDay;
             }
             code += "</tr>";
             // Contents for the day
             code += "<tr class='weekBody'>";
-            for (var day = 0; day < 7; day++) {    
+            for (var day = 0; day < 7; day++) {
                 var dateIndex = week * 7 + day;
-                var tdClass = '';                
+                var dayTimestamp = dateStart + mOneDay * dateIndex;
+                var dayDate = new Date(dayTimestamp);
+
+                var tdClass = '';
                 
-                if (currentTimestamp == todayTimestamp) {
+                if (dayTimestamp == todayTimestamp) {
                     tdClass = " class='dayBodyToday'";
                 } else if (day > 4) {
                     tdClass = " class='dayBodyWeekend'";
                 } else if (dayTdClass[dateIndex] != undefined){
                     // If there is an entry in the 'day' table, get color scheme for that entry.   
                     tdClass = " class='" + dayTdClass[dateIndex] + "'";                        
-                }                
-                        
+                }
                 code += '<td'+ tdClass +'>';
-                divID = 'div_'+ week +'_'+ day;
-                
-                var currentDate = new Date(currentTimestamp);
-                var onClickCode = 'View.ShowNew(\''+ divID 
-                        +'\',\''+ My.GetFullDate(currentDate) +'\',\''
-                        + ((currentTimestamp == todayTimestamp) ? currentTime : '12:00') +'\');';
-                
                 
                 // Container for the whole day
                 code += '<div class="dayView" style="z-index: '+ (99 - dateIndex) + ';">';
                 // Click area of day to create new entry
-                code += '<div id="'+ divID  +'" style="z-index: 50;" class="dayBody" onclick="'+onClickCode+'"></div>';
+                var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
+                code += '<div style="z-index: 50;" class="dayBody" onclick="'+showNewCode+'"></div>';
                 code += '<div class="dayContent">';
                 // Insert elements for this day    
                 for (var tableIndex = 0; tableIndex < 4; tableIndex++) {
@@ -586,7 +587,6 @@
                 }
                 code += '</div></div></td>';
                 code += "</td>";
-                currentTimestamp += mOneDay;
             }
             code += "</tr>";
         }
@@ -632,9 +632,6 @@
         }
         else {
             obj.style.visibility = 'collapse';
-            if (mActiveCell != '') {
-                mActiveCell.style.backgroundColor = mActiveCellBackground;
-            }
         }
         return false; // Do not follow href after this.
     };
@@ -654,16 +651,8 @@
         xmlHttp.send(null);
     };
 
-    this.ShowNew = function(senderID, date, time)
+    this.ShowNew = function(date, time)
     {
-        // Reset color of active cell (if other cell was still active).
-        if (mActiveCell != '') {
-            mActiveCell.style.backgroundColor = mActiveCellBackground;
-        }
-        // Set new active cell.
-        mActiveCell = document.getElementById(senderID);
-        mActiveCellBackground = mActiveCell.style.backgroundColor;
-        mActiveCell.style.backgroundColor = '#F4F400';
         // Show edit box.
         this.mEditElementItemID = 0;
         var obj = document.getElementById('editElementContent');

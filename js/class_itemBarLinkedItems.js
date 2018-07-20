@@ -13,14 +13,13 @@
             firstItemAction,
             function (table, id, text, divClass, width, height) {
                 // Create boxes for a certain day
-                return '  <td style="width: 75%">'
-                + '<div class="smallBox ' + divClass + '"'
-                + ' style="width: ' + width + '; height: ' + height + 'px;"'
+                return '  <td>'
+                + '<div class="smallBox itemBarItem ' + divClass + '"'
                 + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ')">' + My.HtmlSpecialChars(text) + '</div>'
                 + "  </td>"
                 + "  <td>"
                 + "    <a class='delete' onclick='return View.SubmitDeleteLink(\"" + mItemTable + "\", " + mItemId + ", \"" + table + "\", " + id + ")' href='#' style='width: 100%;'>x</a>"
-                + "    </td>";
+                + "  </td>";
             });
         // =============================================================================================
         // ================================= Privileged ================================================

@@ -83,6 +83,11 @@ div.itemBar {
     overflow-y:         auto;
 }
 
+div.itemBarItem {
+    height:      32px;
+    width:       98%;
+}
+
 div.mainView {
     height:             100%;
 }
@@ -112,6 +117,7 @@ div.smallBox {
     z-index:       201; 
     overflow:      hidden;
 }
+
 div.selectedDayBody {
     border-color:     #BB0000;
     border-style:     none solid solid solid;
@@ -320,9 +326,19 @@ td.fillTable {
 }
 /* ---------------------------------------- th ----------------------------------------------- */
 
-th.dateHeader {
+th.itemBarDateHeader {
     min-width: 60px;
     width: 60px; 
+}
+
+th.itemBarItemHeader {
+    min-width: 160px;
+    width: 160px; 
+}
+
+th.itemBarDeleteLinkHeader {
+    min-width: 20px;
+    width: 20px; 
 }
 
 /* --------------------------------------------------------------------------------------- */
@@ -353,37 +369,4 @@ textarea.fillCell {
 input.readonly {
     color:              #333333;
     background-color:   #DDDDDD;
-}
-
-/* --------------------------------------------------------------------------------------- */
-
-@media only screen and (max-width: 600px) {
-    html, body, table, input, textarea, select {
-        font-size:   6pt;
-    }
-    
-    a.button {
-        padding-top:      12px;
-        padding-bottom:   12px;
-    }
-    table.editMetaData {
-        font-size:        3pt;
-    }
-
-    td.links {
-        width: 128px;
-    }
-
-    td.months {
-        width: 16px;
-    }
-
-    th.dateHeader {
-        min-width: 30px;
-        width: 30px; 
-    }
-    
-    div.monthBarOneMonth {
-        width: 16px;
-    }
 }

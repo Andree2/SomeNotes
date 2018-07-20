@@ -6,12 +6,12 @@ $timeStamp = time();
 if (!empty($_GET['date'])) {
     $timeStamp = $_GET['date'];
 }
-$date = date("d.m.Y", $timeStamp);
+$date = date("Y-m-d", $timeStamp);
 ?>
 <html>
     <link rel="stylesheet" href="css/my.css" type="text/css" >
+    <link rel="stylesheet" href="css/mobile.css" type="text/css" >
     <link rel="stylesheet" href="css/colorSchemes.css" type="text/css" >
-    <link rel="stylesheet" href="css/jacs.css" type="text/css" >
     <link rel="icon" href="images/favicon.ico" />
     <script type="text/JavaScript" src="js/tables/class_day.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_event.js" charset="utf-8"></script>
@@ -20,13 +20,12 @@ $date = date("d.m.Y", $timeStamp);
     <script type="text/JavaScript" src="js/tables/class_place.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_tag.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/my.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/jacs.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/sorttable.js"></script>
     <script type="text/JavaScript" src="js/class_itemBarBase.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBar.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_mainView.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/var_mainView.js" charset="utf-8"></script>
+    <script type="text/JavaScript" src="3rdParty/sorttable.js"></script>
     <head>
         <title>My</title>
         <script type="text/javascript">
@@ -79,24 +78,23 @@ $date = date("d.m.Y", $timeStamp);
             <tr style="height: 70%">
                 <td>
                     <table class="navigation noSpaces">
+                        <tr>
+                            <td width="100%">
+                                <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
+                                <button onclick="ShowDate()">-></button>
+                                <script type='text/Javascript'>
+                                    function ShowDate() {
+                                        var date = document.getElementById("viewDate").value;
+                                        View.LoadView(new Date(date));
+                                    }
+                                </script>
+                            </td>
+                        </tr>
                         <tr height="100%">
                             <td width="100%">
                                 <div id="divSearch" class="itemBar" style="width: 100%;">
                                         ERROR: innerHTML of divSearch not set
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="100%">
-                                <input id="viewDate" type='hidden' value='<?php echo $date; ?>'/>
-                                <script type='text/Javascript'>
-                                    function ShowDate(page)
-                                    {// Run this when the calendar closes
-                                        View.LoadView(document.getElementById(ShowDate.JACSid).outputDate);
-                                    };
-                                    JACS.show(document.getElementById('viewDate'));
-                                    JACS.next(ShowDate,'index.php');
-                                </script>
                             </td>
                         </tr>
                     </table>

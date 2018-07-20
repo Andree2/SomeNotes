@@ -1,20 +1,10 @@
 ﻿var My = new function()
 {
-        
-    function getEl(id)
-    {
-        return document.getElementById(id);
-    };
-
-    // *********************************
-    // Start of Public  Function Library
-    // *********************************
-    
-        // -------------------------------------------------------------------------------------------	
-       /**
-        * @brief Converts dd.mm.yyyy to a Date object.
-        */
-    this.DateDDMMYYYYToDate = function(date)
+    // -------------------------------------------------------------------------------------------	
+    /**
+    * @brief Converts dd.mm.yyyy to a Date object.
+    */
+this.DateDDMMYYYYToDate = function(date)
     {
         parts = date.split(".");
         // new Date(Jahr, Monat (0 = januar), Tag);
