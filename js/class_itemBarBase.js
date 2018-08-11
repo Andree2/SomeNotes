@@ -61,7 +61,7 @@
                 + "  <span><a class='button' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
                 + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
                 + "</div>"
-                + "<div id='" + divItemsId + "'>"
+                + "<div id='" + divItemsId + "' class='itemBarItems'>"
                 + BuildHTMLItems()
                 + "</div>";
             var divContent = document.getElementById(mDivID);

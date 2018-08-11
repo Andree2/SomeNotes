@@ -58,20 +58,9 @@ div.absolute {
     position:  absolute;
 }
 
-div.dayBodyNew {
-    color:             #444400;
-    background-color:  #F4F400;
-}
-div.dayBody {
-    height:     100%;
-    overflow:   hidden;
-}
-
-div.dayView {
-    position:   relative;
-    height:     100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+div.editArea {
+    display:               grid;
+    grid-template-columns: 240px 1fr; 
 }
 
 div.itemBar {
@@ -79,7 +68,7 @@ div.itemBar {
     border-color:       #B0B0B0;
     border-style:       solid;
     border-width:       1px;
-    height:             100%;
+    overflow:           hidden;
     overflow-y:         auto;
 }
 
@@ -88,14 +77,85 @@ div.itemBarItem {
     width:       98%;
 }
 
-div.mainView {
-    height:             100%;
+
+div.main {
+    height:                100%;
+    width:                 100%;
+    display:               grid;
+    grid-template-rows:    auto 24px 1fr; 
+    grid-template-columns: 240px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    overflow:              hidden;
 }
 
-div.monthBar {
-    height:      100%;
-    width:       100%;
+div.mainView {
+    display:               grid;
+    grid-auto-rows:        240px; 
+    grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    overflow-y:            auto; 
 }
+
+div.mainViewWeekDayHeader {
+    background-color: #BBBBFF;
+    height:           100%;
+}
+
+div.dayHeader {
+    border-color:  #BBBBBB;
+    border-style:  none;
+    height:        16px;
+}
+
+div.dayHeaderSomeDay {
+    background-color: #CCCCCC;
+}
+
+div.dayHeaderToday {
+    background-color: #A0A0A0;
+}
+
+div.dayHeaderOtherMonth {
+    background-color: #E7E7E7;
+    color:            #606060;
+}
+
+div.dayBody {
+    height:          223px;
+    overflow-x:      hidden;
+    overflow-y:      auto;
+    vertical-align:  top;
+    border-color:    #BBBBBB;
+    border-style:    solid;
+    border-collapse: collapse;
+    border-width:    1px;
+    border-style:    none solid solid solid;
+    /*
+    overflow:         visible;
+    z-index:          100;
+    width:            100%;
+    position:         absolute;
+    top:              0px;
+    left:             0px;
+    */
+}
+
+div.dayBodyWeekend {
+    background-color: rgb(232,232,232);
+}
+div.dayBodyToday {
+    background-color: #FFFFB0;
+}
+
+
+/*
+div.weekBody {
+    vertical-align:  top;
+    border-color:    #BBBBBB;
+    border-style:    solid;
+    border-collapse: collapse;
+    border-width:    1px;
+    border-style:    none solid solid solid;
+}
+*/
 
 div.monthBarOneMonth {
     overflow:    hidden;
@@ -123,15 +183,6 @@ div.selectedDayBody {
     border-style:     none solid solid solid;
     border-width:     2px;	
 }
-div.dayContent {
-    overflow:         visible;
-    z-index:          100;
-    width:            100%;
-    position:         absolute;
-    top:              0px;
-    left:             0px;
-}
-
 
 
 /* ---------------------------------------- day ---------------------------------------- */
@@ -191,12 +242,6 @@ table.fillWidth {
     width:             100%;
 }
 
-table.main {
-    height:            100%;
-    width:             100%;
-    table-layout:      fixed;
-}
-
 table.navigation {
     height:            100%;
     width:             100%;
@@ -235,74 +280,13 @@ tr.windowBar {
     height:           32px;
 }
 
-tr.weekBody td {
-    vertical-align:  top;
-    border-color:    #BBBBBB;
-    border-style:    solid;
-    border-collapse: collapse;
-    border-width:    1px;
-    border-style:    none solid solid solid;
-}
 
-tr.weekBody td:first-child {
-    border-style:      none solid solid none;
-
-}
-tr.weekBody td:last-child {
-    border-style:      none none solid solid;
-}
-
-tr.weekDayHeader {
-    background-color: #BBBBFF;
-    height:           16px;
-}
-tr.weekDayHeader td {
-    padding:          1px 0px 1px 4px;
-}
-
-tr.weekDateHeader {
-    height:           16px;
-}
-tr.weekDateHeader td {
-    padding:          1px 0px 1px 4px;
-}
 /* ---------------------------------------- td ----------------------------------------------- */
 
-/* -- day bodies -- */
-td.dayBodyWeekend {
-    background-color: rgb(232,232,232);
-}
-td.dayBodyToday {
-    background-color: #FFFFB0;
-}
 
-/* -- day headers -- */
-
-td.dayHeader {
-    border-color:  #BBBBBB;
-    border-style:  none;
-    height:        16px;
-}
-
-td.dayHeaderSomeDay {
-    background-color: #CCCCCC;
-}
-
-td.dayHeaderToday {
-    background-color: #A0A0A0;
-}
-
-td.dayHeaderOtherMonth {
-    background-color: #E7E7E7;
-    color:            #606060;
-}
 
 td.links {
     width: 240px;
-}
-
-td.months {
-    width: 24px;
 }
 
 td.windowBar, td.window {

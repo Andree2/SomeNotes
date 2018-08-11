@@ -13,6 +13,8 @@ $date = date("Y-m-d", $timeStamp);
     <link rel="stylesheet" href="css/mobile.css" type="text/css" >
     <link rel="stylesheet" href="css/colorSchemes.css" type="text/css" >
     <link rel="icon" href="images/favicon.ico" />
+    <script type="text/JavaScript" src="3rdParty/sorttable.js"></script>
+    <script type="text/JavaScript" src="3rdParty/jquery-3.3.1.js"></script>
     <script type="text/JavaScript" src="js/tables/class_day.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_event.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/tables/class_note.js" charset="utf-8"></script>
@@ -25,30 +27,12 @@ $date = date("Y-m-d", $timeStamp);
     <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_mainView.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/var_mainView.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="3rdParty/sorttable.js"></script>
     <head>
         <title>My</title>
         <script type="text/javascript">
-
             function Load ()
             {
-                var divView = document.getElementById('divView');
-
-                // Add mouse wheel event, according to the events supported by the browser.
-                if(window.addEventListener) {
-                    if (My.IsEventSupported('mousewheel')) {
-                        divView.addEventListener('mousewheel', View.OnEventMouseScroll, false);
-                    }
-                    else {
-                        divView.addEventListener('DOMMouseScroll', View.OnEventMouseScroll, false);
-                    }
-                }
-                else {
-                    divView.onmousewheel = View.OnEventMouseScroll;
-                }
-                window.oncontextmenu = View.OnEventContextMenu;
-                View.LoadView(new Date());
-                View.LoadSearch();
+                View.Initialize();  
             }
         </script>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -61,55 +45,37 @@ $date = date("Y-m-d", $timeStamp);
                 window.onload = Load;
             }
         </script>
-        <table class="main noSpaces">
-            <tr style="height: 0px; visibility: collapse"> 
-                <td class='links'></td>
-                <td class='months'></td>
-                <td style="width: 100%;"></td>
-            </tr>
-            <tr style="height: 0px; visibility: collapse" id="editElement" >
-                <td>
-                    <div id="divLinks" class="itemBar">
-                    </div>
-                </td>
-                <td id="editElementContent" colspan='2'>
-                </td>
-            </tr>
-            <tr style="height: 70%">
-                <td>
-                    <table class="navigation noSpaces">
-                        <tr>
-                            <td width="100%">
-                                <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
-                                <button onclick="ShowDate()">-></button>
-                                <script type='text/Javascript'>
-                                    function ShowDate() {
-                                        var date = document.getElementById("viewDate").value;
-                                        View.LoadView(new Date(date));
-                                    }
-                                </script>
-                            </td>
-                        </tr>
-                        <tr height="100%">
-                            <td width="100%">
-                                <div id="divSearch" class="itemBar" style="width: 100%;">
-                                        ERROR: innerHTML of divSearch not set
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <div id="divMonthBar" class="monthBar">
-                        ERROR: innerHTML of divMonthBar not set
-                    </div>
-                </td>
-                <td>
-                    <div id="divView" class="mainView">
-                        ERROR: innerHTML of divView not set	
-                    </div>
-                </td>
-            </tr>
+        <div class="main noSpaces">
+            <div class="editArea" style="visibility: collapse; grid-column: 1 / 10; grid-row: 1;" id="editElement" >
+                <div id="divLinks" class="itemBar"></div>
+                <div id="editElementContent" colspan='2'></div>
+            </div>
+
+            <div style="grid-column: 1; grid-row: 2;">
+                <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
+                <button onclick="ShowDate()">-></button>
+                <script type='text/Javascript'>
+                    function ShowDate() {
+                        var date = document.getElementById("viewDate").value;
+                        View.LoadView(new Date(date));
+                    }
+                </script>
+            </div>
+            <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 2;"></div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 3; grid-row: 2;">Mo</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 4; grid-row: 2;">Di</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 5; grid-row: 2;">Mi</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 6; grid-row: 2;">Do</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 7; grid-row: 2;">Fr</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 8; grid-row: 2;">Sa</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 2;">So</div>
+
+            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 3;">
+                    ERROR: innerHTML of divSearch not set
+            </div>
+            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3;">
+                ERROR: innerHTML of divView not set	
+            </div>            
         </table>
     </body>
 </html>

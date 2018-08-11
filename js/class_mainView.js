@@ -5,21 +5,14 @@
     this.mEditElementItemID = 0;
     
     // private    
-    var mActiveCell = '';
-    var mDateStart;
-    var mDateEnd;
     var mOneDay = 24 * 60 * 60 * 1000;
-    var mNumRows = 7;
-    var mSelectedDate;
+    var mWeekPadding = 3;
     var mBoxHeight = 16;
-    var mEditElementVisible = false;
+    var mEditElementVisible = false;    
     
     var mThis = this; // For acces to 'this' in private function ('this' is not set correctly there).
     
-    this.mXMLDocView = null;
-    
-    
-        
+    this.mDayData = {};
     //TODO: xml output: Viele items auf attributes umstellen
     
     // =============================================================================================
@@ -83,26 +76,6 @@
     };
 
     /**
-     * @brief Changed the selected day by \p offsets and reloads the page.
-     */
-    function LoadViewDayOffset(dayOffset)
-    {
-        mDateStart += mOneDay * dayOffset;
-        View.LoadView(null);
-    };
-
-    /**
-     * @note \p this object is the xmlHttp object.
-     */
-    function OnStateChangedLoadView()
-    {
-        if (this.readyState == 4) {
-            View.mXMLDocView = this.responseXML;
-            View.RedrawView();
-        }
-    };
-
-    /**
      * @note \p this object is the xmlHttp object.
      */
     function OnStateChangedShowEdit()
@@ -153,16 +126,16 @@
         if (this.readyState == 4) {
             // Update view
             var xmlDoc = this.responseXML;
-            /*
+            
             // Go to date of new item
             var item = xmlDoc.firstChild; // xmlDoc -> row
             var date = item.getAttribute("date");
             if (date != null) {
                 date = My.DateDDMMYYYYToDate(date);
             }
-            */
+            
             View.SetEditElementVisible(false);
-            View.LoadView();
+            View.LoadView(date);
             View.LoadSearch();
         }
     };
@@ -223,6 +196,23 @@
     // =============================================================================================
     // ================================= Privileged ================================================
     // =============================================================================================
+    this.Initialize = function()
+    {
+        this.LoadView(new Date());
+        this.LoadSearch();  
+
+        $("#divView").scroll(function(e){
+            if (ElementIsInScrollView(WeekFirstId)) {
+                //Here you must do what you need to achieve the infinite scroll effect...
+                alert('First is in Scroll')
+            }
+            else if (ElementIsInScrollView(WeekLastId))
+            {
+                alert('Last is in Scroll')
+            }    
+        });
+    }
+
     this.BuildEdit = function(xmlDoc)
     {
         var item = xmlDoc.firstChild; // xmlDoc -> row
@@ -317,60 +307,37 @@
         xmlHttp.send(null);
     }
 
+    this.LoadView = function(date)
+    {
+        this.mXMLDocView = {};
+
+        // Set timestamp time to 00:00:00
+        var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
+        var dateEnd = dateStart + mWeekPadding * 2 * 7 * mOneDay + 6 * mOneDay;
+        this.AddView(dateStart, dateEnd);
+    }
+
     /**
      * @brief Load the view. If <date> (of type Date) is not null, this date will be display. 
      */
-    this.LoadView = function(date)
+    this.AddView = function(dateStart, dateEnd)
     {
-        // Set timestamp time to 00:00:00
-        if (date != null) {
-            mSelectedDate = My.GetFullDayDate(date);
-            if (mDateStart == null || date.getTime() < mDateStart || date.getTime() > mDateEnd) {
-                mDateStart = My.GetWeekStart(mSelectedDate);
-            }
-        }
-        if (mDateStart == null) {
-            mSelectedDate = My.GetFullDayDate(new Date());
-            mDateStart = My.GetWeekStart(mSelectedDate);
-        }
-        mDateEnd = mDateStart + mOneDay * (7 * mNumRows - 1);
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
         url = "php/read_view.php";
-        url = url + "?dateStart=" + mDateStart / 1000;
-        url = url + "&dateEnd=" + mDateEnd / 1000;
+        url = url + "?dateStart=" + dateStart;
+        url = url + "&dateEnd=" + dateEnd;
         url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = OnStateChangedLoadView;
+        xmlHttp.onreadystatechange = function ()
+        {
+            if (xmlHttp.readyState == 4) {
+                View.AddData(xmlHttp.responseXML);
+                View.RedrawView();
+            }
+        };
         xmlHttp.open("GET",url,true);
         //window.open(url) //For testing XML output
         xmlHttp.send(null);
-    };
-
-    this.OnEventContextMenu = function(event)
-    {
-        return false;
-    };
-
-    this.OnEventMouseScroll = function(event)
-    {
-        var delta = 0;
-        if (!event)
-            event = window.event;
-        // normalize the delta
-        if (event.wheelDelta) {
-            // IE & Opera
-            delta = event.wheelDelta / 120;
-        } else if (event.detail) {// W3C
-            delta = -event.detail / 3;
-        }
-        event.wheelDelta = 0;
-        // The delta variable holds the value 1 (mouse wheel up) or -1
-        // (mouse wheel down)
-        if (delta > 0) {
-            LoadViewDayOffset(-7);
-        } else {
-            LoadViewDayOffset(7);
-        }
     };
 
     this.OnEnterKeyLinks = function(table, id)
@@ -413,35 +380,61 @@
         }
     };
 
-    this.RedrawView = function()
+    function ElementIsInScrollView(elementId)
     {
-        if (this.mXMLDocView == null) return;
-        var tables = this.mXMLDocView.getElementsByTagName("table");
-        var dateStart = this.mXMLDocView.firstChild.getAttribute("date_start") * 1000;
-        var dayCode = new Array(7 * mNumRows);
-        var maxBoxHeight = 2 * mBoxHeight;
-        var totalNumDays = dayCode.length;
-        var monthBarSizes = new Array();
+        var divViewTop = $("#divView").scrollTop();
+        var divViewBottom = divViewTop + $("#divView").height();
+    
+        var element = $("#"+elementId);
+        var elementTop = $(element).offset();
+        var elementBottom = elementTop + $(element).height();
+    
+        return ((elementBottom <= divViewBottom) && (elementTop >= divViewTop));
+    }
 
-        var todayTimestamp = My.GetFullDayDate(new Date()).getTime();
-        var currentTime = My.GetFullTime(new Date());
-        var monthNames = new Array("January", "February", "March", "April", "May", "June",
-                                   "July", "August", "September", "October", "November", "December");
-        var monthColors = new Array("#C0C0FF", "#A0A0EE", "#90E4B4", "#A0FFA0", "#FFC098", "#FFAAAA",
-                                    "#EEEE90", "#B2E0B2", "#EAB4B4", "#B0B0B0", "#D4D4D4", "#F0F0F0");
+
+    this.AddData = function(xml)
+    {       
+
+        var tables = xml.getElementsByTagName("table");
+        var dateStart = parseInt(xml.firstChild.getAttribute("date_start"));
+        var dateEnd = parseInt(xml.firstChild.getAttribute("date_end"));
+
+        var test = new Date(dateStart);
+        var test2 = new Date(dateEnd);
+
+        var maxBoxHeight = 2 * mBoxHeight;
+
+        // Create entries for all days from start to end
+
+        for (var timestamp = dateStart; timestamp <= dateEnd; timestamp += mOneDay) {
+            if (!(timestamp in this.mDayData))
+            {
+                // The order in which the items should appear in each day:
+                // 0: day
+                // 1: event
+                // 2: person
+                // 3: note
+                // 4: divClass
+                this.mDayData[timestamp] = new Array("","","","","");
+            }
+        }
+/*
+        var maxBoxHeight = 2 * mBoxHeight;
+        this.mDayData[dateStart] = {};
+
+        var dayCode = new Array(7);
+
+        
 
         for (var i = 0; i < dayCode.length; i++) {
             // Table order for view is: Day, Event, Person, Note
             dayCode[i] = new Array("","","","");
-            // The order in which the items should in each day:
-            // 0: day
-            // 1: event
-            // 2: person
-            // 3: note
         }
+
         // Last found category for 'day'.
-        var dayTdClass = new Array(dayCode.length);
-        
+        var dayDivClass = new Array(dayCode.length);
+        */
         // Sort the data into the 'dayCode' array first. They will later be drawn in a certain oder.
         for (var i = 0; i < tables.length; i++) {
             var tableName = tables[i].getAttribute("name");
@@ -454,18 +447,17 @@
                 switch (tableName) {
                     case "day":
                         {
-                            var startIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date")) - dateStart) / mOneDay;
-                            var endIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date")) - dateStart) / mOneDay;
-                            startIndex = Math.max(startIndex, 0);
-                            endIndex = Math.min(endIndex, mNumRows * 7 - 1);
+                            var fromDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date"));
+                            var toDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date"));
+
                             var dayCagegoryDisplayText = My.GetDayCategoriesDisplayText()[category];
                             // Fill code for relevant days.
-                            for (var k = startIndex; k <= endIndex; ++k) {
-                                dayTdClass[k] = category; 
-                                dayCode[k][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
+                            for (var timestamp = fromDay; timestamp <= toDay; timestamp += mOneDay) {
+                                this.mDayData[timestamp][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
+                                this.mDayData[timestamp][4] = category; 
                             }
                         }    
-                        break;
+                        break;                        
                     case "event":
                         {
                             // EVENT table has additional options for the end date
@@ -476,146 +468,146 @@
                             if (items[j].getAttribute("has_place")) {
                                 text = "● " + text;
                             }
-                            // Get date indices
-                            var startIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date")) - dateStart) / mOneDay;
-                            var endIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date")) - dateStart) / mOneDay;
-                            startIndex = Math.max(startIndex, 0);
+                            // Get dates
+                            var fromDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date"));
+                            var toDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date"));
+
                             // When the endtime is before 05:00 AM, the event will not be shown at that end day.
                             // An entry with 'zero' duration is still shown however.
+                            /*
+                            todo:
                             var endTime = items[j].getAttribute("to_time");
                             var endHour = endTime.substr(0, 2);
                             if (endHour < 5 && endIndex > startIndex) {
-                                endIndex -= 1;
+                                toDay -= 1;
                             }
-                            endIndex = Math.min(endIndex, mNumRows * 7 - 1);
+                            */
                             // Fill code for relevant days.
-                            for (var k = startIndex; k <= endIndex; ++k) {
-                                dayCode[k][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
+                            for (var timestamp = fromDay; timestamp <= toDay; timestamp += mOneDay) {
+                                this.mDayData[timestamp][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
                             }
                         }
                         break;
                     case "person":
                         {
-                            var dateIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("date")) - dateStart) / mOneDay;
+                            var dayTimestamp = My.SQLDate2JSTimeStamp(items[j].getAttribute("date"));
                             var importance = items[j].getAttribute("importance");
-                            var text = items[j].childNodes[0].firstChild.nodeValue;
-                            // Fill code for relevant day.
-                            if (dayCode[dateIndex] == null) {
-                                alert(dateIndex)
-                                alert(dateStart)
-                                alert(items[j].getAttribute("date"))
-                            }
-                            dayCode[dateIndex][2] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);    
+                            var text = items[j].childNodes[0].firstChild.nodeValue;  
+                            this.mDayData[dayTimestamp][2] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
                         }
                         break;
                     case "note":
                         {
-                            var dateIndex = (My.SQLDate2JSTimeStamp(items[j].getAttribute("date")) - dateStart) / mOneDay;
+                            var dayTimestamp = My.SQLDate2JSTimeStamp(items[j].getAttribute("date"));
                             var importance = items[j].getAttribute("importance");
                             var text = items[j].childNodes[0].firstChild.nodeValue;
                             // Fill code for relevant day.
-                            dayCode[dateIndex][3] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);    
+                            this.mDayData[dayTimestamp][3] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);    
                         }
                         break;
                 }
             }
         }
-        // Generate code
-        // Header: Week day names
-        var code = "<table class='view'>"
-                + "<tr class='weekDayHeader'>"
-                + "<td>Mo</td><td>Di</td><td>Mi</td><td>Do</td><td>Fr</td><td>Sa</td><td>So</td>"
-                + "</tr>";
+    }
 
-        for (var week = 0; week < mNumRows; week++) {
-            code += "<tr class='weekDateHeader'>";
+    this.RedrawView = function()
+    {
+        if (this.mDayData == null) return;
 
+        var todayDate = new Date();
+        var todayTimestamp = My.GetFullDayDate(todayDate).getTime();
+        var currentTime = My.GetFullTime(todayDate);
+        var monthNames = new Array("January", "February", "March", "April", "May", "June",
+                                   "July", "August", "September", "October", "November", "December");
+        var monthColors = new Array("#C0C0FF", "#A0A0EE", "#90E4B4", "#A0FFA0", "#FFC098", "#FFAAAA",
+                                   "#EEEE90", "#B2E0B2", "#EAB4B4", "#B0B0B0", "#D4D4D4", "#F0F0F0");
+
+        // Generate code                       
+        var code = "";
+        var keys = Object.keys(this.mDayData); 
+        keys.sort(); 
+
+        for (var i = 0; i < keys.length; i += 7) {
+            // Build a week
+            var weekStartTimestamp = parseInt(keys[i]);
+            var weekStartDate = new Date(weekStartTimestamp);
+            
+            var isFirstItem = i == 0;
+            var isLastItem = i == keys.length - 1;
+            
+            // Build month column
+            var month = weekStartDate.getMonth();
+            var id = (isFirstItem ? 'id='+WeekFirstId+' ' : (isLastItem ? 'id='+WeekLastId+' ' : ''));
+            code += "<div "+ id
+                        +"class='monthBarOneMonth' style='background-color: "+ monthColors[month] +";'>"
+                        +"<div style='height: 100px;'></div><div class='monthBarText'>"
+                        + monthNames[month] // Month name
+                        +"<span style='color: #909090; margin-left: 12px;'>"+ weekStartDate.getFullYear() +"</span>" // Year
+                        +"</div></div>";
+
+            // Day dates
             for (var day = 0; day < 7; day++) {
-                var dateIndex = week * 7 + day;
-                var dayTimestamp = dateStart + mOneDay * dateIndex;
+                code += "<div>";
+
+                var dayTimestamp = weekStartTimestamp + mOneDay * day;
+                var dayTableData = dayTimestamp in this.mDayData ? this.mDayData[dayTimestamp] : undefined;
+
                 var dayDate = new Date(dayTimestamp);
                 var tdHeaderClass = (dayTimestamp == todayTimestamp) ? 'dayHeaderToday' : 'dayHeaderSomeDay';
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
 
-                code += (dayDate.getMonth() == mSelectedDate.getMonth()
-                    ? '<td class="dayHeader '+ tdHeaderClass +'" onclick="'+showNewCode+'">'
-                    : '<td class="dayHeader dayHeaderOtherMonth" onclick="'+showNewCode+'">');
+                code += (dayDate.getMonth() == todayDate.getMonth()
+                    ? '<div class="dayHeader '+ tdHeaderClass +'" onclick="'+showNewCode+'">'
+                    : '<div class="dayHeader dayHeaderOtherMonth" onclick="'+showNewCode+'">');
                 dateDay = dayDate.getDate();
                 code += dateDay;
-                if (dateDay == 1 || day == 0 && week == 0) {
+                if (dateDay == 1) {
                     code += " " + monthNames[dayDate.getMonth()];
                 }
-                // The month bar sizes have the following format: (month index, dateIndex, year).
-                // The #day and height for the preceding month is set when the next month starts
-                if (day == 0 && week == 0) {
-                    monthBarSizes[0] = new Array(dayDate.getMonth(), 0, dayDate.getFullYear());
-                }
-                else if (dateDay == 1) {
-                    monthBarSizes[monthBarSizes.length] = new Array(dayDate.getMonth(), dateIndex, dayDate.getFullYear());
-                }
-                code += "</td>";
-            }
-            code += "</tr>";
-            // Contents for the day
-            code += "<tr class='weekBody'>";
-            for (var day = 0; day < 7; day++) {
-                var dateIndex = week * 7 + day;
-                var dayTimestamp = dateStart + mOneDay * dateIndex;
-                var dayDate = new Date(dayTimestamp);
+                code += '</div>';
 
-                var tdClass = '';
-                
+                var divClass = '';                
                 if (dayTimestamp == todayTimestamp) {
-                    tdClass = " class='dayBodyToday'";
+                    divClass = " dayBodyToday";
                 } else if (day > 4) {
-                    tdClass = " class='dayBodyWeekend'";
-                } else if (dayTdClass[dateIndex] != undefined){
+                    divClass = " dayBodyWeekend";
+                } else if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != ""){
                     // If there is an entry in the 'day' table, get color scheme for that entry.   
-                    tdClass = " class='" + dayTdClass[dateIndex] + "'";                        
+                    divClass = " " + dayTableData[4];                        
                 }
-                code += '<td'+ tdClass +'>';
-                
                 // Container for the whole day
-                code += '<div class="dayView" style="z-index: '+ (99 - dateIndex) + ';">';
                 // Click area of day to create new entry
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
-                code += '<div style="z-index: 50;" class="dayBody" onclick="'+showNewCode+'"></div>';
-                code += '<div class="dayContent">';
-                // Insert elements for this day    
-                for (var tableIndex = 0; tableIndex < 4; tableIndex++) {
-                    code += dayCode[dateIndex][tableIndex];    
-                }
-                code += '</div></div></td>';
-                code += "</td>";
-            }
-            code += "</tr>";
-        }
-            /*
-        for (; date <= dateEnd_; date += oneDay_) {
-            code += days[date];
-        }
-        */
-        code += "</table>";
-        
-        // Build code for the month side bar
-        var monthBarCode = "<table class='noSpaces' style='height: 100%;'><tr><td><div class='monthBarTopFill' style='height: 18px;'></td></tr><tr style='height: 100%;'><td>";
-        
-        for (var i = 0; i < monthBarSizes.length; i++) {
-            var numDaysForMonth = (i == monthBarSizes.length - 1) ? totalNumDays - monthBarSizes[i][1] : monthBarSizes[i+1][1] - monthBarSizes[i][1];
-            monthBarCode += "<div class='monthBarOneMonth' style='background-color: "+ monthColors[monthBarSizes[i][0]] +"; height: "+ 100*numDaysForMonth/totalNumDays +"%;'>"
-                              +"<div style='height: 40%;'></div><div class='monthBarText'>"
-                              + monthNames[monthBarSizes[i][0]] // Month name
-                              +"<span style='color: #909090; margin-left: 12px;'>"+ monthBarSizes[i][2] +"</span>" // Year
-                              +"</div></div>";
-            // 
-        }
-        
-        monthBarCode += "</td></tr></table>";
-        var divMonthBar = document.getElementById('divMonthBar');
-        divMonthBar.innerHTML = monthBarCode;
+                code += '<div class="dayBody'+ divClass +'" style="z-index: '+ (99 - day) + ';" onclick="'+showNewCode+'">';
 
-        var divView = document.getElementById('divView');
-        divView.innerHTML = code;
+                // Insert elements for this day
+                if (dayTableData != undefined)
+                {
+                    for (var tableIndex = 0; tableIndex < 4; tableIndex++) {
+                        code += dayTableData[tableIndex];    
+                    }
+                }
+                code += "</div></div>";
+            }
+                /*
+            for (; date <= dateEnd_; date += oneDay_) {
+                code += days[date];
+            }
+            */
+                code += "</tr>";
+            code += "</div>";
+        }
+
+        var scroll = $("#divView").scrollTop();
+        var height = $("#divView").height();
+
+        $("#divView").html(code);
+
+        var newHeight = $("#divView").height();
+        $("#divView").scrollTop(scroll);
+
+       
+        return code;
     };
 
     this.SetEditElementVisible = function(visible)
@@ -629,9 +621,11 @@
         
         if (visible) {
             obj.style.visibility = 'visible';
+            obj.style.height = '340px';
         }
         else {
             obj.style.visibility = 'collapse';
+            obj.style.height = '0px';
         }
         return false; // Do not follow href after this.
     };

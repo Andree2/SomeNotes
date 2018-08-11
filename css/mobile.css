@@ -14,16 +14,27 @@
         width:       98%;
     }
 
+    div.editArea {
+        display:               grid;
+        grid-template-columns: 120px 1fr; 
+    }
+    
+
+    div.main {
+        height:                100%;
+        width:                 100%;
+        display:               grid;
+        grid-template-rows:    auto 24px 1fr; 
+        grid-template-columns: 120px 16px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        overflow:              hidden;
+    }
+
     table.editMetaData {
         font-size:        3pt;
     }
 
     td.links {
         width: 128px;
-    }
-
-    td.months {
-        width: 16px;
     }
 
     th.itemBarDateHeader {

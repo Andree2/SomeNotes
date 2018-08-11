@@ -5,12 +5,15 @@ require_once('db.php');
 $dateStart = $_GET['dateStart'];
 $dateEnd = $_GET['dateEnd'];
 
-$dateStartSQL = Timestamp2SQLDate($dateStart);
-$dateEndSQL = Timestamp2SQLDate($dateEnd);
+$dateStartTimestampSQL = $dateStart / 1000;
+$dateEndTimestampSQL = $dateEnd / 1000;
+
+$dateStartSQL = Timestamp2SQLDate($dateStartTimestampSQL);
+$dateEndSQL = Timestamp2SQLDate($dateEndTimestampSQL);
 
 XMLHeader();
-// Post start date for which this view was requested.
-echo '<row date_start="'. $dateStart .'">';
+// Post start and end date for which this view was requested.
+echo '<row date_start="'. $dateStart .'" date_end="'. $dateEnd .'">';
 // Select DAYs.
 // 0. Row ID
 // 1. Corresponding day
@@ -66,8 +69,8 @@ echo '</table>';
 // Select PERSONs.
 // Selec persons which have birthday on this date.
 $query = '';
-$dateMonthDayStart = date('md', $dateStart);
-$dateMonthDayEnd = date('md', $dateEnd);
+$dateMonthDayStart = date('md', $dateStartTimestampSQL);
+$dateMonthDayEnd = date('md', $dateEndTimestampSQL);
 
 
 function EchoPersonData($row, $currentYear)
@@ -81,7 +84,7 @@ echo '<table name="person">';
 if ($dateMonthDayStart <= $dateMonthDayEnd) {
     // Boths date lie in the same year.
     $query = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM ". $TABLE[PERSON]->GetTableName() ." WHERE (birthday_month * 100 + birthday_day) BETWEEN ". $dateMonthDayStart ." AND ". $dateMonthDayEnd;
-    $currentYear = date('Y', $dateStart);
+    $currentYear = date('Y', $dateStartTimestampSQL);
     $result = mysqli_query($DBLink, $query);
     while($row = mysqli_fetch_assoc($result)) {
         EchoPersonData($row, $currentYear);
@@ -90,13 +93,13 @@ if ($dateMonthDayStart <= $dateMonthDayEnd) {
 else {
     // dateEnd lies in the year after dateEnd
     $query = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM ". $TABLE[PERSON]->GetTableName() ." WHERE (birthday_month * 100 + birthday_day) >= ". $dateMonthDayStart;
-    $currentYear = date('Y', $dateStart);
+    $currentYear = date('Y', $dateStartTimestampSQL);
     $result = mysqli_query($DBLink, $query);
     while($row = mysqli_fetch_assoc($result)) {
         EchoPersonData($row, $currentYear);
     }
     $query = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM ". $TABLE[PERSON]->GetTableName() ." WHERE (birthday_month * 100 + birthday_day) <= ". $dateMonthDayEnd;
-    $currentYear = date('Y', $dateEnd);
+    $currentYear = date('Y', $dateEndTimestampSQL);
     $result = mysqli_query($DBLink, $query);
     while($row = mysqli_fetch_assoc($result)) {
         EchoPersonData($row, $currentYear);

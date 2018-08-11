@@ -4,7 +4,7 @@
     /**
     * @brief Converts dd.mm.yyyy to a Date object.
     */
-this.DateDDMMYYYYToDate = function(date)
+    this.DateDDMMYYYYToDate = function(date)
     {
         parts = date.split(".");
         // new Date(Jahr, Monat (0 = januar), Tag);
@@ -83,7 +83,7 @@ this.DateDDMMYYYYToDate = function(date)
      {
         var fullDayDate = My.GetFullDayDate(date);	
         var timeStamp = fullDayDate.getTime();
-        return timeStamp -  (24 * 60 * 60 * 1000) * ((fullDayDate.getDay() + 6) % 7); // (week start day) = now - oneDay * ((day of the week [0 = sunday, 6 = saturday] + 6) % 7).
+        return timeStamp - (24 * 60 * 60 * 1000) * ((fullDayDate.getDay() + 6) % 7); // (week start day) = now - oneDay * ((day of the week [0 = sunday, 6 = saturday] + 6) % 7).
      };
     // -------------------------------------------------------------------------------------------	
     this.GetXMLHttpObject = function()
