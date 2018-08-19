@@ -60,7 +60,8 @@ div.absolute {
 
 div.editArea {
     display:               grid;
-    grid-template-columns: 240px 1fr; 
+    grid-template-columns: 240px 1fr;
+    height:                340px;
 }
 
 div.itemBar {
@@ -92,6 +93,7 @@ div.mainView {
     grid-auto-rows:        240px; 
     grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     overflow-y:            auto; 
+    overflow-x:            hidden; 
 }
 
 div.mainViewWeekDayHeader {

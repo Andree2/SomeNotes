@@ -6,13 +6,18 @@
     
     // private    
     var mOneDay = 24 * 60 * 60 * 1000;
-    var mWeekPadding = 3;
+    var mWeekPadding = 4;
     var mBoxHeight = 16;
     var mEditElementVisible = false;    
     
     var mThis = this; // For acces to 'this' in private function ('this' is not set correctly there).
     
     this.mDayData = {};
+    this.mFirstTimestamp = 0;
+    this.mLastTimestamp = 0;
+    this.mAddingData = false;
+    this.mWeekPaddingHeight = 0;
+    this.mEditAreaHeight = 0;
     //TODO: xml output: Viele items auf attributes umstellen
     
     // =============================================================================================
@@ -199,17 +204,32 @@
     this.Initialize = function()
     {
         this.LoadView(new Date());
-        this.LoadSearch();  
+        this.LoadSearch();
+
+        
+        this.mEditAreaHeight = $('#editElement').height();        
+        this.SetEditElementVisible(false);
 
         $("#divView").scroll(function(e){
-            if (ElementIsInScrollView(WeekFirstId)) {
-                //Here you must do what you need to achieve the infinite scroll effect...
-                alert('First is in Scroll')
+                        
+            if (View.mAddingData) return;
+            
+            var weekLast = $("#"+WeekLastId);
+            
+            if ($("#divView").scrollTop() < View.mWeekPaddingHeight / 2) {
+                console.log('First is in Scroll')
+                View.AddView(View.mFirstTimestamp - mWeekPadding * 7 * mOneDay, View.mFirstTimestamp - mOneDay, true, false)
             }
-            else if (ElementIsInScrollView(WeekLastId))
-            {
-                alert('Last is in Scroll')
-            }    
+            
+            var weekLastOffset = weekLast.offset();
+            if (weekLastOffset == undefined) return false;
+            console.log('weekLastOffset.top:' + weekLastOffset.top)
+            console.log('$("#divView").height():' + $("#divView").height())
+
+            if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2) {
+                console.log('Last is in Scroll')
+                View.AddView(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * 7 * mOneDay, false, true)
+            }  
         });
     }
 
@@ -308,19 +328,17 @@
     }
 
     this.LoadView = function(date)
-    {
-        this.mXMLDocView = {};
-
+    {        
         // Set timestamp time to 00:00:00
         var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
         var dateEnd = dateStart + mWeekPadding * 2 * 7 * mOneDay + 6 * mOneDay;
-        this.AddView(dateStart, dateEnd);
+        this.AddView(dateStart, dateEnd, false, false);
     }
 
     /**
      * @brief Load the view. If <date> (of type Date) is not null, this date will be display. 
      */
-    this.AddView = function(dateStart, dateEnd)
+    this.AddView = function(dateStart, dateEnd, addAtStart, addAtEnd)
     {
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
@@ -331,12 +349,14 @@
         xmlHttp.onreadystatechange = function ()
         {
             if (xmlHttp.readyState == 4) {
-                View.AddData(xmlHttp.responseXML);
-                View.RedrawView();
+                View.AddData(xmlHttp.responseXML, addAtStart, addAtEnd);
+                View.mAddingData = false;
+                View.RedrawView(addAtStart, addAtEnd);
             }
         };
         xmlHttp.open("GET",url,true);
         //window.open(url) //For testing XML output
+        this.mAddingData = true;
         xmlHttp.send(null);
     };
 
@@ -380,28 +400,13 @@
         }
     };
 
-    function ElementIsInScrollView(elementId)
-    {
-        var divViewTop = $("#divView").scrollTop();
-        var divViewBottom = divViewTop + $("#divView").height();
-    
-        var element = $("#"+elementId);
-        var elementTop = $(element).offset();
-        var elementBottom = elementTop + $(element).height();
-    
-        return ((elementBottom <= divViewBottom) && (elementTop >= divViewTop));
-    }
-
-
     this.AddData = function(xml)
-    {       
-
+    {
         var tables = xml.getElementsByTagName("table");
         var dateStart = parseInt(xml.firstChild.getAttribute("date_start"));
         var dateEnd = parseInt(xml.firstChild.getAttribute("date_end"));
 
-        var test = new Date(dateStart);
-        var test2 = new Date(dateEnd);
+        console.log("AddData for " + new Date(dateStart) + " to " + new Date(dateEnd));
 
         var maxBoxHeight = 2 * mBoxHeight;
 
@@ -419,22 +424,7 @@
                 this.mDayData[timestamp] = new Array("","","","","");
             }
         }
-/*
-        var maxBoxHeight = 2 * mBoxHeight;
-        this.mDayData[dateStart] = {};
 
-        var dayCode = new Array(7);
-
-        
-
-        for (var i = 0; i < dayCode.length; i++) {
-            // Table order for view is: Day, Event, Person, Note
-            dayCode[i] = new Array("","","","");
-        }
-
-        // Last found category for 'day'.
-        var dayDivClass = new Array(dayCode.length);
-        */
         // Sort the data into the 'dayCode' array first. They will later be drawn in a certain oder.
         for (var i = 0; i < tables.length; i++) {
             var tableName = tables[i].getAttribute("name");
@@ -452,7 +442,7 @@
 
                             var dayCagegoryDisplayText = My.GetDayCategoriesDisplayText()[category];
                             // Fill code for relevant days.
-                            for (var timestamp = fromDay; timestamp <= toDay; timestamp += mOneDay) {
+                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay) {
                                 this.mDayData[timestamp][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
                                 this.mDayData[timestamp][4] = category; 
                             }
@@ -483,7 +473,7 @@
                             }
                             */
                             // Fill code for relevant days.
-                            for (var timestamp = fromDay; timestamp <= toDay; timestamp += mOneDay) {
+                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay) {
                                 this.mDayData[timestamp][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
                             }
                         }
@@ -510,7 +500,7 @@
         }
     }
 
-    this.RedrawView = function()
+    this.RedrawView = function(addedAtStart, addedAtEnd)
     {
         if (this.mDayData == null) return;
 
@@ -522,7 +512,9 @@
         var monthColors = new Array("#C0C0FF", "#A0A0EE", "#90E4B4", "#A0FFA0", "#FFC098", "#FFAAAA",
                                    "#EEEE90", "#B2E0B2", "#EAB4B4", "#B0B0B0", "#D4D4D4", "#F0F0F0");
 
-        // Generate code                       
+        var oldScroll = $("#divView").scrollTop();
+
+        // Generate code
         var code = "";
         var keys = Object.keys(this.mDayData); 
         keys.sort(); 
@@ -532,13 +524,18 @@
             var weekStartTimestamp = parseInt(keys[i]);
             var weekStartDate = new Date(weekStartTimestamp);
             
-            var isFirstItem = i == 0;
-            var isLastItem = i == keys.length - 1;
+            var divId = "";
+            if (i == 0) {
+                this.mFirstTimestamp = weekStartTimestamp
+            }
+            if (i + 7 >= keys.length) {
+                divId = "id="+WeekLastId+" ";
+                this.mLastTimestamp = weekStartTimestamp
+            }
             
             // Build month column
             var month = weekStartDate.getMonth();
-            var id = (isFirstItem ? 'id='+WeekFirstId+' ' : (isLastItem ? 'id='+WeekLastId+' ' : ''));
-            code += "<div "+ id
+            code += "<div "+ divId
                         +"class='monthBarOneMonth' style='background-color: "+ monthColors[month] +";'>"
                         +"<div style='height: 100px;'></div><div class='monthBarText'>"
                         + monthNames[month] // Month name
@@ -589,25 +586,26 @@
                 }
                 code += "</div></div>";
             }
-                /*
-            for (; date <= dateEnd_; date += oneDay_) {
-                code += days[date];
-            }
-            */
-                code += "</tr>";
+            code += "</tr>";
             code += "</div>";
         }
 
-        var scroll = $("#divView").scrollTop();
-        var height = $("#divView").height();
 
         $("#divView").html(code);
 
-        var newHeight = $("#divView").height();
-        $("#divView").scrollTop(scroll);
-
-       
-        return code;
+        if (addedAtEnd) {
+            $("#divView").scrollTop(oldScroll);
+        }
+        else if (addedAtStart) {
+            $("#divView").scrollTop(oldScroll + View.mWeekPaddingHeight);
+        }
+        else {
+            // If no data was added, this was initialization.
+            var oneWeekHeight = $(".monthBarOneMonth:first").height()
+            View.mWeekPaddingHeight = mWeekPadding * oneWeekHeight;
+            console.log('mWeekPaddingHeight: ' + View.mWeekPaddingHeight)
+            $("#divView").scrollTop(View.mWeekPaddingHeight);
+        }
     };
 
     this.SetEditElementVisible = function(visible)
@@ -621,7 +619,7 @@
         
         if (visible) {
             obj.style.visibility = 'visible';
-            obj.style.height = '340px';
+            obj.style.height = this.mEditAreaHeight;
         }
         else {
             obj.style.visibility = 'collapse';

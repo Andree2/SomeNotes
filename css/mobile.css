@@ -16,7 +16,8 @@
 
     div.editArea {
         display:               grid;
-        grid-template-columns: 120px 1fr; 
+        grid-template-columns: 120px 1fr;
+        height:                223px;
     }
     
 
@@ -52,7 +53,16 @@
         width: 10px; 
     }
     
+    div.mainView {
+        display:               grid;
+        grid-auto-rows:        200px; 
+        grid-template-columns: 16px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        overflow-y:            auto; 
+        overflow-x:            hidden; 
+    }
+
     div.monthBarOneMonth {
         width: 16px;
     }
+
 }
