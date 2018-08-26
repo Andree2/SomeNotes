@@ -115,15 +115,21 @@
             var table = item.getAttribute("table");
             var id = item.getAttribute("id");
             var date = item.getAttribute("date");
-            if (date != null) {
-                date = My.DateDDMMYYYYToDate(date);
-            }
             View.ShowEdit(table, id);
+            
+            if (date == null) {
+                date = new Date();
+            }
+            else {
+                date = new Date(date);
+            }
             View.LoadView(date);
         }
     };
 
     /**
+     * Called when an item has been edited and closed.
+     * 
      * @note \p this object is the xmlHttp object.
      */
     function OnStateChangedSubmitClose()
@@ -135,11 +141,16 @@
             // Go to date of new item
             var item = xmlDoc.firstChild; // xmlDoc -> row
             var date = item.getAttribute("date");
-            if (date != null) {
-                date = My.DateDDMMYYYYToDate(date);
+            if (date == null) {
+                date = new Date();
+            }
+            else {
+                date = new Date(date);
             }
             
             View.SetEditElementVisible(false);
+            // An item has changed, reload the data.
+            View.mDayData = {};
             View.LoadView(date);
             View.LoadSearch();
         }
@@ -203,6 +214,7 @@
     // =============================================================================================
     this.Initialize = function()
     {
+        console.log('Initialize')
         this.LoadView(new Date());
         this.LoadSearch();
 
@@ -223,8 +235,6 @@
             
             var weekLastOffset = weekLast.offset();
             if (weekLastOffset == undefined) return false;
-            console.log('weekLastOffset.top:' + weekLastOffset.top)
-            console.log('$("#divView").height():' + $("#divView").height())
 
             if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2) {
                 console.log('Last is in Scroll')
@@ -332,6 +342,9 @@
         // Set timestamp time to 00:00:00
         var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
         var dateEnd = dateStart + mWeekPadding * 2 * 7 * mOneDay + 6 * mOneDay;
+        if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd)) {
+            debugger;
+        }
         this.AddView(dateStart, dateEnd, false, false);
     }
 
@@ -544,7 +557,6 @@
 
             // Day dates
             for (var day = 0; day < 7; day++) {
-                code += "<div>";
 
                 var dayTimestamp = weekStartTimestamp + mOneDay * day;
                 var dayTableData = dayTimestamp in this.mDayData ? this.mDayData[dayTimestamp] : undefined;
@@ -552,7 +564,19 @@
                 var dayDate = new Date(dayTimestamp);
                 var tdHeaderClass = (dayTimestamp == todayTimestamp) ? 'dayHeaderToday' : 'dayHeaderSomeDay';
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
-
+                
+                var divClass = '';                
+                if (dayTimestamp == todayTimestamp) {
+                    divClass = " dayBodyToday";
+                } else if (day > 4) {
+                    divClass = " dayBodyWeekend";
+                } else if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != ""){
+                    // If there is an entry in the 'day' table, get color scheme for that entry.   
+                    divClass = " dayBody_" + dayTableData[4];                        
+                }
+                
+                code += '<div class="dayBody'+ divClass +'" onclick="'+showNewCode+'">';
+                //code += "<div>";
                 code += (dayDate.getMonth() == todayDate.getMonth()
                     ? '<div class="dayHeader '+ tdHeaderClass +'" onclick="'+showNewCode+'">'
                     : '<div class="dayHeader dayHeaderOtherMonth" onclick="'+showNewCode+'">');
@@ -563,19 +587,10 @@
                 }
                 code += '</div>';
 
-                var divClass = '';                
-                if (dayTimestamp == todayTimestamp) {
-                    divClass = " dayBodyToday";
-                } else if (day > 4) {
-                    divClass = " dayBodyWeekend";
-                } else if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != ""){
-                    // If there is an entry in the 'day' table, get color scheme for that entry.   
-                    divClass = " " + dayTableData[4];                        
-                }
+               
                 // Container for the whole day
                 // Click area of day to create new entry
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
-                code += '<div class="dayBody'+ divClass +'" style="z-index: '+ (99 - day) + ';" onclick="'+showNewCode+'">';
 
                 // Insert elements for this day
                 if (dayTableData != undefined)
@@ -584,7 +599,7 @@
                         code += dayTableData[tableIndex];    
                     }
                 }
-                code += "</div></div>";
+                code += "</div>";
             }
             code += "</tr>";
             code += "</div>";

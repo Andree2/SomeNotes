@@ -121,23 +121,14 @@ div.dayHeaderOtherMonth {
 }
 
 div.dayBody {
-    height:          223px;
+    height:          100%;
     overflow-x:      hidden;
     overflow-y:      auto;
     vertical-align:  top;
     border-color:    #BBBBBB;
-    border-style:    solid;
     border-collapse: collapse;
     border-width:    1px;
-    border-style:    none solid solid solid;
-    /*
-    overflow:         visible;
-    z-index:          100;
-    width:            100%;
-    position:         absolute;
-    top:              0px;
-    left:             0px;
-    */
+    border-style:    solid solid solid solid;
 }
 
 div.dayBodyWeekend {
@@ -146,18 +137,6 @@ div.dayBodyWeekend {
 div.dayBodyToday {
     background-color: #FFFFB0;
 }
-
-
-/*
-div.weekBody {
-    vertical-align:  top;
-    border-color:    #BBBBBB;
-    border-style:    solid;
-    border-collapse: collapse;
-    border-width:    1px;
-    border-style:    none solid solid solid;
-}
-*/
 
 div.monthBarOneMonth {
     overflow:    hidden;
@@ -178,12 +157,6 @@ div.smallBox {
     border-style:  solid;
     z-index:       201; 
     overflow:      hidden;
-}
-
-div.selectedDayBody {
-    border-color:     #BB0000;
-    border-style:     none solid solid solid;
-    border-width:     2px;	
 }
 
 

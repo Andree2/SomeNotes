@@ -22,28 +22,28 @@ div.day_reformation_day,
 div.day_parental_leave
 {
     color:            rgb(128,128,128);
+    background-color: rgb(232,232,232);
     border-color:     transparent;
-    background-color: transparent;
 }
-td.day_holiday,
-td.day_flextime,
-td.day_new_year,
-td.day_three_wise_men,
-td.day_good_friday,
-td.day_easter_monday,
-td.day_workers_day,
-td.day_ascension_day,
-td.day_pentecost,
-td.day_corpus_christi,
-td.day_german_unity_day,
-td.day_all_saints_day,
-td.day_december_25,
-td.day_december_26,
-td.day_medical_leave,
-td.day_christmas_eve,
-td.day_new_years_eve,
-td.day_reformation_day,
-td.day_parental_leave
+div.dayBody_day_holiday,
+div.dayBody_day_flextime,
+div.dayBody_day_new_year,
+div.dayBody_day_three_wise_men,
+div.dayBody_day_good_friday,
+div.dayBody_day_easter_monday,
+div.dayBody_day_workers_day,
+div.dayBody_day_ascension_day,
+div.dayBody_day_pentecost,
+div.dayBody_day_corpus_christi,
+div.dayBody_day_german_unity_day,
+div.dayBody_day_all_saints_day,
+div.dayBody_day_december_25,
+div.dayBody_day_december_26,
+div.dayBody_day_medical_leave,
+div.dayBody_day_christmas_eve,
+div.dayBody_day_new_years_eve,
+div.dayBody_day_reformation_day,
+div.dayBody_day_parental_leave
 {
     background-color: rgb(232,232,232);
 }
@@ -51,10 +51,10 @@ td.day_parental_leave
 div.day_school_holidays
 {
     color:            rgb(128,128,128);
+    background-color: rgb(232,255,232);
     border-color:     transparent;
-    background-color: transparent;
 }
-td.day_school_holidays
+div.dayBody_day_school_holidays
 {
     background-color: rgb(232,255,232);
 }

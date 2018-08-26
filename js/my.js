@@ -1,16 +1,6 @@
 ﻿var My = new function()
 {
     // -------------------------------------------------------------------------------------------	
-    /**
-    * @brief Converts dd.mm.yyyy to a Date object.
-    */
-    this.DateDDMMYYYYToDate = function(date)
-    {
-        parts = date.split(".");
-        // new Date(Jahr, Monat (0 = januar), Tag);
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-    };
-        // -------------------------------------------------------------------------------------------	
     this.URIParameterList = function (querystring)
     {
         if (querystring == '') return;
