@@ -13,7 +13,7 @@ function Place()
             +"  </tr>"
             +"  <tr>"
             +"    <td>Address</td>"
-            +"    <td colspan='5' class='fillTable'><textarea id='input_place_address' name='input_place_address' type='text' class='fillCell' rows='10'>"+ My.HtmlSpecialChars(address) +"</textarea></td>"
+            +"    <td colspan='5' class='fillTable'><textarea id='input_place_address' name='input_place_address' type='text' class='fillCell' rows='4'>"+ My.HtmlSpecialChars(address) +"</textarea></td>"
             +"  </tr>"
             +"  <tr>"
             +"    <td>Lat/Long</td>"

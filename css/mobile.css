@@ -5,8 +5,8 @@
     }
     
     a.button {
-        padding-top:      12px;
-        padding-bottom:   12px;
+        padding-top:      8px;
+        padding-bottom:   8px;
     }
 
     div.itemBarItem {
@@ -17,7 +17,7 @@
     div.editArea {
         display:               grid;
         grid-template-columns: 120px 1fr;
-        height:                223px;
+        height:                180px;
     }
     
 

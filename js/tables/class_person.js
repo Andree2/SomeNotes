@@ -30,7 +30,7 @@
             +"  </tr>"
             +"    <td>Text</td>"
             +"    <td colspan='3'>"
-            +"      <textarea id='input_person_text' name='input_person_text' type='text' rows='9' class='fillCell'>"+ My.HtmlSpecialChars(text) +"</textarea>"
+            +"      <textarea id='input_person_text' name='input_person_text' type='text' rows='2' class='fillCell'>"+ My.HtmlSpecialChars(text) +"</textarea>"
             +"    </td>"
             +"  </tr>"
             +"  <tr>"
