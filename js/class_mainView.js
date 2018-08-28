@@ -117,6 +117,9 @@
             var date = item.getAttribute("date");
             View.ShowEdit(table, id);
             
+            // An item has changed, reload the data.
+            View.mDayData = {};
+            
             if (date == null) {
                 date = new Date();
             }
