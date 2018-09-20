@@ -117,15 +117,13 @@
             var date = item.getAttribute("date");
             View.ShowEdit(table, id);
             
-            // An item has changed, reload the data.
-            View.mDayData = {};
-            
             if (date == null) {
                 date = new Date();
             }
             else {
                 date = new Date(date);
             }
+            // An item has changed, reload the data.
             View.LoadView(date);
         }
     };
@@ -153,7 +151,6 @@
             
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
-            View.mDayData = {};
             View.LoadView(date);
             View.LoadSearch();
         }
@@ -218,7 +215,7 @@
     this.Initialize = function()
     {
         console.log('Initialize')
-        this.LoadView(new Date());
+        this.AddView(new Date());
         this.LoadSearch();
 
         
@@ -233,7 +230,7 @@
             
             if ($("#divView").scrollTop() < View.mWeekPaddingHeight / 2) {
                 console.log('First is in Scroll')
-                View.AddView(View.mFirstTimestamp - mWeekPadding * 7 * mOneDay, View.mFirstTimestamp - mOneDay, true, false)
+                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * 7 * mOneDay, View.mFirstTimestamp - mOneDay, true, false)
             }
             
             var weekLastOffset = weekLast.offset();
@@ -241,7 +238,7 @@
 
             if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2) {
                 console.log('Last is in Scroll')
-                View.AddView(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * 7 * mOneDay, false, true)
+                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * 7 * mOneDay, false, true)
             }  
         });
     }
@@ -341,6 +338,12 @@
     }
 
     this.LoadView = function(date)
+    {
+        this.mDayData = {};
+        this.AddView(date);
+    }
+
+    this.AddView = function(date)
     {        
         // Set timestamp time to 00:00:00
         var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
@@ -348,13 +351,13 @@
         if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd)) {
             debugger;
         }
-        this.AddView(dateStart, dateEnd, false, false);
+        this.AddViewRange(dateStart, dateEnd, false, false);
     }
 
     /**
      * @brief Load the view. If <date> (of type Date) is not null, this date will be display. 
      */
-    this.AddView = function(dateStart, dateEnd, addAtStart, addAtEnd)
+    this.AddViewRange = function(dateStart, dateEnd, addAtStart, addAtEnd)
     {
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
