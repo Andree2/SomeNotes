@@ -1,6 +1,8 @@
 ﻿@charset "utf-8";
 
-/* ---------------------------------------- day_* ------------------------------------------ */
+
+/* ---------------------------------------- day ---------------------------------------- */
+/* -- day_* -- */
 div.day_holiday,
 div.day_flextime,
 div.day_new_year,
@@ -47,7 +49,7 @@ div.dayBody_day_parental_leave
 {
     background-color: rgb(232,232,232);
 }
-/* ---------------------------------------- day_school_holidays ------------------------------------------ */
+/* -- day_school_holidays -- */
 div.day_school_holidays
 {
     color:            rgb(128,128,128);
@@ -57,6 +59,10 @@ div.day_school_holidays
 div.dayBody_day_school_holidays
 {
     background-color: rgb(232,255,232);
+}
+
+table.day, td.day {
+    background-color: rgb(232,232,232);
 }
 /* ---------------------------------------- event ------------------------------------------ */
 div.event0
@@ -86,7 +92,12 @@ div.event7, div.event8, div.event9, div.event10
     border-color:     rgb(180,0,0);
     background-color: rgb(255,130,130);
 }
-/* ---------------------------------------- event_others ------------------------------------------ */
+
+table.event, td.event
+{
+    background-color: rgb(255,170,170);
+}
+/* -- event_others -- */
 div.event_others0
 {
     color:            rgb(180,180,180);
@@ -142,7 +153,11 @@ div.note7, div.note8, div.note9, div.note10
     border-color:     rgb(24,24,255);
     background-color: rgb(150,150,255);
 }
-/* ---------------------------------------- note_diary ------------------------------------------ */
+table.note, td.note
+{
+    background-color: rgb(170,170,255);
+}
+/* -- note_diary -- */
 div.note_diary0
 {
     color:            rgb(128,128,128);
@@ -198,7 +213,11 @@ div.person7, div.person8, div.person9, div.person10
     border-color:     rgb(220,220,0);
     background-color: rgb(255,255,60);
 }
-/* ---------------------------------------- place_* ------------------------------------------ */
+table.person, td.person
+{
+    background-color: rgb(255,255,100);
+}
+/* ---------------------------------------- place ------------------------------------------ */
 div.place0,
 div.place_activity0,
 div.place_bar0,
@@ -254,31 +273,39 @@ div.place_restaurant7,      div.place_restaurant8,        div.place_restaurant9,
     border-color:     rgb(0,160,0);
     background-color: rgb(120,220,120);
 }
+table.place, td.place, div.place
+{
+    background-color: rgb(64,220,64);
+}
 /* ---------------------------------------- tag ------------------------------------------ */
 div.tag0
 {
-    color:            rgb(160,128,170);
-    border-color:     rgb(192,128,204);
+    color:            rgb(255, 160, 80);
+    border-color:     rgb(255, 160, 80);
     background-color: rgb(255,255,255);
 }
 
 div.tag1, div.tag2, div.tag3
 {
-    color:            rgb(128,64,160);
-    border-color:     rgb(192,160,224);
+    color:            rgb(255, 100, 24);
+    border-color:     rgb(255, 160, 80);
     background-color: rgb(255,255,255);
 }
 
 div.tag4, div.tag5, div.tag6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(224,190,240);
-    background-color: rgb(224,190,240);
+    border-color:     rgb(255, 160, 80);
+    background-color: rgb(255, 160, 80);
 }
 
 div.tag7, div.tag8, div.tag9, div.tag10
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(80,24,112);
-    background-color: rgb(200,170,224);
+    border-color:     rgb(255, 100, 24);
+    background-color: rgb(255, 128, 24);
 }
+table.tag, td.tag, div.tag
+{
+    background-color: rgb(252, 160, 80);
+};

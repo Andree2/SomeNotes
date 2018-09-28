@@ -112,7 +112,7 @@ div.dayHeaderSomeDay {
 }
 
 div.dayHeaderToday {
-    background-color: #A0A0A0;
+    background-color: #808080;
 }
 
 div.dayHeaderOtherMonth {
@@ -135,7 +135,7 @@ div.dayBodyWeekend {
     background-color: rgb(232,232,232);
 }
 div.dayBodyToday {
-    background-color: #FFFFB0;
+    border-color: rgb(211, 64, 15);
 }
 
 div.monthBarOneMonth {
@@ -160,30 +160,6 @@ div.smallBox {
 }
 
 
-/* ---------------------------------------- day ---------------------------------------- */
-table.day, td.day, div.day {
-    background-color: #F0F0F0;
-}
-/* ---------------------------------------- event ---------------------------------------- */
-table.event, td.event, div.event {
-    background-color: #FFD0D0;
-}
-/* ---------------------------------------- note ----------------------------------------- */
-table.note, td.note, div.note {
-    background-color: #D0D0FF;
-}
-/* ---------------------------------------- person ------------------------------------------ */
-table.person, td.person, div.person {
-    background-color: #E4E400;
-}
-/* ---------------------------------------- place ------------------------------------------ */
-table.place, td.place, div.place {
-    background-color: #80E480;
-}
-/* ---------------------------------------- tag ------------------------------------------ */
-table.tag, td.tag, div.tag {
-    background-color: #E0E0E0;
-}
 /* ----------------------------------- table ----------------------------------------- */
 table.editMetaData {
     font-size:         8pt;
