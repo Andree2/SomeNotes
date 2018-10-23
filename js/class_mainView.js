@@ -574,11 +574,13 @@
                 var divClass = '';                
                 if (dayTimestamp == todayTimestamp) {
                     divClass = " dayBodyToday";
-                } else if (day > 4) {
-                    divClass = " dayBodyWeekend";
-                } else if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != ""){
+                }
+                if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != ""){
                     // If there is an entry in the 'day' table, get color scheme for that entry.   
-                    divClass = " dayBody_" + dayTableData[4];                        
+                    divClass += " dayBody_" + dayTableData[4];                        
+                }
+                else if (day > 4) {
+                    divClass += " dayBodyWeekend";
                 }
                 
                 code += '<div class="dayBody'+ divClass +'" onclick="'+showNewCode+'">';
