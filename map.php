@@ -1,5 +1,5 @@
 <?php
-require_once('passes.php');
+require_once 'passes.php';
 ?>
 <html>
   <link rel="icon" href="images/favicon.ico" />

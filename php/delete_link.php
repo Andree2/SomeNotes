@@ -1,10 +1,9 @@
 <?php
-require_once('constants.php');
-require_once('db.php');
-require_once('functions.php');
+require_once 'constants.php';
+require_once 'db.php';
+require_once 'functions.php';
 
-
-function startElement($parser, $name, $attributes) 
+function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
         global $gQueryID1;
@@ -18,7 +17,7 @@ function startElement($parser, $name, $attributes)
     }
 }
 
-function endElement($parser, $name) 
+function endElement($parser, $name)
 {
     global $gQueryID1;
     global $gQueryTable1;
@@ -27,9 +26,9 @@ function endElement($parser, $name)
     global $TABLE;
     global $TABLE_LINK;
     global $DBLink;
-    
+
     if ($name == 'ROW') {
-        $query = "DELETE FROM ". $TABLE_LINK->GetTableName() ." WHERE (table1_id = ". $TABLE["$gQueryTable1"]->GetID() ." AND table1_item_id = $gQueryID1 AND table2_id = ". $TABLE["$gQueryTable2"]->GetID() ." AND table2_item_id = $gQueryID2) OR (table1_id = ". $TABLE["$gQueryTable2"]->GetID() ." AND table1_item_id = $gQueryID2 AND table2_id = ". $TABLE["$gQueryTable1"]->GetID() ." AND table2_item_id = $gQueryID1)";
+        $query = "DELETE FROM " . $TABLE_LINK->GetTableName() . " WHERE (table1_id = " . $TABLE["$gQueryTable1"]->GetID() . " AND table1_item_id = $gQueryID1 AND table2_id = " . $TABLE["$gQueryTable2"]->GetID() . " AND table2_item_id = $gQueryID2) OR (table1_id = " . $TABLE["$gQueryTable2"]->GetID() . " AND table1_item_id = $gQueryID2 AND table2_id = " . $TABLE["$gQueryTable1"]->GetID() . " AND table2_item_id = $gQueryID1)";
         mysqli_query($DBLink, $query);
     }
 }
@@ -43,5 +42,4 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 mysqli_close($DBLink);
 
 XMLHeader();
-echo '<row table1="'.$gQueryTable1.'" id1="'.$gQueryID1.' table2="'.$gQueryTable2.'" id2="'.$gQueryID2.'"/>';
-?>
+echo '<row table1="' . $gQueryTable1 . '" id1="' . $gQueryID1 . ' table2="' . $gQueryTable2 . '" id2="' . $gQueryID2 . '"/>';

@@ -1,6 +1,6 @@
 <?php
-require_once('php/functions.php');
-require_once('php/constants.php');
+require_once 'php/functions.php';
+require_once 'php/constants.php';
 
 $timeStamp = time();
 if (!empty($_GET['date'])) {
@@ -32,11 +32,11 @@ $date = date("Y-m-d", $timeStamp);
         <script type="text/javascript">
             function Load ()
             {
-                View.Initialize();  
+                View.Initialize();
             }
         </script>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body class="main">
         <script type="text/javascript">
@@ -74,8 +74,8 @@ $date = date("Y-m-d", $timeStamp);
                     ERROR: innerHTML of divSearch not set
             </div>
             <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3;">
-                ERROR: innerHTML of divView not set	
-            </div>            
+                ERROR: innerHTML of divView not set
+            </div>
         </table>
     </body>
 </html>

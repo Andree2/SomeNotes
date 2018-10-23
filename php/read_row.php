@@ -1,13 +1,13 @@
 <?php
-require_once('constants.php');
-require_once('db.php');
-require_once('functions.php');
+require_once 'constants.php';
+require_once 'db.php';
+require_once 'functions.php';
 
 $table = $_GET['table'];
 $id = $_GET['id'];
 
 $tableNameTemp = $TABLE[$table]->GetTableName();
-$query =  $TABLE[$table]->GetQueryReadRow($id);
+$query = $TABLE[$table]->GetQueryReadRow($id);
 $result = mysqli_query($DBLink, $query);
 
 XMLHeader();
@@ -17,4 +17,3 @@ $row = mysqli_fetch_assoc($result);
 $TABLE[$table]->EchoXMLRow($row);
 
 mysqli_close($DBLink);
-?> 

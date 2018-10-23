@@ -5,15 +5,14 @@ class Link
     {
         return 'link';
     }
-    
+
     public function GetID()
     {
         return 3;
     }
-    
+
     public function GetTableName()
     {
         return 'lifelog_links';
     }
 }
-?>
