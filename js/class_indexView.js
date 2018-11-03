@@ -679,7 +679,7 @@
 
     this.SetEditElementVisible = function(visible)
     {
-        var obj = document.getElementById('editElement');
+        var editElement = document.getElementById('editElement');
         mEditElementVisible = visible;
 
         // Hide links and search bar. They will be loaded again when an edit 
@@ -688,13 +688,15 @@
 
         if (visible)
         {
-            obj.style.visibility = 'visible';
-            obj.style.height = this.mEditAreaHeight;
+            editElement.style.visibility = 'visible';
+            editElement.style.height = this.mEditAreaHeight;
+            $('#divSearchButton').html('Link');
         }
         else
         {
-            obj.style.visibility = 'collapse';
-            obj.style.height = '0px';
+            editElement.style.visibility = 'collapse';
+            editElement.style.height = '0px';
+            $('#divSearchButton').html('Go');
         }
         return false; // Do not follow href after this.
     };
