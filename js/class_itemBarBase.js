@@ -1,6 +1,8 @@
-﻿﻿class ItemBarBase {
+﻿﻿class ItemBarBase
+{
 
-    constructor(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow) {
+    constructor(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
+    {
 
         var mXMLDoc = null;
         var mMinImportance = minImportance;
@@ -21,11 +23,13 @@
         // ================================= Private ===================================================
         // =============================================================================================
         // -------------------------------------------------------------------------------------------
-        function BuildHTMLItems() {
+        function BuildHTMLItems()
+        {
             var code = ""
                 + "     <table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
                 + "     <tr>";
-            if (mHasDate) {
+            if (mHasDate)
+            {
                 code += "       <th class='itemBarDateHeader'>Date</th>";
             }
             code += "       <th class='itemBarItemHeader'>Item</th>";
@@ -37,10 +41,12 @@
         }
         ;
         // -------------------------------------------------------------------------------------------
-        function InitItemsTable() {
+        function InitItemsTable()
+        {
             mDivTable = document.getElementById(mDivTableId);
             sorttable.makeSortable(mDivTable);
-            if (mInitialSortColumn >= 0) {
+            if (mInitialSortColumn >= 0)
+            {
                 sorttable.sortByColumn(mDivTable, mInitialSortColumn, mInitialSortAscending);
             }
         }
@@ -49,7 +55,8 @@
         /**
          * @brief Redraws the whole item listbox.
          */
-        function Redraw() {
+        function Redraw()
+        {
             var onInput = mVariableName + '.RedrawItems()';
             var onKeyPress = mVariableName + '.OnKeyPress(event)';
             var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
@@ -79,17 +86,21 @@
          * @param nodes         The hierarchically structured input data.
          * @param minImportance Only items with importance greater or equal to \p minImportance will be drawn.
          */
-        function BuildBoxList(nodes) {
+        function BuildBoxList(nodes)
+        {
             mFirstItem = null;
             var code = '';
-            for (var j = 0; j < nodes.length; j++) {
+            for (var j = 0; j < nodes.length; j++)
+            {
                 var importance = parseInt(nodes[j].getAttribute("importance"));
                 if (importance < mMinImportance)
                     continue;
                 var text = nodes[j].getAttribute("text");
                 var containsFilter = true;
-                for (var i = 0; i < mFilterTexts.length; i++) {
-                    if (text.toLowerCase().indexOf(mFilterTexts[i].toLowerCase()) == -1) {
+                for (var i = 0; i < mFilterTexts.length; i++)
+                {
+                    if (text.toLowerCase().indexOf(mFilterTexts[i].toLowerCase()) == -1)
+                    {
                         containsFilter = false;
                         break;
                     }
@@ -98,20 +109,23 @@
                 if (!containsFilter)
                     continue;
                 code += "<tr>";
-                if (mHasDate) {
+                if (mHasDate)
+                {
                     code += "  <td style='font-size: 75%; color: #404040;'>"
                         + nodes[j].getAttribute("date")
                         + "  </td>";
                 }
                 var table = nodes[j].getAttribute("table");
                 var id = nodes[j].getAttribute("id");
-                if (mFirstItem == null) {
+                if (mFirstItem == null)
+                {
                     mFirstItem = [table, id];
                 }
                 var category = nodes[j].getAttribute("category");
                 code += buildRow(table, id, text, category + importance);
                 code += "</tr>";
-                if (nodes[j].hasChildNodes()) {
+                if (nodes[j].hasChildNodes())
+                {
                     code += BuildBoxList(nodes[j].childNodes);
                 }
             }
@@ -122,17 +136,21 @@
         // ================================= Privileged ================================================
         // =============================================================================================
         // -------------------------------------------------------------------------------------------
-        this.SetVisible = function (visible) {
+        this.SetVisible = function(visible)
+        {
             var mainDiv = document.getElementById(mDivID);
-            if (visible) {
+            if (visible)
+            {
                 mainDiv.style.visibility = 'visible';
             }
-            else {
+            else
+            {
                 mainDiv.style.visibility = 'hidden';
             }
         };
         // -------------------------------------------------------------------------------------------
-        this.SetXMLDoc = function (xmlDoc) {
+        this.SetXMLDoc = function(xmlDoc)
+        {
             mXMLDoc = xmlDoc;
             Redraw();
         };
@@ -140,7 +158,8 @@
         /**
          * @brief Redraw the items of this item box (but not the filter).
          */
-        this.RedrawItems = function () {
+        this.RedrawItems = function()
+        {
             mFilterTexts = mDivFilterText.value.split(" ");
             mMinImportance = mDivFilterImportance.value;
             mDivItems.innerHTML = BuildHTMLItems();
@@ -150,9 +169,11 @@
         /**
          * @brief Executed when a key is pressed in the filter text box.
          */
-        this.OnKeyPress = function (event) {
+        this.OnKeyPress = function(event)
+        {
             // When 'Enter' is pressed, call the 'EnterKeyFunc'.
-            if (event.keyCode == 13) {
+            if (event.keyCode == 13)
+            {
                 this.ExecuteFirstItemAction();
             }
         };
@@ -160,7 +181,8 @@
         /**
          * @brief Executes the given first item action for the first element in the box.
          */
-        this.ExecuteFirstItemAction = function () {
+        this.ExecuteFirstItemAction = function()
+        {
             if (mFirstItem == null)
                 return;
             mFirstItemAction(mFirstItem[0], mFirstItem[1]);

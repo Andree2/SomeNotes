@@ -1,6 +1,5 @@
 function MapView()
 {
-
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
@@ -13,7 +12,8 @@ function MapView()
 
         request.onreadystatechange = function()
         {
-            if (request.readyState == 4) {
+            if (request.readyState == 4)
+            {
                 request.onreadystatechange = doNothing;
                 callback(request, request.status);
             }
@@ -36,7 +36,8 @@ function MapView()
         url = url + "&sid=" + Math.random();
         xmlHttp.onreadystatechange = function()
         {
-            if (xmlHttp.readyState == 4) {
+            if (xmlHttp.readyState == 4)
+            {
                 ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
                 ItemBarLinks.SetVisible(true);
             }
@@ -45,7 +46,6 @@ function MapView()
         //window.open(url) //For testing XML output
         xmlHttp.send(null);
     };
-
 
     // =============================================================================================
     // ================================= Privileged ================================================

@@ -85,7 +85,8 @@
      */
     function OnStateChangedShowEdit()
     {
-        if (this.readyState == 4) {
+        if (this.readyState == 4)
+        {
             var xmlDoc = this.responseXML;
 
             //alert((new XMLSerializer()).serializeToString(xmlDoc.documentElement));
@@ -107,7 +108,8 @@
      */
     function OnStateChangedSubmit()
     {
-        if (this.readyState == 4) {
+        if (this.readyState == 4)
+        {
             // Update view
             var xmlDoc = this.responseXML;
             //alert((new XMLSerializer()).serializeToString(xmlDoc));
@@ -117,10 +119,12 @@
             var date = item.getAttribute("date");
             View.ShowEdit(table, id);
 
-            if (date == null) {
+            if (date == null)
+            {
                 date = new Date();
             }
-            else {
+            else
+            {
                 date = new Date(date);
             }
             // An item has changed, reload the data.
@@ -135,17 +139,20 @@
      */
     function OnStateChangedSubmitClose()
     {
-        if (this.readyState == 4) {
+        if (this.readyState == 4)
+        {
             // Update view
             var xmlDoc = this.responseXML;
 
             // Go to date of new item
             var item = xmlDoc.firstChild; // xmlDoc -> row
             var date = item.getAttribute("date");
-            if (date == null) {
+            if (date == null)
+            {
                 date = new Date();
             }
-            else {
+            else
+            {
                 date = new Date(date);
             }
 
@@ -161,11 +168,13 @@
      */
     function SubmitNewLinkCurrentEdit(table, id)
     {
-        if (mThis.GetEditElementVisible()) {
+        if (mThis.GetEditElementVisible())
+        {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return;
             if (mThis.mEditElementTable == null) return;
-            if (table == mThis.mEditElementTable && id == mThis.mEditElementItemID) {
+            if (table == mThis.mEditElementTable && id == mThis.mEditElementItemID)
+            {
                 alert('Link to itself not allowed.');
                 return;
             }
@@ -174,9 +183,11 @@
                 + '<row table1="' + table + '" table1_item_id="' + id + '" table2="' + mThis.mEditElementTable + '" table2_item_id="' + mThis.mEditElementItemID + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/new_link.php", xml, function()
             {
-                if (xmlHttp.readyState == 4) {
+                if (xmlHttp.readyState == 4)
+                {
                     // Update divLink
-                    if (View.GetEditElementVisible()) {
+                    if (View.GetEditElementVisible())
+                    {
                         View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
                     }
                 }
@@ -190,17 +201,22 @@
     function TimeStampDifferenceURI(editTime)
     {
         var currentTime;
-        if (location.search == '') {
+        if (location.search == '')
+        {
             currentTime = Math.floor((new Date()).getTime() / 1000);
-        } else {
+        } else
+        {
             parList = My.URIParameterList(location.search);
             currentTime = parList["date"];
         }
         var diff = editTime - currentTime;
         var uri;
-        if (diff > 0 && diff < (5 * 7 * 24 * 3600)) { // less than 5 weeks difference
+        if (diff > 0 && diff < (5 * 7 * 24 * 3600))
+        { // less than 5 weeks difference
             uri = (location.search == '') ? "" : "&viewDate=" + currentTime;
-        } else {
+        }
+        else
+        {
             uri = "&viewDate=" + editTime;
         }
         return uri;
@@ -231,7 +247,8 @@
 
             var weekLast = $("#" + WeekLastId);
 
-            if ($("#divView").scrollTop() < View.mWeekPaddingHeight / 2) {
+            if ($("#divView").scrollTop() < View.mWeekPaddingHeight / 2)
+            {
                 console.log('First is in Scroll')
                 View.AddViewRange(View.mFirstTimestamp - mWeekPadding * 7 * mOneDay, View.mFirstTimestamp - mOneDay, true, false)
             }
@@ -239,7 +256,8 @@
             var weekLastOffset = weekLast.offset();
             if (weekLastOffset == undefined) return false;
 
-            if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2) {
+            if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2)
+            {
                 console.log('Last is in Scroll')
                 View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * 7 * mOneDay, false, true)
             }
@@ -312,7 +330,8 @@
         url = url + "&sid=" + Math.random();
         xmlHttp.onreadystatechange = function()
         {
-            if (xmlHttp.readyState == 4) {
+            if (xmlHttp.readyState == 4)
+            {
                 ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
                 ItemBarLinks.SetVisible(true);
             }
@@ -331,7 +350,8 @@
         url = url + "?sid=" + Math.random();
         xmlHttp.onreadystatechange = function()
         {
-            if (xmlHttp.readyState == 4) {
+            if (xmlHttp.readyState == 4)
+            {
                 ItemBarSearch.SetXMLDoc(xmlHttp.responseXML);
             }
         };
@@ -351,7 +371,8 @@
         // Set timestamp time to 00:00:00
         var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
         var dateEnd = dateStart + mWeekPadding * 2 * 7 * mOneDay + 6 * mOneDay;
-        if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd)) {
+        if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd))
+        {
             debugger;
         }
         this.AddViewRange(dateStart, dateEnd, false, false);
@@ -370,7 +391,8 @@
         url = url + "&sid=" + Math.random();
         xmlHttp.onreadystatechange = function()
         {
-            if (xmlHttp.readyState == 4) {
+            if (xmlHttp.readyState == 4)
+            {
                 View.AddData(xmlHttp.responseXML, addAtStart, addAtEnd);
                 View.mAddingData = false;
                 View.RedrawView(addAtStart, addAtEnd);
@@ -384,10 +406,12 @@
 
     this.OnEnterKeySearch = function(table, id)
     {
-        if (View.GetEditElementVisible()) {
+        if (View.GetEditElementVisible())
+        {
             SubmitNewLinkCurrentEdit(table, id);
         }
-        else {
+        else
+        {
             View.ShowEdit(table, id);
         }
     };
@@ -397,21 +421,26 @@
         event = event || window.event;
 
         var rightClick = false;
-        if (event.which) {
+        if (event.which)
+        {
             // Firefox
             rightClick = (event.which == 3);
         }
-        else if (event.button) {
+        else if (event.button)
+        {
             // IE
             rightClick = (event.button == 2);
         }
-        if (rightClick) {
-            if (View.GetEditElementVisible()) {
+        if (rightClick)
+        {
+            if (View.GetEditElementVisible())
+            {
                 // Directly add link for current item
                 SubmitNewLinkCurrentEdit(table, id);
             }
         }
-        else {
+        else
+        {
             // Left click
             View.ShowEdit(table, id);
         }
@@ -429,8 +458,10 @@
 
         // Create entries for all days from start to end
 
-        for (var timestamp = dateStart; timestamp <= dateEnd; timestamp += mOneDay) {
-            if (!(timestamp in this.mDayData)) {
+        for (var timestamp = dateStart; timestamp <= dateEnd; timestamp += mOneDay)
+        {
+            if (!(timestamp in this.mDayData))
+            {
                 // The order in which the items should appear in each day:
                 // 0: day
                 // 1: event
@@ -442,15 +473,18 @@
         }
 
         // Sort the data into the 'dayCode' array first. They will later be drawn in a certain oder.
-        for (var i = 0; i < tables.length; i++) {
+        for (var i = 0; i < tables.length; i++)
+        {
             var tableName = tables[i].getAttribute("name");
             var items = tables[i].childNodes;
             // Go through all items of the table.
-            for (var j = 0; j < items.length; j++) {
+            for (var j = 0; j < items.length; j++)
+            {
                 var id = items[j].getAttribute("id");
                 var category = items[j].getAttribute("category");
 
-                switch (tableName) {
+                switch (tableName)
+                {
                     case "day":
                         {
                             var fromDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date"));
@@ -458,7 +492,8 @@
 
                             var dayCagegoryDisplayText = My.GetDayCategoriesDisplayText()[category];
                             // Fill code for relevant days.
-                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay) {
+                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay)
+                            {
                                 this.mDayData[timestamp][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
                                 this.mDayData[timestamp][4] = category;
                             }
@@ -471,7 +506,8 @@
                             var importance = items[j].getAttribute("importance");
                             var text = items[j].childNodes[0].firstChild.nodeValue;
                             // If this is linked to a place, add a marker symbol.
-                            if (items[j].getAttribute("has_place")) {
+                            if (items[j].getAttribute("has_place"))
+                            {
                                 text = "● " + text;
                             }
                             // Get dates
@@ -489,7 +525,8 @@
                             }
                             */
                             // Fill code for relevant days.
-                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay) {
+                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay)
+                            {
                                 this.mDayData[timestamp][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
                             }
                         }
@@ -535,16 +572,19 @@
         var keys = Object.keys(this.mDayData);
         keys.sort();
 
-        for (var i = 0; i < keys.length; i += 7) {
+        for (var i = 0; i < keys.length; i += 7)
+        {
             // Build a week
             var weekStartTimestamp = parseInt(keys[i]);
             var weekStartDate = new Date(weekStartTimestamp);
 
             var divId = "";
-            if (i == 0) {
+            if (i == 0)
+            {
                 this.mFirstTimestamp = weekStartTimestamp
             }
-            if (i + 7 >= keys.length) {
+            if (i + 7 >= keys.length)
+            {
                 divId = "id=" + WeekLastId + " ";
                 this.mLastTimestamp = weekStartTimestamp
             }
@@ -559,7 +599,8 @@
                 + "</div></div>";
 
             // Day dates
-            for (var day = 0; day < 7; day++) {
+            for (var day = 0; day < 7; day++)
+            {
 
                 var dayTimestamp = weekStartTimestamp + mOneDay * day;
                 var dayTableData = dayTimestamp in this.mDayData ? this.mDayData[dayTimestamp] : undefined;
@@ -569,14 +610,17 @@
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
 
                 var divClass = '';
-                if (dayTimestamp == todayTimestamp) {
+                if (dayTimestamp == todayTimestamp)
+                {
                     divClass = " dayBodyToday";
                 }
-                if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != "") {
+                if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != "")
+                {
                     // If there is an entry in the 'day' table, get color scheme for that entry.   
                     divClass += " dayBody_" + dayTableData[4];
                 }
-                else if (day > 4) {
+                else if (day > 4)
+                {
                     divClass += " dayBodyWeekend";
                 }
 
@@ -587,7 +631,8 @@
                     : '<div class="dayHeader dayHeaderOtherMonth" onclick="' + showNewCode + '">');
                 dateDay = dayDate.getDate();
                 code += dateDay;
-                if (dateDay == 1) {
+                if (dateDay == 1)
+                {
                     code += " " + monthNames[dayDate.getMonth()];
                 }
                 code += '</div>';
@@ -598,8 +643,10 @@
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
 
                 // Insert elements for this day
-                if (dayTableData != undefined) {
-                    for (var tableIndex = 0; tableIndex < 4; tableIndex++) {
+                if (dayTableData != undefined)
+                {
+                    for (var tableIndex = 0; tableIndex < 4; tableIndex++)
+                    {
                         code += dayTableData[tableIndex];
                     }
                 }
@@ -612,13 +659,16 @@
 
         $("#divView").html(code);
 
-        if (addedAtEnd) {
+        if (addedAtEnd)
+        {
             $("#divView").scrollTop(oldScroll);
         }
-        else if (addedAtStart) {
+        else if (addedAtStart)
+        {
             $("#divView").scrollTop(oldScroll + View.mWeekPaddingHeight);
         }
-        else {
+        else
+        {
             // If no data was added, this was initialization.
             var oneWeekHeight = $(".monthBarOneMonth:first").height()
             View.mWeekPaddingHeight = mWeekPadding * oneWeekHeight;
@@ -636,11 +686,13 @@
         // view is shown.
         ItemBarLinks.SetVisible(false);
 
-        if (visible) {
+        if (visible)
+        {
             obj.style.visibility = 'visible';
             obj.style.height = this.mEditAreaHeight;
         }
-        else {
+        else
+        {
             obj.style.visibility = 'collapse';
             obj.style.height = '0px';
         }
@@ -674,7 +726,8 @@
     this.SubmitDelete = function(table, id)
     {
         var confirmDelete = confirm("Really delete item?");
-        if (confirmDelete) {
+        if (confirmDelete)
+        {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return false;
             var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '"/>';
@@ -686,15 +739,18 @@
     this.SubmitDeleteLink = function(table1, id1, table2, id2)
     {
         var confirmDelete = confirm("Really delete link?");
-        if (confirmDelete) {
+        if (confirmDelete)
+        {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return false;
             var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table1="' + table1 + '" id1="' + id1 + '" table2="' + table2 + '" id2="' + id2 + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/delete_link.php", xml, function()
             {
-                if (xmlHttp.readyState == 4) {
+                if (xmlHttp.readyState == 4)
+                {
                     // Update divLink
-                    if (View.GetEditElementVisible()) {
+                    if (View.GetEditElementVisible())
+                    {
                         View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
                     }
                 }
@@ -705,17 +761,20 @@
 
     this.SubmitEdit = function(table, id, saveAndClose)
     {
-        if (!Table[table].CheckEditNewInput()) {
+        if (!Table[table].CheckEditNewInput())
+        {
             return false;
         }
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return false;
         // Build parameter string
         var xml = Table[table].GetRow(id);
-        if (saveAndClose) {
+        if (saveAndClose)
+        {
             My.SendPOSTRequest(xmlHttp, "./php/edit.php", xml, OnStateChangedSubmitClose);
         }
-        else {
+        else
+        {
             My.SendPOSTRequest(xmlHttp, "./php/edit.php", xml, OnStateChangedSubmit);
         }
         return false; // Do not follow href after this.
@@ -723,17 +782,20 @@
 
     this.SubmitNew = function(table, saveAndClose)
     {
-        if (!Table[table].CheckEditNewInput()) {
+        if (!Table[table].CheckEditNewInput())
+        {
             return;
         }
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
         // Build parameter string
         var xml = Table[table].GetRow('');
-        if (saveAndClose) {
+        if (saveAndClose)
+        {
             My.SendPOSTRequest(xmlHttp, "./php/new.php", xml, OnStateChangedSubmitClose);
         }
-        else {
+        else
+        {
             My.SendPOSTRequest(xmlHttp, "./php/new.php", xml, OnStateChangedSubmit);
         }
         return false;
