@@ -2,7 +2,16 @@
 require_once 'passes.php';
 ?>
 <html>
+  <link rel="stylesheet" href="css/my.css" type="text/css" >
+  <link rel="stylesheet" href="css/mobile.css" type="text/css" >
+  <link rel="stylesheet" href="css/colorSchemes.css" type="text/css" >
   <link rel="icon" href="images/favicon.ico" />
+  <script type="text/JavaScript" src="3rdParty/sorttable.js"></script>
+  <script type="text/JavaScript" src="3rdParty/jquery-3.3.1.js"></script>
+  <script type="text/JavaScript" src="js/my.js" charset="utf-8"></script>
+  <script type="text/JavaScript" src="js/class_itemBarBase.js" charset="utf-8"></script>
+  <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
+  <script type="text/JavaScript" src="js/class_mapView.js" charset="utf-8"></script>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -23,130 +32,18 @@ require_once 'passes.php';
   </head>
 
   <body>
-    <div id="map"></div>
-
+    <div class="mapView" style="grid-column: 1 / 10; grid-row: 1;">
+        <div id="divLinks" class="itemBar"></div>
+        <div id="map"></div>
+    </div>
     <script>
-      var customLabel = {
-        restaurant: {
-          label: 'R'
-        },
-        bar: {
-          label: 'B'
-        }
-      };
 
-        function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(53.073666, 8.796378),
-          zoom: 12,
-          styles: [
-            {
-              "featureType": "poi",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
-            },
-            {
-              "featureType": "road.arterial",
-              "elementType": "labels.icon",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
-            },
-            {
-              "featureType": "road.highway",
-              "elementType": "labels.icon",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
-            },
-            {
-              "featureType": "road.highway.controlled_access",
-              "elementType": "labels.icon",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
-            },
-            {
-              "featureType": "transit.station",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
-            }
-          ]
-        });
-        var infoWindow = new google.maps.InfoWindow;
+      var View = new MapView();
+      var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', true, 0, 0, false, View.LoadLinks);
 
-          // Change this depending on the name of your PHP or XML file
-          downloadUrl('php/read_places.php', function(data) {
-            var xml = data.responseXML;
-            var places = xml.documentElement.getElementsByTagName('place');
-            Array.prototype.forEach.call(places, function(place) {
-              var title = place.getAttribute('title')
-              //var address = My.NodeValuesToString(place.getElementsByTagName("address")[0].childNodes);
-              var category = place.getAttribute('category');
-              var latitude = place.getAttribute('latitude');
-              var longitude = place.getAttribute('longitude');
-              var point = new google.maps.LatLng(
-                latitude,
-                longitude);
-
-              var infowincontent = document.createElement('div');
-              var strong = document.createElement('strong');
-              strong.textContent = title
-              infowincontent.appendChild(strong);
-              infowincontent.appendChild(document.createElement('br'));
-
-              //var text = document.createElement('text');
-              //text.textContent = address
-              //infowincontent.appendChild(text);
-
-              var marker = new google.maps.Marker({
-                icon: 'images/' + category + '.png',
-                map: map,
-                position: point
-              });
-              marker.addListener('click', function() {
-                infoWindow.setContent(infowincontent);
-                infoWindow.open(map, marker);
-              });
-            });
-          });
-        }
-
-
-
-      function downloadUrl(url, callback) {
-        url = url + "?sid=" + Math.random();
-        var request = window.ActiveXObject ?
-            new ActiveXObject('Microsoft.XMLHTTP') :
-            new XMLHttpRequest;
-
-        request.onreadystatechange = function() {
-          if (request.readyState == 4) {
-            request.onreadystatechange = doNothing;
-            callback(request, request.status);
-          }
-        };
-
-        request.open('GET', url, true);
-        request.send(null);
-      }
-
-      function doNothing() {}
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=<?php echo $GoogleAPIKey; ?>&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=<?php echo $GoogleAPIKey; ?>&callback=View.InitMap">
     </script>
   </body>
 </html>

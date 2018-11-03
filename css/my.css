@@ -54,6 +54,12 @@ body.main {
 }
 /* ---------------------------------------- div ------------------------------------------ */
 
+div.mapView {
+    display:               grid;
+    grid-template-columns: 240px 1fr;
+    height:                100%;
+}
+
 div.absolute {
     position:  absolute;
 }

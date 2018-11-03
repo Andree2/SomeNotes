@@ -25,24 +25,35 @@ $date = date("Y-m-d", $timeStamp);
     <script type="text/JavaScript" src="js/class_itemBarBase.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBar.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/class_mainView.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/var_mainView.js" charset="utf-8"></script>
+    <script type="text/JavaScript" src="js/class_indexView.js" charset="utf-8"></script>
     <head>
         <title>My</title>
-        <script type="text/javascript">
-            function Load ()
-            {
-                View.Initialize();
-            }
-        </script>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body class="main">
         <script type="text/javascript">
-            /* Ueberwachung von Internet Explorer initialisieren */
+
+            var Table = new Array();
+
+            Table['day'] = new Day();
+            Table['event'] = new Event();
+            Table['note'] = new Note();
+            Table['person'] = new Person();
+            Table['place'] = new Place();
+            Table['tag'] = new Tag();
+
+            var View = new IndexView();
+            var WeekLastId = 'WeekLast';
+
+            var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', true, 0, 0, false, View.ShowEdit);
+            var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', true, 0, -1, true, View.OnEnterKeySearch)
+
             if (document.body && document.body.offsetWidth) {
-                window.onload = Load;
+                window.onload =  function ()
+                    {
+                        View.Initialize();
+                    };
             }
         </script>
         <div class="main noSpaces">
