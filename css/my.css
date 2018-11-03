@@ -135,6 +135,7 @@ div.dayBody {
     border-collapse: collapse;
     border-width:    1px;
     border-style:    solid solid solid solid;
+    position:        relative;
 }
 
 div.dayBodyWeekend {
@@ -156,13 +157,21 @@ div.monthBarText {
     -moz-transform:    rotate(-90deg);
     -o-transform:      rotate(-90deg);
 }
+
 div.smallBox {
-    margin-top:    1px;
     cursor:        pointer;
     border-width:  1px;
     border-style:  solid;
-    z-index:       201; 
     overflow:      hidden;
+}
+
+div.smallBoxStacked {
+    width:         100%; 
+}
+
+div.smallBoxAbsolute {
+    position:      absolute;
+    width:         90%; 
 }
 
 

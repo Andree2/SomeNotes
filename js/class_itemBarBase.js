@@ -1,6 +1,5 @@
 ﻿﻿class ItemBarBase
 {
-
     constructor(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
     {
 

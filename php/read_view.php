@@ -15,9 +15,6 @@ XMLHeader();
 // Post start and end date for which this view was requested.
 echo '<row date_start="' . $dateStart . '" date_end="' . $dateEnd . '">';
 // Select DAYs.
-// 0. Row ID
-// 1. Corresponding day
-// 2. category
 $query = "SELECT id,from_date,to_date,category FROM " . $TABLE[DAY]->GetTableName() . " WHERE from_date <= " . $dateEndSQL . " AND to_date >= " . $dateStartSQL;
 $result = mysqli_query($DBLink, $query);
 echo '<table name="' . DAY . '">';
@@ -27,11 +24,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 echo '</table>';
 
 // Select NOTEs.
-// 0. Row ID
-// 1. Corresponding day
-// 2. Text to be displayed in the box
-// 3. importance
-// 4. category
 $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . " WHERE date BETWEEN " . $dateStartSQL . " AND " . $dateEndSQL;
 $result = mysqli_query($DBLink, $query);
 echo '<table name="' . NOTE . '">';
@@ -43,12 +35,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 echo '</table>';
 
 // Select EVENTs.
-// 0. Row ID
-// 1. Corresponding day
-// 2. Text to be displayed in the box
-// 3. importance
-// 4. category
-$query = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . " WHERE from_date <= " . $dateEndSQL . " AND to_date >= " . $dateStartSQL;
+$query = "SELECT id,title,from_time,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . " WHERE from_date <= " . $dateEndSQL . " AND to_date >= " . $dateStartSQL;
 $result = mysqli_query($DBLink, $query);
 
 echo '<table name="' . EVENT . '">';
@@ -60,7 +47,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $eventLinkResult = mysqli_query($DBLink, $eventLinkQuery);
     $hasPlace = mysqli_num_rows($eventLinkResult) > 0;
 
-    echo '<item id="' . $row['id'] . '" from_date="' . $row['from_date'] . '" to_date="' . $row['to_date'] . '" to_time="' . $row['to_time'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '" has_place="' . $hasPlace . '">';
+    echo '<item id="' . $row['id'] . '" from_date="' . $row['from_date'] . '"  from_time ="' . $row['from_time'] . '" to_date="' . $row['to_date'] . '" to_time="' . $row['to_time'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '" has_place="' . $hasPlace . '">';
     echo "<title>" . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . "</title>";
     echo "</item>";
 }

@@ -1,4 +1,39 @@
-﻿﻿function IndexView()
+﻿﻿class ItemData
+{
+    constructor(table, id, text, style)
+    {
+        this.Table = table
+        this.Id = id;
+        this.Text = text;
+        this.Style = style;
+    }
+}
+
+class EventItemData extends ItemData
+{
+    constructor(table, id, text, style, fromDate, fromTime, toDate, toTime)
+    {
+        super(table, id, text, style);
+        this.FromDate = fromDate;
+        this.FromTime = fromTime;
+        this.ToDate = toDate;
+        this.ToTime = toTime;
+    }
+}
+
+class DayData
+{
+    constructor()
+    {
+        this.Days = new Array();
+        this.Events = new Array();
+        this.Persons = new Array();
+        this.Notes = new Array();
+        this.DivClass = "";
+    }
+}
+
+function IndexView()
 {
     // public
     this.mEditElementTable = null;
@@ -72,12 +107,32 @@
             + "   </table>";
     };
 
-    function BuildSmallBox(table, id, text, style, width, maxHeight)
+    function BuildSmallBoxStacked(item)
     {
-        // Create boxes for a certain day
-        return '<div class="smallBox ' + style
-            + '" style="width: ' + width + '; max-height: ' + maxHeight + 'px;"'
-            + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ')">' + My.HtmlSpecialChars(text) + '</div>';
+        return '<div class="smallBox smallBoxStacked ' + item.Style
+            + '" style="max-height: ' + 2 * mBoxHeight + 'px;"'
+            + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
+    };
+
+    function CalculateAbsoluteBoxValues(item, dayTimestamp)
+    {
+        // todo: get offset (dayHeader height) and row height from css properties
+        var from = item.FromDate != dayTimestamp ? 0 : new Date('1970-01-01T' + item.FromTime + 'Z').getTime() / mOneDay;
+        var to = item.ToDate != dayTimestamp ? 1 : new Date('1970-01-01T' + item.ToTime + 'Z').getTime() / mOneDay;
+
+        var offset = 16;
+        var rowHeight = 240 - offset - 2; // 2 = 2 * border width
+        var fromPx = from * rowHeight;
+        var toPx = to * rowHeight;
+        var height = Math.min(Math.max(32, toPx - fromPx), rowHeight - fromPx);
+        return [offset + fromPx, height];
+    }
+
+    function BuildSmallBoxAbsolute(item, top, height)
+    {
+        return '<div class="smallBox smallBoxAbsolute ' + item.Style
+            + '" style="left: 10%; height: ' + height + 'px; top: ' + top + 'px; z-index: ' + Math.floor(top) + ';"'
+            + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
     /**
@@ -454,21 +509,13 @@
 
         console.log("AddData for " + new Date(dateStart) + " to " + new Date(dateEnd));
 
-        var maxBoxHeight = 2 * mBoxHeight;
-
         // Create entries for all days from start to end
 
         for (var timestamp = dateStart; timestamp <= dateEnd; timestamp += mOneDay)
         {
             if (!(timestamp in this.mDayData))
             {
-                // The order in which the items should appear in each day:
-                // 0: day
-                // 1: event
-                // 2: person
-                // 3: note
-                // 4: divClass
-                this.mDayData[timestamp] = new Array("", "", "", "", "");
+                this.mDayData[timestamp] = new DayData();
             }
         }
 
@@ -494,8 +541,8 @@
                             // Fill code for relevant days.
                             for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay)
                             {
-                                this.mDayData[timestamp][0] += BuildSmallBox(tableName, id, dayCagegoryDisplayText, category, '100%', maxBoxHeight);
-                                this.mDayData[timestamp][4] = category;
+                                this.mDayData[timestamp].Days.push(new ItemData(tableName, id, dayCagegoryDisplayText, category));
+                                this.mDayData[timestamp].DivClass = category;
                             }
                         }
                         break;
@@ -510,24 +557,17 @@
                             {
                                 text = "● " + text;
                             }
-                            // Get dates
-                            var fromDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date"));
-                            var toDay = My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date"));
+                            // Get time and dates
 
-                            // When the endtime is before 05:00 AM, the event will not be shown at that end day.
-                            // An entry with 'zero' duration is still shown however.
-                            /*
-                            todo:
-                            var endTime = items[j].getAttribute("to_time");
-                            var endHour = endTime.substr(0, 2);
-                            if (endHour < 5 && endIndex > startIndex) {
-                                toDay -= 1;
-                            }
-                            */
+                            var fromDate = My.SQLDate2JSTimeStamp(items[j].getAttribute("from_date"));
+                            var fromTime = items[j].getAttribute("from_time");
+                            var toDate = My.SQLDate2JSTimeStamp(items[j].getAttribute("to_date"));
+                            var toTime = items[j].getAttribute("to_time");
+
                             // Fill code for relevant days.
-                            for (var timestamp = fromDay; timestamp <= toDay && timestamp in this.mDayData; timestamp += mOneDay)
+                            for (var timestamp = fromDate; timestamp <= toDate && timestamp in this.mDayData; timestamp += mOneDay)
                             {
-                                this.mDayData[timestamp][1] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
+                                this.mDayData[timestamp].Events.push(new EventItemData(tableName, id, text, category + importance, fromDate, fromTime, toDate, toTime));
                             }
                         }
                         break;
@@ -536,7 +576,7 @@
                             var dayTimestamp = My.SQLDate2JSTimeStamp(items[j].getAttribute("date"));
                             var importance = items[j].getAttribute("importance");
                             var text = items[j].childNodes[0].firstChild.nodeValue;
-                            this.mDayData[dayTimestamp][2] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
+                            this.mDayData[dayTimestamp].Persons.push(new ItemData(tableName, id, text, category + importance));
                         }
                         break;
                     case "note":
@@ -545,7 +585,7 @@
                             var importance = items[j].getAttribute("importance");
                             var text = items[j].childNodes[0].firstChild.nodeValue;
                             // Fill code for relevant day.
-                            this.mDayData[dayTimestamp][3] += BuildSmallBox(tableName, id, text, category + importance, '100%', maxBoxHeight);
+                            this.mDayData[dayTimestamp].Notes.push(new ItemData(tableName, id, text, category + importance));
                         }
                         break;
                 }
@@ -601,7 +641,6 @@
             // Day dates
             for (var day = 0; day < 7; day++)
             {
-
                 var dayTimestamp = weekStartTimestamp + mOneDay * day;
                 var dayTableData = dayTimestamp in this.mDayData ? this.mDayData[dayTimestamp] : undefined;
 
@@ -614,10 +653,10 @@
                 {
                     divClass = " dayBodyToday";
                 }
-                if (dayTableData != undefined && dayTableData[4] != undefined && dayTableData[4] != "")
+                if (dayTableData != undefined && dayTableData.DivClass != "")
                 {
                     // If there is an entry in the 'day' table, get color scheme for that entry.   
-                    divClass += " dayBody_" + dayTableData[4];
+                    divClass += " dayBody_" + dayTableData.DivClass;
                 }
                 else if (day > 4)
                 {
@@ -625,7 +664,6 @@
                 }
 
                 code += '<div class="dayBody' + divClass + '" onclick="' + showNewCode + '">';
-                //code += "<div>";
                 code += (dayDate.getMonth() == todayDate.getMonth()
                     ? '<div class="dayHeader ' + tdHeaderClass + '" onclick="' + showNewCode + '">'
                     : '<div class="dayHeader dayHeaderOtherMonth" onclick="' + showNewCode + '">');
@@ -645,10 +683,23 @@
                 // Insert elements for this day
                 if (dayTableData != undefined)
                 {
-                    for (var tableIndex = 0; tableIndex < 4; tableIndex++)
+                    dayTableData.Days.forEach(item =>
                     {
-                        code += dayTableData[tableIndex];
-                    }
+                        code += BuildSmallBoxStacked(item);
+                    });
+                    dayTableData.Events.forEach(item =>
+                    {
+                        var topAndHeight = CalculateAbsoluteBoxValues(item, dayTimestamp);
+                        code += BuildSmallBoxAbsolute(item, topAndHeight[0], topAndHeight[1]);
+                    });
+                    dayTableData.Persons.forEach(item =>
+                    {
+                        code += BuildSmallBoxStacked(item);
+                    });
+                    dayTableData.Notes.forEach(item =>
+                    {
+                        code += BuildSmallBoxStacked(item);
+                    });
                 }
                 code += "</div>";
             }
