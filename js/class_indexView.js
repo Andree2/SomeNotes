@@ -165,6 +165,23 @@ function IndexView()
         }
     };
 
+    function GoToDateAfterEdit(item)
+    {
+        var date = item.getAttribute("date");
+        if (date == null)
+        {
+            // Go to the last viewed date
+            date = new Date(View.mCurrentlyViewedTimestamp);
+            console.log('Go to viewed date ' + date);
+        }
+        else
+        {
+            date = new Date(date);
+            console.log('Go to new date ' + date);
+        }
+        return date;
+    }
+
     /**
      * @note \p this object is the xmlHttp object.
      */
@@ -178,18 +195,10 @@ function IndexView()
             var item = xmlDoc.firstChild; // xmlDoc -> row
             var table = item.getAttribute("table");
             var id = item.getAttribute("id");
-            var date = item.getAttribute("date");
             View.ShowEdit(table, id);
 
-            if (date == null)
-            {
-                date = new Date();
-            }
-            else
-            {
-                date = new Date(date);
-            }
             // An item has changed, reload the data.
+            var date = GoToDateAfterEdit(item);
             View.LoadView(date);
         }
     };
@@ -206,21 +215,9 @@ function IndexView()
             // Update view
             var xmlDoc = this.responseXML;
 
-            // Go to date of new item
-            var item = xmlDoc.firstChild; // xmlDoc -> row
-            var date = item.getAttribute("date");
-            if (date == null)
-            {
-                // Go to the last viewed date
-                date = new Date(View.mCurrentlyViewedTimestamp);
-            }
-            else
-            {
-                date = new Date(date);
-            }
-
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
+            var date = GoToDateAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
             View.LoadView(date);
             View.LoadSearch();
         }
@@ -310,6 +307,7 @@ function IndexView()
 
             var divViewScrollTop = $("#divView").scrollTop();
             View.mCurrentlyViewedTimestamp = View.mFirstTimestamp + divViewScrollTop / View.mOneWeekHeight * mOneWeek;
+            console.log('Currently viewed date: ' + new Date(View.mCurrentlyViewedTimestamp));
 
             var weekLast = $("#" + WeekLastId);
             if (divViewScrollTop < View.mWeekPaddingHeight / 2)
