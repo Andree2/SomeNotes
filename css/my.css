@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 
 html, body, table, input, textarea, select {
     font-family: Arial, Verdana,Sans-Serif;
@@ -129,12 +129,20 @@ div.dayHeaderOtherMonth {
 div.dayBody {
     height:          100%;
     overflow-x:      hidden;
-    overflow-y:      auto;
+    overflow-y:      hidden;
     vertical-align:  top;
     border-color:    #BBBBBB;
     border-collapse: collapse;
     border-width:    1px;
     border-style:    solid solid solid solid;
+    box-sizing:      border-box;
+}
+
+div.dayContent {
+    height:          100%;
+    overflow-x:      hidden;
+    overflow-y:      auto;
+    vertical-align:  top;
     position:        relative;
 }
 
@@ -163,15 +171,21 @@ div.smallBox {
     border-width:  1px;
     border-style:  solid;
     overflow:      hidden;
+    box-sizing:    border-box;
 }
 
-div.smallBoxStacked {
-    width:         100%; 
-}
-
-div.smallBoxAbsolute {
+div.smallBoxDay {
     position:      absolute;
+}
+
+div.smallBoxDayStacked {
+    left:          10%;
     width:         90%; 
+    z-index:       1000;
+}
+
+div.smallBoxDayEvent {
+    width:         100%; 
 }
 
 

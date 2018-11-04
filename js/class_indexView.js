@@ -42,7 +42,7 @@ function IndexView()
     // private    
     var mOneDay = 24 * 60 * 60 * 1000;
     var mWeekPadding = 4;
-    var mBoxHeight = 16;
+    var mBoxHeight = 18;
     var mEditElementVisible = false;
 
     var mThis = this; // For acces to 'this' in private functions.
@@ -107,31 +107,29 @@ function IndexView()
             + "   </table>";
     };
 
-    function BuildSmallBoxStacked(item)
+    function BuildSmallBoxStacked(item, top)
     {
-        return '<div class="smallBox smallBoxStacked ' + item.Style
-            + '" style="max-height: ' + 2 * mBoxHeight + 'px;"'
-            + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
+        return '<div class="smallBox smallBoxDay smallBoxDayStacked ' + item.Style + '"'
+            + ' style="top: ' + top + 'px; height: ' + mBoxHeight + 'px;"'
+            + ' onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
-    function CalculateAbsoluteBoxValues(item, dayTimestamp)
+    function BuildSmallBoxEvent(item, dayTimestamp)
     {
-        // todo: get offset (dayHeader height) and row height from css properties
         var from = item.FromDate != dayTimestamp ? 0 : new Date('1970-01-01T' + item.FromTime + 'Z').getTime() / mOneDay;
         var to = item.ToDate != dayTimestamp ? 1 : new Date('1970-01-01T' + item.ToTime + 'Z').getTime() / mOneDay;
 
-        var offset = 16;
-        var rowHeight = 240 - offset - 2; // 2 = 2 * border width
-        var fromPx = from * rowHeight;
-        var toPx = to * rowHeight;
-        var height = Math.min(Math.max(32, toPx - fromPx), rowHeight - fromPx);
-        return [offset + fromPx, height];
-    }
+        var backgroundItem = ((from == 0 && to > 0.1) || (to == 1.0 && from < 0.9));
+        var left = backgroundItem ? "30%" : "0px";
+        var width = backgroundItem ? "70%" : "100%";
 
-    function BuildSmallBoxAbsolute(item, top, height)
-    {
-        return '<div class="smallBox smallBoxAbsolute ' + item.Style
-            + '" style="left: 10%; height: ' + height + 'px; top: ' + top + 'px; z-index: ' + Math.floor(top) + ';"'
+        var rowHeight = 100; // percent
+        var top = from * rowHeight;
+        var bottom = to * rowHeight;
+        var height = Math.min(Math.max(8, bottom - top), rowHeight - top);
+
+        return '<div class="smallBox smallBoxDay smallBoxDayEvent ' + item.Style
+            + '" style="left: ' + left + '; width: ' + width + '; top: ' + top + '%; height: ' + height + '%; z-index: ' + Math.floor(top) + ';"'
             + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
@@ -683,23 +681,28 @@ function IndexView()
                 // Insert elements for this day
                 if (dayTableData != undefined)
                 {
-                    dayTableData.Days.forEach(item =>
-                    {
-                        code += BuildSmallBoxStacked(item);
-                    });
+                    var top = 0;
+                    code += '<div class="dayContent">';
                     dayTableData.Events.forEach(item =>
                     {
-                        var topAndHeight = CalculateAbsoluteBoxValues(item, dayTimestamp);
-                        code += BuildSmallBoxAbsolute(item, topAndHeight[0], topAndHeight[1]);
+                        code += BuildSmallBoxEvent(item, dayTimestamp);
+                    });
+                    dayTableData.Days.forEach(item =>
+                    {
+                        code += BuildSmallBoxStacked(item, top);
+                        top += mBoxHeight;
                     });
                     dayTableData.Persons.forEach(item =>
                     {
-                        code += BuildSmallBoxStacked(item);
+                        code += BuildSmallBoxStacked(item, top);
+                        top += mBoxHeight;
                     });
                     dayTableData.Notes.forEach(item =>
                     {
-                        code += BuildSmallBoxStacked(item);
+                        code += BuildSmallBoxStacked(item, top);
+                        top += mBoxHeight;
                     });
+                    code += '</div>';
                 }
                 code += "</div>";
             }

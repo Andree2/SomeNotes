@@ -82,7 +82,7 @@ div.event1, div.event2, div.event3
 div.event4, div.event5, div.event6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(255,170,170);
+    border-color:     rgb(240,150,150);
     background-color: rgb(255,170,170);
 }
 
@@ -115,7 +115,7 @@ div.event_others1, div.event_others2, div.event_others3
 div.event_others4, div.event_others5, div.event_others6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(220,220,220);
+    border-color:     rgb(220,200,200);
     background-color: rgb(220,220,220);
 }
 
@@ -143,7 +143,7 @@ div.note1, div.note2, div.note3
 div.note4, div.note5, div.note6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(170,170,255);
+    border-color:     rgb(150,150,240);
     background-color: rgb(170,170,255);
 }
 
@@ -175,7 +175,7 @@ div.note_diary1, div.note_diary2, div.note_diary3
 div.note_diary4, div.note_diary5, div.note_diary6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(160,255,160);
+    border-color:     rgb(140,240,140);
     background-color: rgb(160,255,160);
 }
 
@@ -203,7 +203,7 @@ div.person1, div.person2, div.person3
 div.person4, div.person5, div.person6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(255,255,100);
+    border-color:     rgb(240,240,80);
     background-color: rgb(255,255,100);
 }
 
@@ -256,7 +256,7 @@ div.place_home4,       div.place_home5,         div.place_home6,
 div.place_restaurant4, div.place_restaurant5,   div.place_restaurant6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(64,220,64);
+    border-color:     rgb(44,210,44);
     background-color: rgb(64,220,64);
 }
 
@@ -295,7 +295,7 @@ div.tag1, div.tag2, div.tag3
 div.tag4, div.tag5, div.tag6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(255, 160, 80);
+    border-color:     rgb(240, 140, 60);
     background-color: rgb(255, 160, 80);
 }
 
