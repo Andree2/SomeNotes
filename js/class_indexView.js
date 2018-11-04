@@ -35,12 +35,15 @@ class DayData
 
 function IndexView()
 {
+    //TODO: xml output: Viele items auf attributes umstellen
+
     // public
     this.mEditElementTable = null;
     this.mEditElementItemID = 0;
 
     // private    
     var mOneDay = 24 * 60 * 60 * 1000;
+    var mOneWeek = mOneDay * 7;
     var mWeekPadding = 4;
     var mBoxHeight = 18;
     var mEditElementVisible = false;
@@ -51,9 +54,10 @@ function IndexView()
     this.mFirstTimestamp = 0;
     this.mLastTimestamp = 0;
     this.mAddingData = false;
+    this.mOneWeekHeight = 0;
     this.mWeekPaddingHeight = 0;
     this.mEditAreaHeight = 0;
-    //TODO: xml output: Viele items auf attributes umstellen
+    this.mCurrentlyViewedTimestamp = 0;
 
     // =============================================================================================
     // ================================= Private ===================================================
@@ -207,7 +211,8 @@ function IndexView()
             var date = item.getAttribute("date");
             if (date == null)
             {
-                date = new Date();
+                // Go to the last viewed date
+                date = new Date(View.mCurrentlyViewedTimestamp);
             }
             else
             {
@@ -303,12 +308,14 @@ function IndexView()
 
             if (View.mAddingData) return;
 
-            var weekLast = $("#" + WeekLastId);
+            var divViewScrollTop = $("#divView").scrollTop();
+            View.mCurrentlyViewedTimestamp = View.mFirstTimestamp + divViewScrollTop / View.mOneWeekHeight * mOneWeek;
 
-            if ($("#divView").scrollTop() < View.mWeekPaddingHeight / 2)
+            var weekLast = $("#" + WeekLastId);
+            if (divViewScrollTop < View.mWeekPaddingHeight / 2)
             {
                 console.log('First is in Scroll')
-                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * 7 * mOneDay, View.mFirstTimestamp - mOneDay, true, false)
+                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * mOneWeek, View.mFirstTimestamp - mOneDay, true, false)
             }
 
             var weekLastOffset = weekLast.offset();
@@ -317,7 +324,7 @@ function IndexView()
             if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2)
             {
                 console.log('Last is in Scroll')
-                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * 7 * mOneDay, false, true)
+                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * mOneWeek, false, true)
             }
         });
     }
@@ -427,8 +434,8 @@ function IndexView()
     this.AddView = function(date)
     {
         // Set timestamp time to 00:00:00
-        var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneDay * 7;
-        var dateEnd = dateStart + mWeekPadding * 2 * 7 * mOneDay + 6 * mOneDay;
+        var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneWeek;
+        var dateEnd = dateStart + mWeekPadding * 2 * mOneWeek + 6 * mOneDay;
         if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd))
         {
             debugger;
@@ -733,8 +740,9 @@ function IndexView()
         else
         {
             // If no data was added, this was initialization.
-            var oneWeekHeight = $(".monthBarOneMonth:first").height()
-            View.mWeekPaddingHeight = mWeekPadding * oneWeekHeight;
+            View.mOneWeekHeight = $(".monthBarOneMonth:first").height()
+            View.mWeekPaddingHeight = mWeekPadding * View.mOneWeekHeight;
+            console.log('mOneWeekHeight: ' + View.mOneWeekHeight)
             console.log('mWeekPaddingHeight: ' + View.mWeekPaddingHeight)
             $("#divView").scrollTop(View.mWeekPaddingHeight);
         }
