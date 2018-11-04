@@ -119,7 +119,7 @@ function IndexView()
         var from = item.FromDate != dayTimestamp ? 0 : new Date('1970-01-01T' + item.FromTime + 'Z').getTime() / mOneDay;
         var to = item.ToDate != dayTimestamp ? 1 : new Date('1970-01-01T' + item.ToTime + 'Z').getTime() / mOneDay;
 
-        var backgroundItem = ((from == 0 && to > 0.1) || (to == 1.0 && from < 0.9));
+        var backgroundItem = ((from == 0 && to > 0.2) || (to == 1.0 && from < 0.8));
         var left = backgroundItem ? "30%" : "0px";
         var width = backgroundItem ? "70%" : "100%";
 
@@ -687,11 +687,21 @@ function IndexView()
                     {
                         code += BuildSmallBoxEvent(item, dayTimestamp);
                     });
-                    dayTableData.Days.forEach(item =>
+
+                    // Add non-event items stacked after each other.
+                    if (dayTableData.Days.length == 0)
                     {
-                        code += BuildSmallBoxStacked(item, top);
+                        // There should always be a small space at the day start.
                         top += mBoxHeight;
-                    });
+                    }
+                    else
+                    {
+                        dayTableData.Days.forEach(item =>
+                        {
+                            code += BuildSmallBoxStacked(item, top);
+                            top += mBoxHeight;
+                        });
+                    }
                     dayTableData.Persons.forEach(item =>
                     {
                         code += BuildSmallBoxStacked(item, top);

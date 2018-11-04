@@ -24,7 +24,7 @@ div.day_reformation_day,
 div.day_parental_leave
 {
     color:            rgb(128,128,128);
-    background-color: rgb(232,232,232);
+    background-color: transparent;
     border-color:     transparent;
 }
 div.dayBody_day_holiday,
@@ -53,7 +53,7 @@ div.dayBody_day_parental_leave
 div.day_school_holidays
 {
     color:            rgb(128,128,128);
-    background-color: rgb(232,255,232);
+    background-color: transparent;
     border-color:     transparent;
 }
 div.dayBody_day_school_holidays

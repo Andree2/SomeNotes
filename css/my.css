@@ -110,7 +110,7 @@ div.mainViewWeekDayHeader {
 div.dayHeader {
     border-color:  #BBBBBB;
     border-style:  none;
-    height:        16px;
+    height:        8%;
 }
 
 div.dayHeaderSomeDay {
@@ -139,7 +139,7 @@ div.dayBody {
 }
 
 div.dayContent {
-    height:          100%;
+    height:          92%;
     overflow-x:      hidden;
     overflow-y:      auto;
     vertical-align:  top;
