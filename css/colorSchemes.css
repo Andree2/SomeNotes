@@ -3,29 +3,9 @@
 
 /* ---------------------------------------- day ---------------------------------------- */
 /* -- day_* -- */
-div.day_holiday,
-div.day_flextime,
-div.day_new_year,
-div.day_three_wise_men,
-div.day_good_friday,
-div.day_easter_monday,
-div.day_workers_day,
-div.day_ascension_day,
-div.day_pentecost,
-div.day_corpus_christi,
-div.day_german_unity_day,
-div.day_all_saints_day,
-div.day_december_25,
-div.day_december_26,
-div.day_medical_leave,
-div.day_christmas_eve,
-div.day_new_years_eve,
-div.day_reformation_day,
-div.day_parental_leave
+span.item_day
 {
     color:            rgb(128,128,128);
-    background-color: transparent;
-    border-color:     transparent;
 }
 div.dayBody_day_holiday,
 div.dayBody_day_flextime,
@@ -50,12 +30,6 @@ div.dayBody_day_parental_leave
     background-color: rgb(232,232,232);
 }
 /* -- day_school_holidays -- */
-div.day_school_holidays
-{
-    color:            rgb(128,128,128);
-    background-color: transparent;
-    border-color:     transparent;
-}
 div.dayBody_day_school_holidays
 {
     background-color: rgb(232,255,232);
@@ -69,14 +43,14 @@ div.event0
 {
     color:            rgb(128,128,128);
     border-color:     rgb(255,160,160);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,0.6);
 }
 
 div.event1, div.event2, div.event3
 {
     color:            rgb(180,0,0);
     border-color:     rgb(255,160,160);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,0.6);
 }
 
 div.event4, div.event5, div.event6
@@ -102,14 +76,14 @@ div.event_others0
 {
     color:            rgb(180,180,180);
     border-color:     rgb(192,192,192);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,0.6);
 }
 
 div.event_others1, div.event_others2, div.event_others3
 {
     color:            rgb(128,128,128);
     border-color:     rgb(160,160,160);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,0.6);
 }
 
 div.event_others4, div.event_others5, div.event_others6

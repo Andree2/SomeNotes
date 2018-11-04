@@ -114,6 +114,11 @@ function IndexView()
             + ' onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
+    function BuildDayBox(item)
+    {
+        return '<span class="item_day" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</span>';
+    };
+
     function BuildSmallBoxEvent(item, dayTimestamp)
     {
         var from = item.FromDate != dayTimestamp ? 0 : new Date('1970-01-01T' + item.FromTime + 'Z').getTime() / mOneDay;
@@ -671,6 +676,13 @@ function IndexView()
                 {
                     code += " " + monthNames[dayDate.getMonth()];
                 }
+                if (dayTableData != undefined)
+                {
+                    dayTableData.Days.forEach(item =>
+                    {
+                        code += BuildDayBox(item);
+                    });
+                }
                 code += '</div>';
 
 
@@ -681,27 +693,14 @@ function IndexView()
                 // Insert elements for this day
                 if (dayTableData != undefined)
                 {
-                    var top = 0;
                     code += '<div class="dayContent">';
                     dayTableData.Events.forEach(item =>
                     {
                         code += BuildSmallBoxEvent(item, dayTimestamp);
                     });
 
-                    // Add non-event items stacked after each other.
-                    if (dayTableData.Days.length == 0)
-                    {
-                        // There should always be a small space at the day start.
-                        top += mBoxHeight;
-                    }
-                    else
-                    {
-                        dayTableData.Days.forEach(item =>
-                        {
-                            code += BuildSmallBoxStacked(item, top);
-                            top += mBoxHeight;
-                        });
-                    }
+                    // Add persons and notes stacked after each other, starting with a small space.
+                    var top = mBoxHeight;
                     dayTableData.Persons.forEach(item =>
                     {
                         code += BuildSmallBoxStacked(item, top);
