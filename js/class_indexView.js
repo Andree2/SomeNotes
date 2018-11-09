@@ -54,8 +54,8 @@ function IndexView()
     var mThis = this; // For acces to 'this' in private functions.
 
     this.mDayData = {};
-    this.mFirstTimestamp = 0;
-    this.mLastTimestamp = 0;
+    this.mFirstWeekTimestamp = 0;
+    this.mLastWeekTimestamp = 0;
     this.mAddingData = false;
     this.mOneWeekHeight = 0;
 
@@ -303,7 +303,7 @@ function IndexView()
             if ($("#divView").scrollTop() < View.mWeekScrollLoadLimit)
             {
                 console.log('First is in Scroll')
-                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * mOneWeek, View.mFirstTimestamp - mOneDay, null)
+                View.AddViewRange(View.mFirstWeekTimestamp - mWeekPadding * mOneWeek, View.mFirstWeekTimestamp - mOneWeek, null)
             }
 
             var weekLastOffset = weekLast.offset();
@@ -312,7 +312,7 @@ function IndexView()
             if (weekLastOffset.top - $("#divView").height() < View.mWeekScrollLoadLimit)
             {
                 console.log('Last is in Scroll')
-                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * mOneWeek, null)
+                View.AddViewRange(View.mLastWeekTimestamp + mOneWeek, View.mLastWeekTimestamp + mWeekPadding * mOneWeek, null)
             }
         });
     }
@@ -426,7 +426,7 @@ function IndexView()
     {
         var scroll = $("#divView").scrollTop();
         var weeks = Math.floor(scroll / this.mOneWeekHeight);
-        this.mCurrentlyViewedTimestamp = this.mFirstTimestamp + weeks * mOneWeek;
+        this.mCurrentlyViewedTimestamp = this.mFirstWeekTimestamp + weeks * mOneWeek;
         this.mCurrentlyViewedTimestampScrollOffset = scroll - weeks * this.mOneWeekHeight;
         return scroll;
     }
@@ -656,12 +656,12 @@ function IndexView()
             var divId = "";
             if (i == 0)
             {
-                this.mFirstTimestamp = weekStartTimestamp
+                this.mFirstWeekTimestamp = weekStartTimestamp
             }
             if (i + 7 >= keys.length)
             {
                 divId = "id=" + WeekLastId + " ";
-                this.mLastTimestamp = weekStartTimestamp
+                this.mLastWeekTimestamp = weekStartTimestamp
             }
 
             // Build month column
@@ -777,7 +777,7 @@ function IndexView()
 
             console.log('Go to viewed date ' + new Date(this.mCurrentlyViewedTimestamp));
 
-            var diffWeeks = (this.mCurrentlyViewedTimestamp - this.mFirstTimestamp) / mOneWeek;
+            var diffWeeks = (this.mCurrentlyViewedTimestamp - this.mFirstWeekTimestamp) / mOneWeek;
             var scrollOffset = Math.floor(diffWeeks) * this.mOneWeekHeight + oldScroll % this.mOneWeekHeight;
             $("#divView").scrollTop(scrollOffset);
         }
@@ -788,7 +788,7 @@ function IndexView()
             console.log('Go to date ' + goToDate);
 
             var goToTimestamp = goToDate.getTime();
-            var diffWeeks = (goToTimestamp - this.mFirstTimestamp) / mOneWeek;
+            var diffWeeks = (goToTimestamp - this.mFirstWeekTimestamp) / mOneWeek;
             var scrollOffset = Math.floor(diffWeeks) * this.mOneWeekHeight;
             $("#divView").scrollTop(scrollOffset);
         }
