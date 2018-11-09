@@ -303,7 +303,7 @@ function IndexView()
             if ($("#divView").scrollTop() < View.mWeekScrollLoadLimit)
             {
                 console.log('First is in Scroll')
-                View.AddViewRange(View.mFirstWeekTimestamp - mWeekPadding * mOneWeek, View.mFirstWeekTimestamp - mOneWeek, null)
+                View.AddViewRange(View.mFirstWeekTimestamp - mWeekPadding * mOneWeek, View.mFirstWeekTimestamp - mOneDay, null)
             }
 
             var weekLastOffset = weekLast.offset();
@@ -312,7 +312,7 @@ function IndexView()
             if (weekLastOffset.top - $("#divView").height() < View.mWeekScrollLoadLimit)
             {
                 console.log('Last is in Scroll')
-                View.AddViewRange(View.mLastWeekTimestamp + mOneWeek, View.mLastWeekTimestamp + mWeekPadding * mOneWeek, null)
+                View.AddViewRange(View.mLastWeekTimestamp + mOneWeek, View.mLastWeekTimestamp + mWeekPadding * mOneWeek + 6 * mOneDay, null)
             }
         });
     }
