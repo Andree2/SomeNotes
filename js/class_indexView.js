@@ -726,10 +726,6 @@ function IndexView()
                 if (dayTableData != undefined)
                 {
                     code += '<div class="dayContent">';
-                    dayTableData.Events.forEach(item =>
-                    {
-                        code += BuildSmallBoxEvent(item, dayTimestamp);
-                    });
 
                     // Add persons and notes stacked after each other, starting with a small space.
                     var top = mBoxHeight;
@@ -742,6 +738,23 @@ function IndexView()
                     {
                         code += BuildSmallBoxStacked(item, top);
                         top += mBoxHeight;
+                    });
+
+                    // Add events
+                    top += mBoxHeight;
+                    dayTableData.Events.forEach(item =>
+                    {
+                        if (item.FromTime == "00:00:00" && item.ToTime == "00:00:00")
+                        {
+                            // No time was set for this item - draw it as a stacked box.
+                            code += BuildSmallBoxStacked(item, top);
+                            top += mBoxHeight;
+                        }
+                        else
+                        {
+                            // Draw event with top and height indicating the time.
+                            code += BuildSmallBoxEvent(item, dayTimestamp);
+                        }
                     });
                     code += '</div>';
                 }
