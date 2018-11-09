@@ -46,8 +46,8 @@ $date = date("Y-m-d", $timeStamp);
             var View = new IndexView();
             var WeekLastId = 'WeekLast';
 
-            var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', true, 0, 0, false, View.ShowEdit);
-            var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', true, 0, -1, true, View.OnEnterKeySearch)
+            var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.ShowEdit);
+            var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', 0, -1, true, View.OnEnterKeySearch)
 
             if (document.body && document.body.offsetWidth) {
                 window.onload =  function ()
@@ -57,9 +57,10 @@ $date = date("Y-m-d", $timeStamp);
             }
         </script>
         <div class="main noSpaces">
-            <div class="editArea" style="visibility: collapse; grid-column: 1 / 10; grid-row: 1;" id="editElement" >
+
+            <div class="editArea" style="visibility: collapse;grid-area: 1 / 1 / 1 / 10;" id="editElement" >
                 <div id="divLinks" class="itemBar"></div>
-                <div id="editElementContent" colspan='2'></div>
+                <div id="editElementContent" ></div>
             </div>
 
             <div style="grid-column: 1; grid-row: 2;">

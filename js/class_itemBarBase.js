@@ -1,13 +1,11 @@
 ﻿﻿class ItemBarBase
 {
-    constructor(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
+    constructor(variableName, divID, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
     {
-
         var mXMLDoc = null;
         var mMinImportance = minImportance;
         var mFilterTexts = [];
         var mFirstItem = null;
-        var mHasDate = hasDate;
         var mVariableName = variableName;
         var mInitialSortColumn = initialSortColumn;
         var mInitialSortAscending = initialSortAscending;
@@ -27,12 +25,9 @@
             var code = ""
                 + "     <table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
                 + "     <tr>";
-            if (mHasDate)
-            {
-                code += "       <th class='itemBarDateHeader'>Date</th>";
-            }
-            code += "       <th class='itemBarItemHeader'>Item</th>";
-            code += "       <th class='itemBarDeleteLinkHeader'></th>";
+            code += "       <th class='itemBarDate'>Date</th>";
+            code += "       <th class='itemBarItem'>Item</th>";
+            code += "       <th class='itemBarDeleteLink'></th>";
             code += "     </tr>";
             code += BuildBoxList(mXMLDoc.firstChild.childNodes);
             code += "</table>";
@@ -68,7 +63,7 @@
                 + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
                 + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
                 + "</div>"
-                + "<div id='" + divItemsId + "' class='itemBarItems'>"
+                + "<div id='" + divItemsId + "' class='itemBar'>"
                 + BuildHTMLItems()
                 + "</div>";
             var divContent = document.getElementById(mDivID);
@@ -109,12 +104,9 @@
                 if (!containsFilter)
                     continue;
                 code += "<tr>";
-                if (mHasDate)
-                {
-                    code += "  <td style='font-size: 75%; color: #404040;'>"
-                        + nodes[j].getAttribute("date")
-                        + "  </td>";
-                }
+                code += "  <td class='itemBarDate'>"
+                    + nodes[j].getAttribute("date")
+                    + "  </td>";
                 var table = nodes[j].getAttribute("table");
                 var id = nodes[j].getAttribute("id");
                 if (mFirstItem == null)

@@ -33,6 +33,7 @@ function endElement($parser, $name)
     global $table1ItemID;
     global $table2Name;
     global $table2ItemID;
+    global $categoryOrPlaceModified;
 
     // The IDs in links are restricted the following way:
     // - TABLE1.ID must always be smaller or equal to TABLE2.ID
@@ -65,6 +66,11 @@ function endElement($parser, $name)
     // Special case: if table1Item or table2Item is 'Me' and the other an event, set to 'event' (instead of the default 'event_others').
     setCategoryEvent($table1, $table1ItemID, $table2, $table2ItemID);
     setCategoryEvent($table2, $table2ItemID, $table1, $table1ItemID);
+
+    if ($table1->GetID() == $TABLE[PLACE]->GetID() || $table2->GetID() == $TABLE[PLACE]->GetID()) {
+        global $categoryOrPlaceModified;
+        $categoryOrPlaceModified = 1;
+    }
 }
 
 function characterData($parser, $data)
@@ -95,6 +101,9 @@ function setCategoryFromTag($tagTable, $tagItemID, $targetTable, $targetItemID)
     // A category is induced, edit this in the target table
     $query = 'UPDATE ' . $targetTable->GetTableName() . " SET category='" . $row['induced_category'] . "' WHERE id = $targetItemID";
     mysqli_query($DBLink, $query);
+
+    global $categoryOrPlaceModified;
+    $categoryOrPlaceModified = 1;
 }
 
 function setCategoryEvent($sourceTable, $sourceItemID, $targetTable, $targetItemID)
@@ -117,12 +126,16 @@ function setCategoryEvent($sourceTable, $sourceItemID, $targetTable, $targetItem
     $query = 'UPDATE ' . $targetTable->GetTableName() . " SET category='event' WHERE id = $targetItemID";
     mysqli_query($DBLink, $query);
 
+    global $categoryOrPlaceModified;
+    $categoryOrPlaceModified = 1;
 }
+
+global $categoryOrPlaceModified;
+$categoryOrPlaceModified = 0;
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
 
-global $query;
 XMLHeader();
-echo '<row>' . $query . '</row>';
+echo '<row category_or_place_modified="' . $categoryOrPlaceModified . '" />';
 
 mysqli_close($DBLink);

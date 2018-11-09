@@ -72,6 +72,10 @@
             + "-" + ((day < 10) ? "0" + day : day);
     };
     // -------------------------------------------------------------------------------------------	
+
+    /**
+     * Returns the timestamp for start of the week in which <date> lies.
+     */
     this.GetWeekStart = function(date)
     {
         var fullDayDate = My.GetFullDayDate(date);

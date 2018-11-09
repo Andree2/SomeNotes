@@ -44,7 +44,10 @@ function IndexView()
     // private    
     var mOneDay = 24 * 60 * 60 * 1000;
     var mOneWeek = mOneDay * 7;
+
+    // Number of weeks that will be padded at start and end.
     var mWeekPadding = 4;
+
     var mBoxHeight = 18;
     var mEditElementVisible = false;
 
@@ -55,9 +58,11 @@ function IndexView()
     this.mLastTimestamp = 0;
     this.mAddingData = false;
     this.mOneWeekHeight = 0;
-    this.mWeekPaddingHeight = 0;
+
+    // The distance in pixels from the current content border at which new content will be loaded during scrolling.
+    this.mWeekScrollLoadLimit = 0;
+
     this.mEditAreaHeight = 0;
-    this.mCurrentlyViewedTimestamp = 0;
 
     // =============================================================================================
     // ================================= Private ===================================================
@@ -165,23 +170,6 @@ function IndexView()
         }
     };
 
-    function GoToDateAfterEdit(item)
-    {
-        var date = item.getAttribute("date");
-        if (date == null)
-        {
-            // Go to the last viewed date
-            date = new Date(View.mCurrentlyViewedTimestamp);
-            console.log('Go to viewed date ' + date);
-        }
-        else
-        {
-            date = new Date(date);
-            console.log('Go to new date ' + date);
-        }
-        return date;
-    }
-
     /**
      * @note \p this object is the xmlHttp object.
      */
@@ -198,8 +186,7 @@ function IndexView()
             View.ShowEdit(table, id);
 
             // An item has changed, reload the data.
-            var date = GoToDateAfterEdit(item);
-            View.LoadView(date);
+            View.LoadViewAfterEdit(item);
         }
     };
 
@@ -217,8 +204,7 @@ function IndexView()
 
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
-            var date = GoToDateAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
-            View.LoadView(date);
+            View.LoadViewAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
             View.LoadSearch();
         }
     };
@@ -249,6 +235,13 @@ function IndexView()
                     if (View.GetEditElementVisible())
                     {
                         View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
+                    }
+                    // Update view if the link has changed item display properties.
+                    var xmlDoc = this.responseXML;
+                    var categoryOrPlaceModified = xmlDoc.firstChild.getAttribute("category_or_place_modified");
+                    if (categoryOrPlaceModified == 1) 
+                    {
+                        View.LoadViewCurrentlyViewedTimestamp();
                     }
                 }
             });
@@ -293,7 +286,8 @@ function IndexView()
     this.Initialize = function()
     {
         console.log('Initialize')
-        this.AddView(new Date());
+        var currentDate = new Date();
+        this.AddView(currentDate, currentDate);
         this.LoadSearch();
 
 
@@ -302,27 +296,23 @@ function IndexView()
 
         $("#divView").scroll(function(e)
         {
-
             if (View.mAddingData) return;
 
-            var divViewScrollTop = $("#divView").scrollTop();
-            View.mCurrentlyViewedTimestamp = View.mFirstTimestamp + divViewScrollTop / View.mOneWeekHeight * mOneWeek;
-            console.log('Currently viewed date: ' + new Date(View.mCurrentlyViewedTimestamp));
-
             var weekLast = $("#" + WeekLastId);
-            if (divViewScrollTop < View.mWeekPaddingHeight / 2)
+
+            if ($("#divView").scrollTop() < View.mWeekScrollLoadLimit)
             {
                 console.log('First is in Scroll')
-                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * mOneWeek, View.mFirstTimestamp - mOneDay, true, false)
+                View.AddViewRange(View.mFirstTimestamp - mWeekPadding * mOneWeek, View.mFirstTimestamp - mOneDay, null)
             }
 
             var weekLastOffset = weekLast.offset();
             if (weekLastOffset == undefined) return false;
 
-            if (weekLastOffset.top - $("#divView").height() < View.mWeekPaddingHeight / 2)
+            if (weekLastOffset.top - $("#divView").height() < View.mWeekScrollLoadLimit)
             {
                 console.log('Last is in Scroll')
-                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * mOneWeek, false, true)
+                View.AddViewRange(View.mLastTimestamp + mOneDay, View.mLastTimestamp + mWeekPadding * mOneWeek, null)
             }
         });
     }
@@ -423,42 +413,82 @@ function IndexView()
         xmlHttp.send(null);
     }
 
+    /**
+     * Resets the view and loads the view for <date>.
+     */
     this.LoadView = function(date)
     {
         this.mDayData = {};
-        this.AddView(date);
+        this.AddView(date, date);
     }
 
-    this.AddView = function(date)
+    this.UpdateCurrentlyViewedTimestamp = function()
     {
-        // Set timestamp time to 00:00:00
-        var dateStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneWeek;
-        var dateEnd = dateStart + mWeekPadding * 2 * mOneWeek + 6 * mOneDay;
-        if (!Number.isInteger(dateStart) || !Number.isInteger(dateEnd))
-        {
-            debugger;
-        }
-        this.AddViewRange(dateStart, dateEnd, false, false);
+        var scroll = $("#divView").scrollTop();
+        var weeks = Math.floor(scroll / this.mOneWeekHeight);
+        this.mCurrentlyViewedTimestamp = this.mFirstTimestamp + weeks * mOneWeek;
+        this.mCurrentlyViewedTimestampScrollOffset = scroll - weeks * this.mOneWeekHeight;
+        return scroll;
     }
 
     /**
-     * @brief Load the view. If <date> (of type Date) is not null, this date will be display. 
+     * Resets the view and loads the view for <date>.
      */
-    this.AddViewRange = function(dateStart, dateEnd, addAtStart, addAtEnd)
+    this.LoadViewCurrentlyViewedTimestamp = function()
+    {
+        this.mDayData = {};
+        this.UpdateCurrentlyViewedTimestamp();
+        this.AddView(new Date(this.mCurrentlyViewedTimestamp), null);
+    }
+
+    this.LoadViewAfterEdit = function(item)
+    {
+        var date = item.getAttribute("date");
+        if (date == null)
+        {
+            // Go to the last viewed date
+            this.LoadViewCurrentlyViewedTimestamp();
+        }
+        else
+        {
+            this.LoadView(new Date(date));
+            console.log('Go to new date ' + date);
+        }
+    }
+
+    /**
+     * Adds view content for <date>.
+     */
+    this.AddView = function(date, goToDate)
+    {
+        // Set timestamp time to 00:00:00
+        var timestampStart = My.GetWeekStart(My.GetFullDayDate(date)) - mWeekPadding * mOneWeek;
+        var timestampEnd = timestampStart + mWeekPadding * 2 * mOneWeek + 6 * mOneDay;
+        if (!Number.isInteger(timestampStart) || !Number.isInteger(timestampEnd))
+        {
+            debugger;
+        }
+        this.AddViewRange(timestampStart, timestampEnd, goToDate);
+    }
+
+    /**
+     * @brief Add view data. If <date> (of type Date) is not null, this date will be display. 
+     */
+    this.AddViewRange = function(timestampStart, timestampEnd, goToDate)
     {
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
         url = "php/read_view.php";
-        url = url + "?dateStart=" + dateStart;
-        url = url + "&dateEnd=" + dateEnd;
+        url = url + "?dateStart=" + timestampStart;
+        url = url + "&dateEnd=" + timestampEnd;
         url = url + "&sid=" + Math.random();
         xmlHttp.onreadystatechange = function()
         {
             if (xmlHttp.readyState == 4)
             {
-                View.AddData(xmlHttp.responseXML, addAtStart, addAtEnd);
+                View.AddData(xmlHttp.responseXML);
                 View.mAddingData = false;
-                View.RedrawView(addAtStart, addAtEnd);
+                View.RedrawView(goToDate);
             }
         };
         xmlHttp.open("GET", url, true);
@@ -601,10 +631,8 @@ function IndexView()
         }
     }
 
-    this.RedrawView = function(addedAtStart, addedAtEnd)
+    this.BuildViewHtml = function()
     {
-        if (this.mDayData == null) return;
-
         var todayDate = new Date();
         var todayTimestamp = My.GetFullDayDate(todayDate).getTime();
         var currentTime = My.GetFullTime(todayDate);
@@ -613,7 +641,6 @@ function IndexView()
         var monthColors = new Array("#C0C0FF", "#A0A0EE", "#90E4B4", "#A0FFA0", "#FFC098", "#FFAAAA",
             "#EEEE90", "#B2E0B2", "#EAB4B4", "#B0B0B0", "#D4D4D4", "#F0F0F0");
 
-        var oldScroll = $("#divView").scrollTop();
 
         // Generate code
         var code = "";
@@ -724,25 +751,46 @@ function IndexView()
             code += "</div>";
         }
 
-
         $("#divView").html(code);
 
-        if (addedAtEnd)
+        // If this was the first html draw operation, save the height and padding values.
+        if (this.mOneWeekHeight == 0)
         {
-            $("#divView").scrollTop(oldScroll);
+            this.mOneWeekHeight = $(".monthBarOneMonth:first").height()
+            this.mWeekScrollLoadLimit = mWeekPadding * View.mOneWeekHeight / 2;
+            console.log('mOneWeekHeight: ' + View.mOneWeekHeight)
+            console.log('mWeekScrollLoadLimit: ' + View.mWeekScrollLoadLimit)
         }
-        else if (addedAtStart)
+    }
+
+    /**
+     * @param goToDate If null, the view will keep the currently vieded date. Otherwise, it will go to this date
+     */
+    this.RedrawView = function(goToDate)
+    {
+        if (this.mDayData == null) return;
+
+        if (goToDate == null)
         {
-            $("#divView").scrollTop(oldScroll + View.mWeekPaddingHeight);
+            var oldScroll = this.UpdateCurrentlyViewedTimestamp();
+            this.BuildViewHtml();
+
+            console.log('Go to viewed date ' + new Date(this.mCurrentlyViewedTimestamp));
+
+            var diffWeeks = (this.mCurrentlyViewedTimestamp - this.mFirstTimestamp) / mOneWeek;
+            var scrollOffset = Math.floor(diffWeeks) * this.mOneWeekHeight + oldScroll % this.mOneWeekHeight;
+            $("#divView").scrollTop(scrollOffset);
         }
         else
         {
-            // If no data was added, this was initialization.
-            View.mOneWeekHeight = $(".monthBarOneMonth:first").height()
-            View.mWeekPaddingHeight = mWeekPadding * View.mOneWeekHeight;
-            console.log('mOneWeekHeight: ' + View.mOneWeekHeight)
-            console.log('mWeekPaddingHeight: ' + View.mWeekPaddingHeight)
-            $("#divView").scrollTop(View.mWeekPaddingHeight);
+            this.BuildViewHtml();
+
+            console.log('Go to date ' + goToDate);
+
+            var goToTimestamp = goToDate.getTime();
+            var diffWeeks = (goToTimestamp - this.mFirstTimestamp) / mOneWeek;
+            var scrollOffset = Math.floor(diffWeeks) * this.mOneWeekHeight;
+            $("#divView").scrollTop(scrollOffset);
         }
     };
 

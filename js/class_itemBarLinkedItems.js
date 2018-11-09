@@ -1,13 +1,12 @@
 ﻿﻿class ItemBarLinkedItems extends ItemBarBase
 {
-    constructor(variableName, divID, hasDate, minImportance, initialSortColumn, initialSortAscending, firstItemAction)
+    constructor(variableName, divID, minImportance, initialSortColumn, initialSortAscending, firstItemAction)
     {
         var mItemTable = null;
         var mItemId = null;
 
         super(variableName,
             divID,
-            hasDate,
             minImportance,
             initialSortColumn,
             initialSortAscending,

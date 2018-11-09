@@ -39,7 +39,7 @@ require_once 'passes.php';
     <script>
 
       var View = new MapView();
-      var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', true, 0, 0, false, View.LoadLinks);
+      var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.LoadLinks);
 
     </script>
     <script async defer

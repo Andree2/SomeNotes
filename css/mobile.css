@@ -11,7 +11,7 @@
 
     div.itemBarItem {
         height:      16px;
-        width:       98%;
+        width:       90%;
     }
 
     div.editArea {
@@ -38,18 +38,33 @@
         width: 128px;
     }
 
-    th.itemBarDateHeader {
+    td.itemBarDate {
         min-width: 30px;
         width: 30px; 
     }
-
-    th.itemBarItemHeader {
+    
+    td.itemBarItem {
         min-width: 88px;
         width: 88px; 
     }
-
-    th.itemBarDeleteLinkHeader {
+    
+    td.itemBarDeleteLink {
         min-width: 10px;
+        width: 10px; 
+    }
+
+    th.itemBarDate {
+        max-width: 30px;
+        width: 30px; 
+    }
+
+    th.itemBarItem {
+        max-width: 88px;
+        width: 88px; 
+    }
+
+    th.itemBarDeleteLink {
+        max-width: 10px;
         width: 10px; 
     }
     

@@ -56,7 +56,7 @@ body.main {
 
 div.mapView {
     display:               grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 260px 1fr;
     height:                100%;
 }
 
@@ -66,7 +66,7 @@ div.absolute {
 
 div.editArea {
     display:               grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 260px 1fr;
     height:                340px;
 }
 
@@ -90,7 +90,7 @@ div.main {
     width:                 100%;
     display:               grid;
     grid-template-rows:    auto 24px 1fr; 
-    grid-template-columns: 240px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-columns: 260px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
     overflow:              hidden;
 }
 
@@ -269,12 +269,6 @@ tr.windowBar {
 
 /* ---------------------------------------- td ----------------------------------------------- */
 
-
-
-td.links {
-    width: 240px;
-}
-
 td.windowBar, td.window {
     margin:               0px;
     background-color:     #D0D0D0;
@@ -294,20 +288,43 @@ td.noWrap {
 td.fillTable {
     width: 100%;
 }
-/* ---------------------------------------- th ----------------------------------------------- */
 
-th.itemBarDateHeader {
+td.itemBarDate {
     min-width: 60px;
-    width: 60px; 
+    max-width: 60px;
+    width:     60px; 
+    font-size: 75%;
+    color: #404040;
 }
 
-th.itemBarItemHeader {
+td.itemBarItem {
     min-width: 160px;
+    max-width: 160px;
     width: 160px; 
 }
 
-th.itemBarDeleteLinkHeader {
+td.itemBarDeleteLink {
     min-width: 20px;
+    max-width: 20px;
+    width: 20px; 
+}
+/* ---------------------------------------- th ----------------------------------------------- */
+
+th.itemBarDate {
+    min-width: 60px;
+    max-width: 60px;
+    width: 60px; 
+}
+
+th.itemBarItem {
+    min-width: 160px;
+    max-width: 160px;
+    width: 160px; 
+}
+
+th.itemBarDeleteLink {
+    min-width: 20px;
+    max-width: 20px;
     width: 20px; 
 }
 
