@@ -33,7 +33,10 @@ require_once 'passes.php';
 
   <body>
     <div class="mapView" style="grid-column: 1 / 10; grid-row: 1;">
-        <div id="divLinks" class="itemBar"></div>
+        <div >
+            <div id="selectedElement" class="header">Test</div>
+            <div id="divLinks" class="itemBar"></div>
+        </div>
         <div id="map"></div>
     </div>
     <script>

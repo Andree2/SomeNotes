@@ -7,8 +7,14 @@ $table = $_GET['table'];
 $id = $_GET['id'];
 
 XMLHeader();
-echo '<row>';
-// ------------------------- Read links ----------------------------->
+
+// ------------------------- Read item -----------------------------
+$query = "SELECT " . $TABLE[$table]->GetColumnDisplayText() . " FROM " . $TABLE[$table]->GetTableName() . " WHERE id = $id";
+$result = mysqli_query($DBLink, $query);
+$row = mysqli_fetch_row($result);
+echo '<row text="' . htmlspecialchars($row[0], ENT_QUOTES, "UTF-8") . '">';
+
+// ------------------------- Read linked items -----------------------------
 $query = "SELECT table2_id, table2_item_id FROM " . $TABLE_LINK->GetTableName()
 . " WHERE table1_id = " . $TABLE[$table]->GetID() . " AND table1_item_id = $id";
 $result = mysqli_query($DBLink, $query);
@@ -50,7 +56,6 @@ if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
         echo '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $row[1] . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '" />';
     }
 }
-// <-------------------------- Read links ----------------------------
 
 echo '</row>';
 mysqli_close($DBLink);

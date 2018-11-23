@@ -84,6 +84,12 @@ div.itemBarItem {
     width:       98%;
 }
 
+div.header {
+    padding:            3px;
+    font-weight:        bold;
+    background-color:   #F0F0F0;
+}
+
 
 div.main {
     height:                100%;

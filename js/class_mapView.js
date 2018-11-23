@@ -39,7 +39,7 @@ function MapView()
             if (xmlHttp.readyState == 4)
             {
                 ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
-                ItemBarLinks.SetVisible(true);
+                $('#selectedElement').html(xmlHttp.responseXML.firstChild.getAttribute('text'));
             }
         };
         xmlHttp.open("GET", url, true);
