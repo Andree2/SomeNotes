@@ -63,10 +63,40 @@ function MapView()
             zoom: 12,
             styles: [
                 {
+                    "featureType": "administrative",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "color": "#b0b0b0"
+                        },
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#b0b0b0"
+                        }
+                    ]
+                },
+                {
                     "featureType": "poi",
                     "stylers": [
                         {
                             "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#b0b0b0"
                         }
                     ]
                 },
