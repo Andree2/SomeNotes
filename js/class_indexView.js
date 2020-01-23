@@ -156,7 +156,6 @@ function IndexView()
         {
             var xmlDoc = this.responseXML;
 
-            //alert((new XMLSerializer()).serializeToString(xmlDoc.documentElement));
             var objEditElementContent = document.getElementById('editElementContent');
             objEditElementContent.innerHTML = View.BuildEdit(xmlDoc);
 
@@ -165,8 +164,7 @@ function IndexView()
             View.mEditElementItemID = item.getAttribute("id");
 
             View.SetEditElementVisible(true);
-            View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
-            //alert((new XMLSerializer()).serializeToString(xmlDoc));
+            LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
         }
     };
 
@@ -205,9 +203,17 @@ function IndexView()
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
             View.LoadViewAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
-            View.LoadSearch();
+            ItemBarAll.UpdateItems();
         }
     };
+
+    function LoadLinksAndShowBar(table, id)
+    {
+        ItemBarLinks.LoadLinks(table, id, function(_)
+        {
+            ItemBarLinks.SetVisible(true);
+        });
+    }
 
     /**
      * @brief Creates a link directly between the given item and the currently edited item
@@ -234,7 +240,7 @@ function IndexView()
                     // Update divLink
                     if (View.GetEditElementVisible())
                     {
-                        View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
+                        LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
                     }
                     // Update view if the link has changed item display properties.
                     var xmlDoc = this.responseXML;
@@ -288,7 +294,7 @@ function IndexView()
         console.log('Initialize')
         var currentDate = new Date();
         this.AddView(currentDate, currentDate);
-        this.LoadSearch();
+        ItemBarAll.UpdateItems();
 
 
         this.mEditAreaHeight = $('#editElement').height();
@@ -372,46 +378,6 @@ function IndexView()
         return mEditElementVisible;
     };
 
-    this.LoadLinks = function(table, id)
-    {
-        var xmlHttp = My.GetXMLHttpObject();
-        if (xmlHttp == null)
-            return;
-        var url = "php/read_links.php";
-        url = url + "?table=" + table;
-        url = url + "&id=" + id;
-        url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = function()
-        {
-            if (xmlHttp.readyState == 4)
-            {
-                ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
-                ItemBarLinks.SetVisible(true);
-            }
-        };
-        xmlHttp.open("GET", url, true);
-        //window.open(url) //For testing XML output
-        xmlHttp.send(null);
-    };
-
-    this.LoadSearch = function()
-    {
-        var xmlHttp = My.GetXMLHttpObject();
-        if (xmlHttp == null)
-            return;
-        var url = "php/read_items.php";
-        url = url + "?sid=" + Math.random();
-        xmlHttp.onreadystatechange = function()
-        {
-            if (xmlHttp.readyState == 4)
-            {
-                ItemBarSearch.SetXMLDoc(xmlHttp.responseXML);
-            }
-        };
-        xmlHttp.open("GET", url, true);
-        //window.open(url); //For testing XML output
-        xmlHttp.send(null);
-    }
 
     /**
      * Resets the view and loads the view for <date>.
@@ -883,7 +849,7 @@ function IndexView()
                     // Update divLink
                     if (View.GetEditElementVisible())
                     {
-                        View.LoadLinks(View.mEditElementTable, View.mEditElementItemID);
+                        LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
                     }
                 }
             });

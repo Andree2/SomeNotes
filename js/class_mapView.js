@@ -25,27 +25,13 @@ function MapView()
 
     function doNothing() { }
 
-    this.LoadLinks = function(table, id)
+    function LoadLinksAndSetSelectedElement(table, id)
     {
-        var xmlHttp = My.GetXMLHttpObject();
-        if (xmlHttp == null)
-            return;
-        var url = "php/read_links.php";
-        url = url + "?table=" + table;
-        url = url + "&id=" + id;
-        url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = function()
+        ItemBarLinks.LoadLinks(table, id, function(responseXML)
         {
-            if (xmlHttp.readyState == 4)
-            {
-                ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
-                $('#selectedElement').html(xmlHttp.responseXML.firstChild.getAttribute('text'));
-            }
-        };
-        xmlHttp.open("GET", url, true);
-        //window.open(url) //For testing XML output
-        xmlHttp.send(null);
-    };
+            $('#selectedElement').html(responseXML.firstChild.getAttribute('text'));
+        });
+    }
 
     // =============================================================================================
     // ================================= Privileged ================================================
@@ -53,7 +39,7 @@ function MapView()
 
     this.OnMouseUpBox = function(event, table, id)
     {
-        View.LoadLinks(table, id);
+        LoadLinksAndSetSelectedElement(table, id);
     };
 
     this.InitMap = function()
@@ -174,7 +160,7 @@ function MapView()
                 {
                     infoWindow.setContent(infowincontent);
                     infoWindow.open(map, marker);
-                    View.LoadLinks('place', id);
+                    LoadLinksAndSetSelectedElement('place', id);
                 });
             });
         });

@@ -34,7 +34,7 @@ require_once 'passes.php';
   <body>
     <div class="mapView" style="grid-column: 1 / 10; grid-row: 1;">
         <div >
-            <div id="selectedElement" class="header">Test</div>
+            <div id="selectedElement" class="header">Please select an item</div>
             <div id="divLinks" class="itemBar"></div>
         </div>
         <div id="map"></div>
@@ -42,7 +42,7 @@ require_once 'passes.php';
     <script>
 
       var View = new MapView();
-      var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.LoadLinks);
+      var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.LoadLinksAndSetSelectedElement);
 
     </script>
     <script async defer

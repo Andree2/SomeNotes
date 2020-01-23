@@ -34,22 +34,11 @@
             return code;
         }
         ;
-        // -------------------------------------------------------------------------------------------
-        function InitItemsTable()
-        {
-            mDivTable = document.getElementById(mDivTableId);
-            sorttable.makeSortable(mDivTable);
-            if (mInitialSortColumn >= 0)
-            {
-                sorttable.sortByColumn(mDivTable, mInitialSortColumn, mInitialSortAscending);
-            }
-        }
-        ;
         // ---------------------------------------------------------------------------------------------
         /**
          * @brief Redraws the whole item listbox.
          */
-        function Redraw()
+        function Initialize()
         {
             var onInput = mVariableName + '.RedrawItems()';
             var onKeyPress = mVariableName + '.OnKeyPress(event)';
@@ -64,14 +53,12 @@
                 + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
                 + "</div>"
                 + "<div id='" + divItemsId + "' class='itemBar'>"
-                + BuildHTMLItems()
                 + "</div>";
             var divContent = document.getElementById(mDivID);
             divContent.innerHTML = code;
             mDivItems = document.getElementById(divItemsId);
             mDivFilterText = document.getElementById(divFilterTextId);
             mDivFilterImportance = document.getElementById(divFilterImportanceId);
-            InitItemsTable();
         }
         ;
         // -------------------------------------------------------------------------------------------
@@ -144,7 +131,11 @@
         this.SetXMLDoc = function(xmlDoc)
         {
             mXMLDoc = xmlDoc;
-            Redraw();
+            if (mDivItems == undefined)
+            {
+                Initialize();
+            }
+            this.RedrawItems();
         };
         // ---------------------------------------------------------------------------------------------
         /**
@@ -155,7 +146,12 @@
             mFilterTexts = mDivFilterText.value.split(" ");
             mMinImportance = mDivFilterImportance.value;
             mDivItems.innerHTML = BuildHTMLItems();
-            InitItemsTable();
+            mDivTable = document.getElementById(mDivTableId);
+            sorttable.makeSortable(mDivTable);
+            if (mInitialSortColumn >= 0)
+            {
+                sorttable.sortByColumn(mDivTable, mInitialSortColumn, mInitialSortAscending);
+            }
         };
         // ---------------------------------------------------------------------------------------------
         /**

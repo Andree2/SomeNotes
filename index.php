@@ -23,7 +23,7 @@ $date = date("Y-m-d", $timeStamp);
     <script type="text/JavaScript" src="js/tables/class_tag.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/my.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBarBase.js" charset="utf-8"></script>
-    <script type="text/JavaScript" src="js/class_itemBar.js" charset="utf-8"></script>
+    <script type="text/JavaScript" src="js/class_itemBarAllItems.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_itemBarLinkedItems.js" charset="utf-8"></script>
     <script type="text/JavaScript" src="js/class_indexView.js" charset="utf-8"></script>
     <head>
@@ -47,7 +47,7 @@ $date = date("Y-m-d", $timeStamp);
             var WeekLastId = 'WeekLast';
 
             var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.ShowEdit);
-            var ItemBarSearch = new ItemBar('ItemBarSearch', 'divSearch', 0, -1, true, View.OnEnterKeySearch)
+            var ItemBarAll = new ItemBarAllItems('ItemBarAll', 'divSearch', 0, -1, true, View.OnEnterKeySearch)
 
             if (document.body && document.body.offsetWidth) {
                 window.onload =  function ()
