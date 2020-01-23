@@ -34,7 +34,7 @@ require_once 'passes.php';
   <body>
     <div class="mapView" style="grid-column: 1 / 10; grid-row: 1;">
         <div >
-            <div id="selectedElement" class="header">Please select an item</div>
+            <div id="selectedElement">Please select an item</div>
             <div id="divLinks" class="itemBar"></div>
         </div>
         <div id="map"></div>

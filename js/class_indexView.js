@@ -120,12 +120,12 @@ function IndexView()
     {
         return '<div class="smallBox smallBoxDay smallBoxDayStacked ' + item.Style + '"'
             + ' style="top: ' + top + 'px; height: ' + mBoxHeight + 'px;"'
-            + ' onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
+            + ' onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ', \'' + item.Style + '\')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
     function BuildDayBox(item)
     {
-        return '<span class="item_day" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</span>';
+        return '<span class="item_day" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ', \'' + item.Style + '\')">' + My.HtmlSpecialChars(item.Text) + '</span>';
     };
 
     function BuildSmallBoxEvent(item, dayTimestamp)
@@ -144,7 +144,7 @@ function IndexView()
 
         return '<div class="smallBox smallBoxDay smallBoxDayEvent ' + item.Style
             + '" style="left: ' + left + '; width: ' + width + '; top: ' + top + '%; height: ' + height + '%; z-index: ' + Math.floor(top) + ';"'
-            + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ')">' + My.HtmlSpecialChars(item.Text) + '</div>';
+            + '" onmouseup="View.OnMouseUpBox(event, \'' + item.Table + '\', ' + item.Id + ', \'' + item.Style + '\')">' + My.HtmlSpecialChars(item.Text) + '</div>';
     };
 
     /**
@@ -475,7 +475,7 @@ function IndexView()
         }
     };
 
-    this.OnMouseUpBox = function(event, table, id)
+    this.OnMouseUpBox = function(event, table, id, divClass)
     {
         event = event || window.event;
 

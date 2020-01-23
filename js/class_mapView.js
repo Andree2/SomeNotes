@@ -25,11 +25,15 @@ function MapView()
 
     function doNothing() { }
 
-    function LoadLinksAndSetSelectedElement(table, id)
+    function LoadLinksAndSetSelectedElement(table, id, divClass)
     {
         ItemBarLinks.LoadLinks(table, id, function(responseXML)
         {
-            $('#selectedElement').html(responseXML.firstChild.getAttribute('text'));
+            var placeItem = responseXML.firstChild;
+            $('#selectedElement').html(placeItem.getAttribute('text'));
+            $('#selectedElement').removeClass();
+            $('#selectedElement').addClass(divClass);
+            $('#selectedElement').addClass('smallBox');
         });
     }
 
@@ -37,9 +41,9 @@ function MapView()
     // ================================= Privileged ================================================
     // =============================================================================================
 
-    this.OnMouseUpBox = function(event, table, id)
+    this.OnMouseUpBox = function(event, table, id, divClass)
     {
-        LoadLinksAndSetSelectedElement(table, id);
+        LoadLinksAndSetSelectedElement(table, id, divClass);
     };
 
     this.InitMap = function()
@@ -137,6 +141,7 @@ function MapView()
                 var category = place.getAttribute('category');
                 var latitude = place.getAttribute('latitude');
                 var longitude = place.getAttribute('longitude');
+                var importance = place.getAttribute('importance');
                 var point = new google.maps.LatLng(
                     latitude,
                     longitude);
@@ -160,7 +165,7 @@ function MapView()
                 {
                     infoWindow.setContent(infowincontent);
                     infoWindow.open(map, marker);
-                    LoadLinksAndSetSelectedElement('place', id);
+                    LoadLinksAndSetSelectedElement('place', id, 'place' + importance);
                 });
             });
         });

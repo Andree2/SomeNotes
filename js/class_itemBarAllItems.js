@@ -13,7 +13,7 @@
                 // Create boxes for a certain day
                 return "  <td class='itemBarItem'>"
                     + '<div class="smallBox itemBarItem ' + divClass + '"'
-                    + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ')">' + My.HtmlSpecialChars(text) + '</div>'
+                    + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>'
                     + "  </td>"
                     + "  <td class='itemBarDeleteLink'></td>";
             });
