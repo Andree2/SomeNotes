@@ -135,7 +135,7 @@ $categoryOrPlaceModified = 0;
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
 
+mysqli_close($DBLink);
+
 XMLHeader();
 echo '<row category_or_place_modified="' . $categoryOrPlaceModified . '" />';
-
-mysqli_close($DBLink);

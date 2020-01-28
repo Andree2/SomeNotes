@@ -4,7 +4,6 @@
     {
         var mXMLDoc = null;
         var mMinImportance = minImportance;
-        var mFilterTexts = [];
         var mFirstItem = null;
         var mVariableName = variableName;
         var mInitialSortColumn = initialSortColumn;
@@ -14,7 +13,6 @@
         var mDivTableId = mDivID + 'Table';
         var mDivTable;
         var mDivItems;
-        var mDivFilterText;
         var mDivFilterImportance;
         // =============================================================================================
         // ================================= Private ===================================================
@@ -34,33 +32,6 @@
             return code;
         }
         ;
-        // ---------------------------------------------------------------------------------------------
-        /**
-         * @brief Redraws the whole item listbox.
-         */
-        function Initialize()
-        {
-            var onInput = mVariableName + '.RedrawItems()';
-            var onKeyPress = mVariableName + '.OnKeyPress(event)';
-            var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
-            var divItemsId = mDivID + 'Items';
-            var divFilterTextId = mDivID + 'FilterText';
-            var divFilterImportanceId = mDivID + 'FilterImportance';
-            var divButtonId = mDivID + 'Button';
-            var code = "<div>"
-                + "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:55%;'/>"
-                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
-                + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
-                + "</div>"
-                + "<div id='" + divItemsId + "' class='itemBar'>"
-                + "</div>";
-            var divContent = document.getElementById(mDivID);
-            divContent.innerHTML = code;
-            mDivItems = document.getElementById(divItemsId);
-            mDivFilterText = document.getElementById(divFilterTextId);
-            mDivFilterImportance = document.getElementById(divFilterImportanceId);
-        }
-        ;
         // -------------------------------------------------------------------------------------------
         /**
          * @brief Prints a hierarchically list of item boxes.
@@ -78,18 +49,6 @@
                 if (importance < mMinImportance)
                     continue;
                 var text = nodes[j].getAttribute("text");
-                var containsFilter = true;
-                for (var i = 0; i < mFilterTexts.length; i++)
-                {
-                    if (text.toLowerCase().indexOf(mFilterTexts[i].toLowerCase()) == -1)
-                    {
-                        containsFilter = false;
-                        break;
-                    }
-                    ;
-                }
-                if (!containsFilter)
-                    continue;
                 code += "<tr>";
                 code += "  <td class='itemBarDate'>"
                     + nodes[j].getAttribute("date")
@@ -114,6 +73,33 @@
         // =============================================================================================
         // ================================= Privileged ================================================
         // =============================================================================================
+        // ---------------------------------------------------------------------------------------------
+        /**
+         * @brief Initializes the whole item listbox.
+         */
+        this.Initialize = function()
+        {
+            var onInput = mVariableName + '.OnInput()';
+            var onKeyPress = mVariableName + '.OnKeyPress(event)';
+            var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
+            var divItemsId = mDivID + 'Items';
+            var divFilterTextId = mDivID + 'FilterText';
+            var divFilterImportanceId = mDivID + 'FilterImportance';
+            var divButtonId = mDivID + 'Button';
+            var code = "<div>"
+                + "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:55%;'/>"
+                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
+                + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
+                + "</div>"
+                + "<div id='" + divItemsId + "' class='itemBar'>"
+                + "</div>";
+            var divContent = document.getElementById(mDivID);
+            divContent.innerHTML = code;
+            mDivItems = document.getElementById(divItemsId);
+            this.DivFilterText = document.getElementById(divFilterTextId);
+            mDivFilterImportance = document.getElementById(divFilterImportanceId);
+        }
+            ;
         // -------------------------------------------------------------------------------------------
         this.SetVisible = function(visible)
         {
@@ -131,19 +117,6 @@
         this.SetXMLDoc = function(xmlDoc)
         {
             mXMLDoc = xmlDoc;
-            if (mDivItems == undefined)
-            {
-                Initialize();
-            }
-            this.RedrawItems();
-        };
-        // ---------------------------------------------------------------------------------------------
-        /**
-         * @brief Redraw the items of this item box (but not the filter).
-         */
-        this.RedrawItems = function()
-        {
-            mFilterTexts = mDivFilterText.value.split(" ");
             mMinImportance = mDivFilterImportance.value;
             mDivItems.innerHTML = BuildHTMLItems();
             mDivTable = document.getElementById(mDivTableId);
@@ -174,8 +147,8 @@
             if (mFirstItem == null)
                 return;
             mFirstItemAction(mFirstItem[0], mFirstItem[1]);
-            mDivFilterText.value = '';
-            this.RedrawItems();
+            this.DivFilterText.value = '';
+            this.OnInput();
         };
     }
 }

@@ -50,6 +50,8 @@ function characterData($parser, $data)
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
 
+mysqli_close($DBLink);
+
 //TODO: Do not only send table and ID, but send whole object (see read_row.php, EchoXMLRow)
 // and direclty call BuildEdit in javascript->OnStateChanged
 XMLHeader();
@@ -58,5 +60,3 @@ if ($gDate != '') {
     echo ' date="' . $gDate . '"';
 }
 echo '/>';
-
-mysqli_close($DBLink);

@@ -203,7 +203,7 @@ function IndexView()
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
             View.LoadViewAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
-            ItemBarAll.UpdateItems();
+            ItemBarAll.LoadItems();
         }
     };
 
@@ -294,7 +294,8 @@ function IndexView()
         console.log('Initialize')
         var currentDate = new Date();
         this.AddView(currentDate, currentDate);
-        ItemBarAll.UpdateItems();
+        ItemBarAll.Initialize();
+        ItemBarLinks.Initialize();
 
 
         this.mEditAreaHeight = $('#editElement').height();

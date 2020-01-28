@@ -21,23 +21,25 @@
         // =============================================================================================
         // ================================= Privileged ================================================
         // =============================================================================================
-        this.UpdateItems = function()
+        this.OnInput = function()
         {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null)
                 return;
-            var url = "php/read_items.php";
-            url = url + "?sid=" + Math.random();
-            xmlHttp.onreadystatechange = function()
+
+            var filterText = this.DivFilterText.value;
+            // Only start request when there is some filter text to speed up search.
+            if (filterText.length < 3) return;
+
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '"/>';
+
+            My.SendPOSTRequest(xmlHttp, "./php/read_items.php", xml, function()
             {
                 if (xmlHttp.readyState == 4)
                 {
                     ItemBarAll.SetXMLDoc(xmlHttp.responseXML);
                 }
-            };
-
-            xmlHttp.open("GET", url, true);
-            xmlHttp.send(null);
+            });
         }
     }
 }

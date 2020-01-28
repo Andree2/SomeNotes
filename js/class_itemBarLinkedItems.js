@@ -37,20 +37,24 @@
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null)
                 return;
-            var url = "php/read_links.php";
-            url = url + "?table=" + table;
-            url = url + "&id=" + id;
-            url = url + "&sid=" + Math.random();
-            xmlHttp.onreadystatechange = function()
+
+            var filterText = this.DivFilterText.value;
+
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '" filtertext="' + filterText + '"/>';
+
+            My.SendPOSTRequest(xmlHttp, "./php/read_links.php", xml, function()
             {
                 if (xmlHttp.readyState == 4)
                 {
                     ItemBarLinks.SetXMLDocWithItem(xmlHttp.responseXML, table, id);
                     onReadyStateChange(xmlHttp.responseXML);
                 }
-            };
-            xmlHttp.open("GET", url, true);
-            xmlHttp.send(null);
+            });
         };
+
+        this.OnInput = function()
+        {
+            this.LoadLinks(mItemTable, mItemId, function(_) { });
+        }
     }
 }
