@@ -31,7 +31,7 @@ function endElement($parser, $name)
         global $DBLink;
 
         $gOutput = '';
-        $filterparts = explode(" ", $gFiltertext);
+        $filterparts = preg_split('/\s+/', $gFiltertext, -1, PREG_SPLIT_NO_EMPTY);
 
         // Read Persons
         $filter = BuildFilter($TABLE[PERSON], $filterparts);

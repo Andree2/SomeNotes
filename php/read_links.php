@@ -38,7 +38,7 @@ function endElement($parser, $name)
         global $TABLE_NAME_FROM_ID;
 
         $gOutput = '';
-        $filterparts = explode(" ", $gFiltertext);
+        $filterparts = preg_split('/\s+/', $gFiltertext, -1, PREG_SPLIT_NO_EMPTY);
         $table = $TABLE[$gTable];
 
         // ------------------------- Read item -----------------------------
@@ -81,8 +81,7 @@ function endElement($parser, $name)
                 $filter = BuildFilter($TABLE[$tableLinkName], $filterparts);
                 $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()
-                . ",importance "
-                . ",category "
+                . ",importance,category"
                 . ($hasDate ? "," . $TABLE[$tableLinkName]->GetColumnDate() : "")
                 . " FROM "
                 . $TABLE[$tableLinkName]->GetTableName() . " WHERE id = $row[1]" . $filter;

@@ -39,7 +39,6 @@
                 return;
 
             var filterText = this.DivFilterText.value;
-
             var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '" filtertext="' + filterText + '"/>';
 
             My.SendPOSTRequest(xmlHttp, "./php/read_links.php", xml, function()

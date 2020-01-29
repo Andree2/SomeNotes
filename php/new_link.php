@@ -43,6 +43,11 @@ function endElement($parser, $name)
     $table1 = $TABLE[$table1Name];
     $table2 = $TABLE[$table2Name];
 
+    // Cannot create links including the LINK or DAY table.
+    if ($table1->GetID() == 3 || $table1->GetID() == 7 || $table2->GetID() == 3 || $table2->GetID() == 7) {
+        return;
+    }
+
     if ($table1->GetID() > $table2->GetID()) {
         $temp = $table1;
         $table1 = $table2;
