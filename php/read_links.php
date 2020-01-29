@@ -49,10 +49,10 @@ function endElement($parser, $name)
 
         // ------------------------- Read linked items -----------------------------
         $query = "SELECT table2_id, table2_item_id FROM " . $TABLE_LINK->GetTableName()
-        . " WHERE table1_id = " . $table->GetID() . " AND table1_item_id = $gId";
+        . " WHERE table1_id = " . $table->GetID() . " AND table1_item_id = $gId ORDER BY table2_item_id DESC";
         $result = mysqli_query($DBLink, $query);
         $query = "SELECT table1_id, table1_item_id FROM " . $TABLE_LINK->GetTableName()
-        . " WHERE table2_id = " . $table->GetID() . " AND table2_item_id = $gId";
+        . " WHERE table2_id = " . $table->GetID() . " AND table2_item_id = $gId ORDER BY table1_item_id DESC";
         $result2 = mysqli_query($DBLink, $query);
 
         // TODO: Evtl. mit optimizer hint? ... WITH (INDEX (index_name))
