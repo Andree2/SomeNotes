@@ -5,15 +5,12 @@ require_once 'functions.php';
 
 define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
 
-function BuildDisplayTextColumnFilter($table, $filterparts)
+function BuildFilter($table, $filterparts)
 {
-    $filter = '';
     if (count($filterparts) != 0) {
-        for ($i = 0; $i < count($filterparts); $i++) {
-            $filter .= " AND " . $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%'";
-        }
+        return " AND " . BuildColumnFilter($table, $filterparts);
     }
-    return $filter;
+    return '';
 }
 
 function startElement($parser, $name, $attributes)
@@ -81,7 +78,7 @@ function endElement($parser, $name)
 
                 $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
 
-                $filter = BuildDisplayTextColumnFilter($TABLE[$tableLinkName], $filterparts);
+                $filter = BuildFilter($TABLE[$tableLinkName], $filterparts);
                 $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()
                 . ",importance "

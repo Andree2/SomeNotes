@@ -38,3 +38,20 @@ function XMLHeader()
 {
     header('content-type: text/xml; charset=utf-8');
 }
+
+function BuildColumnFilter($table, $filterparts)
+{
+    $filter = '';
+    for ($i = 0; $i < count($filterparts); $i++) {
+        if ($i > 0) {
+            $filter .= " AND";
+        }
+        $displayTextSearch = $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%'";
+        if ($table->GetColumnDate() == '') {
+            $filter .= " " . $displayTextSearch;
+        } else {
+            $filter .= " (" . $displayTextSearch . " OR " . $table->GetColumnDate() . " LIKE '%" . $filterparts[$i] . "%')";
+        }
+    }
+    return $filter;
+}
