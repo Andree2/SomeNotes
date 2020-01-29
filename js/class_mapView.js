@@ -46,8 +46,10 @@ function MapView()
         LoadLinksAndSetSelectedElement(table, id, divClass);
     };
 
-    this.InitMap = function()
+    this.Initialize = function()
     {
+        ItemBarLinks.Initialize();
+
         var map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(53.073666, 8.796378),
             zoom: 12,

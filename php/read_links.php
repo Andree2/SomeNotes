@@ -3,6 +3,8 @@ require_once 'constants.php';
 require_once 'db.php';
 require_once 'functions.php';
 
+define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
+
 function BuildDisplayTextColumnFilter($table, $filterparts)
 {
     $filter = '';
@@ -58,11 +60,11 @@ function endElement($parser, $name)
 
         // TODO: Evtl. mit optimizer hint? ... WITH (INDEX (index_name))
 
-        $numberOfItems = 0;
+        $numberOfEventsNotes = 0;
         if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
             $resultEmpty = false;
 
-            while (true && $numberOfItems < MAX_NUMBER_LINKED_ITEMS) {
+            while (true) {
                 if ($resultEmpty) {
                     $row = mysqli_fetch_row($result2);
                     if ($row == false) {
@@ -90,8 +92,14 @@ function endElement($parser, $name)
                 $resultLink = mysqli_query($DBLink, $query);
                 $rowLink = mysqli_fetch_row($resultLink);
                 if ($rowLink) {
+                    // Only show MAX_NUMBER_LINKED_EVENT_NOTES items of type 'event' and 'note'
+                    if ($tableLinkName == EVENT || $tableLinkName == NOTE) {
+                        if ($numberOfEventsNotes >= MAX_NUMBER_LINKED_EVENT_NOTES) {
+                            continue;
+                        }
+                        ++$numberOfEventsNotes;
+                    }
                     $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $row[1] . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '" />';
-                    ++$numberOfItems;
                 }
             }
         }

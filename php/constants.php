@@ -19,9 +19,6 @@ define('TAG', 'tag');
 
 define('ONEDAY', '86400'); //24 * 60 * 60
 
-define('MAX_NUMBER_ITEMS_PER_CATEGORY', '20');
-define('MAX_NUMBER_LINKED_ITEMS', '30');
-
 global $TABLE;
 $TABLE = array();
 $TABLE[DAY] = new Day();

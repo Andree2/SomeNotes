@@ -39,14 +39,14 @@ require_once 'passes.php';
         </div>
         <div id="map"></div>
     </div>
-    <script>
+    <script type="text/javascript">
 
       var View = new MapView();
       var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.LoadLinksAndSetSelectedElement);
 
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=<?php echo $GoogleAPIKey; ?>&callback=View.InitMap">
+    src="https://maps.googleapis.com/maps/api/js?key=<?php echo $GoogleAPIKey; ?>&callback=View.Initialize">
     </script>
   </body>
 </html>

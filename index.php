@@ -46,7 +46,7 @@ $date = date("Y-m-d", $timeStamp);
             var View = new IndexView();
             var WeekLastId = 'WeekLast';
 
-            var ItemBarLinks   = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.ShowEdit);
+            var ItemBarLinks = new ItemBarLinkedItems('ItemBarLinks', 'divLinks', 0, 0, false, View.ShowEdit);
             var ItemBarAll = new ItemBarAllItems('ItemBarAll', 'divSearch', 0, -1, true, View.OnEnterKeySearch)
 
             if (document.body && document.body.offsetWidth) {
