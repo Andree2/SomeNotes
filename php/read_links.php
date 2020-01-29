@@ -58,10 +58,11 @@ function endElement($parser, $name)
 
         // TODO: Evtl. mit optimizer hint? ... WITH (INDEX (index_name))
 
+        $numberOfItems = 0;
         if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
             $resultEmpty = false;
 
-            while (true) {
+            while (true && $numberOfItems < MAX_NUMBER_LINKED_ITEMS) {
                 if ($resultEmpty) {
                     $row = mysqli_fetch_row($result2);
                     if ($row == false) {
@@ -90,6 +91,7 @@ function endElement($parser, $name)
                 $rowLink = mysqli_fetch_row($resultLink);
                 if ($rowLink) {
                     $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $row[1] . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '" />';
+                    ++$numberOfItems;
                 }
             }
         }

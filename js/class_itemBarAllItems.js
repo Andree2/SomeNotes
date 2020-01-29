@@ -28,8 +28,8 @@
                 return;
 
             var filterText = this.DivFilterText.value;
-            // Only start request when there is some filter text to speed up search.
-            if (filterText.length < 3) return;
+            // Only start request when there is a filter text to speed up search.
+            if (filterText.length < 1) return;
 
             var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '"/>';
 
