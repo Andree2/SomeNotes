@@ -185,6 +185,7 @@ function IndexView()
 
             // An item has changed, reload the data.
             View.LoadViewAfterEdit(item);
+            ItemBarAll.OnInput();
         }
     };
 
@@ -203,7 +204,7 @@ function IndexView()
             View.SetEditElementVisible(false);
             // An item has changed, reload the data.
             View.LoadViewAfterEdit(xmlDoc.firstChild); // xmlDoc -> row
-            ItemBarAll.LoadItems();
+            ItemBarAll.OnInput();
         }
     };
 
