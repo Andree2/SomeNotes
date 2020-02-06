@@ -199,6 +199,7 @@ div.place_bar_food0,
 div.place_cafe0,
 div.place_club0,
 div.place_home0,
+div.place_hotel0,
 div.place_restaurant0
 {
     color:            rgb(128,128,128);
@@ -213,6 +214,7 @@ div.place_bar_food1,   div.place_bar_food2,     div.place_bar_food3,
 div.place_cafe1,       div.place_cafe2,         div.place_cafe3,
 div.place_club1,       div.place_club2,         div.place_club3,
 div.place_home1,       div.place_home2,         div.place_home3,
+div.place_hotel1,      div.place_hotel2,        div.place_hotel3,
 div.place_restaurant1, div.place_restaurant2,   div.place_restaurant3
 {
     color:            rgb(0,140,0);
@@ -227,6 +229,7 @@ div.place_bar_food4,   div.place_bar_food5,     div.place_bar_food6,
 div.place_cafe4,       div.place_cafe5,         div.place_cafe6,
 div.place_club4,       div.place_club5,         div.place_club6,
 div.place_home4,       div.place_home5,         div.place_home6,
+div.place_hotel4,      div.place_hotel5,        div.place_hotel6,
 div.place_restaurant4, div.place_restaurant5,   div.place_restaurant6
 {
     color:            rgb(0,0,0);
@@ -235,12 +238,13 @@ div.place_restaurant4, div.place_restaurant5,   div.place_restaurant6
 }
 
 div.place7,                 div.place8,                   div.place9,                   div.place10,    
-div.place_activity7,        div.place_activity8,          div.place_activity9,          div.place_activity10,  
-div.place_bar7,             div.place_bar8,               div.place_bar9,               div.place_bar10,           
-div.place_bar_food7,        div.place_bar_food8,          div.place_bar_food9,          div.place_bar_food10,      
-div.place_cafe7,            div.place_cafe8,              div.place_cafe9               div.place_cafe10,         
-div.place_club7,            div.place_club8,              div.place_club9               div.place_club10,               
-div.place_home7,            div.place_home8,              div.place_home9,              div.place_home10,                      
+div.place_activity7,        div.place_activity8,          div.place_activity9,          div.place_activity10,
+div.place_bar7,             div.place_bar8,               div.place_bar9,               div.place_bar10,
+div.place_bar_food7,        div.place_bar_food8,          div.place_bar_food9,          div.place_bar_food10,
+div.place_cafe7,            div.place_cafe8,              div.place_cafe9               div.place_cafe10,
+div.place_club7,            div.place_club8,              div.place_club9               div.place_club10,
+div.place_home7,            div.place_home8,              div.place_home9,              div.place_home10,   
+div.place_hotel7,           div.place_hotel8,             div.place_hotel9,             div.place_hotel10,
 div.place_restaurant7,      div.place_restaurant8,        div.place_restaurant9,        div.place_restaurant10
 {
     color:            rgb(0,0,0);
