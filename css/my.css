@@ -119,16 +119,8 @@ div.dayHeader {
     height:        8%;
 }
 
-div.dayHeaderSomeDay {
-    background-color: #CCCCCC;
-}
-
-div.dayHeaderToday {
-    background-color: #808080;
-}
 
 div.dayHeaderOtherMonth {
-    background-color: #E7E7E7;
     color:            #606060;
 }
 
@@ -153,7 +145,7 @@ div.dayContent {
 }
 
 div.dayBodyWeekend {
-    background-color: rgb(232,232,232);
+    background-color: rgb(240,240,247);
 }
 div.dayBodyToday {
     border-color: rgb(211, 64, 15);

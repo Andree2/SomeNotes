@@ -27,12 +27,12 @@ div.dayBody_day_new_years_eve,
 div.dayBody_day_reformation_day,
 div.dayBody_day_parental_leave
 {
-    background-color: rgb(232,232,232);
+    background-color: rgb(247,240,240);
 }
 /* -- day_school_holidays -- */
 div.dayBody_day_school_holidays
 {
-    background-color: rgb(232,255,232);
+    background-color: rgb(240,255,240);
 }
 
 table.day, td.day {
@@ -41,30 +41,30 @@ table.day, td.day {
 /* ---------------------------------------- event ------------------------------------------ */
 div.event0
 {
-    color:            rgb(128,128,128);
-    border-color:     rgb(255,160,160);
-    background-color: rgba(255,255,255,0.6);
+    color:            rgb(160,160,160);
+    border-color:     rgb(255,230,230);
+    background-color: rgba(255,230,230,0.9);
 }
 
 div.event1, div.event2, div.event3
 {
-    color:            rgb(180,0,0);
-    border-color:     rgb(255,160,160);
-    background-color: rgba(255,255,255,0.6);
+    color:            rgb(48,48,48);
+    border-color:     rgb(255,190,190);
+    background-color: rgba(255,200,200,0.9);
 }
 
 div.event4, div.event5, div.event6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(240,150,150);
-    background-color: rgb(255,170,170);
+    border-color:     rgb(255,150,150);
+    background-color: rgb(255,170,170,0.9);
 }
 
 div.event7, div.event8, div.event9, div.event10
 {
     color:            rgb(0,0,0);
     border-color:     rgb(180,0,0);
-    background-color: rgb(255,130,130);
+    background-color: rgb(255,130,130,0.9);
 }
 
 table.event, td.event
@@ -74,23 +74,23 @@ table.event, td.event
 /* -- event_others -- */
 div.event_others0
 {
-    color:            rgb(180,180,180);
-    border-color:     rgb(192,192,192);
-    background-color: rgba(255,255,255,0.6);
+    color:            rgb(160,160,160);
+    border-color:     rgb(236,236,236);
+    background-color: rgba(236,236,236,0.9);
 }
 
 div.event_others1, div.event_others2, div.event_others3
 {
-    color:            rgb(128,128,128);
-    border-color:     rgb(160,160,160);
-    background-color: rgba(255,255,255,0.6);
+    color:            rgb(48,48,48);
+    border-color:     rgb(200,200,200);
+    background-color: rgba(220,220,220,0.9);
 }
 
 div.event_others4, div.event_others5, div.event_others6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(220,200,200);
-    background-color: rgb(220,220,220);
+    border-color:     rgb(190,190,190);
+    background-color: rgb(210,210,210);
 }
 
 div.event_others7, div.event_others8, div.event_others9, div.event_others10
@@ -102,30 +102,30 @@ div.event_others7, div.event_others8, div.event_others9, div.event_others10
 /* ---------------------------------------- note ------------------------------------------ */
 div.note0
 {
-    color:            rgb(128,128,128);
-    border-color:     rgb(160,160,255);
-    background-color: rgb(255,255,255);
+    color:            rgb(160,160,160);
+    border-color:     rgb(230,230,255);
+    background-color: rgb(230,230,255,0.9);
 }
 
 div.note1, div.note2, div.note3
 {
-    color:            rgb(0,0,220);
-    border-color:     rgb(160,160,255);
-    background-color: rgb(255,255,255);
+    color:            rgb(48,48,48);
+    border-color:     rgb(190,190,255);
+    background-color: rgb(200,200,255,0.9);
 }
 
 div.note4, div.note5, div.note6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(150,150,240);
-    background-color: rgb(170,170,255);
+    border-color:     rgb(150,150,255);
+    background-color: rgb(170,170,255,0.9);
 }
 
 div.note7, div.note8, div.note9, div.note10
 {
     color:            rgb(0,0,0);
     border-color:     rgb(24,24,255);
-    background-color: rgb(150,150,255);
+    background-color: rgb(150,150,255,0.9);
 }
 table.note, td.note
 {
@@ -134,58 +134,58 @@ table.note, td.note
 /* -- note_diary -- */
 div.note_diary0
 {
-    color:            rgb(128,128,128);
-    border-color:     rgb(160,255,160);
-    background-color: rgb(255,255,255);
+    color:            rgb(160,160,160);
+    border-color:     rgb(230,255,230);
+    background-color: rgb(235,255,235,0.9);
 }
 
 div.note_diary1, div.note_diary2, div.note_diary3
 {
-    color:            rgb(0,140,0);
-    border-color:     rgb(160,255,160);
-    background-color: rgb(255,255,255);
+    color:            rgb(48,48,48);
+    border-color:     rgb(190,255,190);
+    background-color: rgb(200,255,200,0.9);
 }
 
 div.note_diary4, div.note_diary5, div.note_diary6
 {
     color:            rgb(0,0,0);
-    border-color:     rgb(140,240,140);
-    background-color: rgb(160,255,160);
+    border-color:     rgb(150,255,150);
+    background-color: rgb(170,255,170,0.9);
 }
 
 div.note_diary7, div.note_diary8, div.note_diary9, div.note_diary10
 {
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
-    background-color: rgb(130,255,130);
+    background-color: rgb(130,255,130,0.9);
 }
 /* ---------------------------------------- person ------------------------------------------ */
 div.person0
 {
     color:            rgb(160,160,160);
-    border-color:     rgb(220,220,0);
-    background-color: rgb(255,255,255);
+    border-color:     rgb(255,255,210);
+    background-color: rgb(255,255,210,0.9);
 }
 
 div.person1, div.person2, div.person3
 {
-    color:            rgb(70,70,0);
-    border-color:     rgb(220,220,0);
-    background-color: rgb(255,255,255);
+    color:            rgb(48,48,48);
+    border-color:     rgb(255,255,180);
+    background-color: rgb(255,255,190,0.9);
 }
 
 div.person4, div.person5, div.person6
 {
     color:            rgb(0,0,0);
     border-color:     rgb(240,240,80);
-    background-color: rgb(255,255,100);
+    background-color: rgb(255,255,100,0.9);
 }
 
 div.person7, div.person8, div.person9, div.person10
 {
     color:            rgb(0,0,0);
     border-color:     rgb(220,220,0);
-    background-color: rgb(255,255,60);
+    background-color: rgb(255,255,60,0.9);
 }
 table.person, td.person
 {
@@ -202,9 +202,9 @@ div.place_home0,
 div.place_hotel0,
 div.place_restaurant0
 {
-    color:            rgb(128,128,128);
-    border-color:     rgb(64,220,64);
-    background-color: rgb(255,255,255);
+    color:            rgb(160,160,160);
+    border-color:     rgb(160,230,160);
+    background-color: rgb(160,230,160,0.9);
 }
 
 div.place1,            div.place2,              div.place3,
@@ -217,9 +217,9 @@ div.place_home1,       div.place_home2,         div.place_home3,
 div.place_hotel1,      div.place_hotel2,        div.place_hotel3,
 div.place_restaurant1, div.place_restaurant2,   div.place_restaurant3
 {
-    color:            rgb(0,140,0);
-    border-color:     rgb(64,220,64);
-    background-color: rgb(255,255,255);
+    color:            rgb(48,48,48);
+    border-color:     rgb(140,220,140);
+    background-color: rgb(160,230,160,0.9);
 }
 
 div.place4,            div.place5,              div.place6,
@@ -234,7 +234,7 @@ div.place_restaurant4, div.place_restaurant5,   div.place_restaurant6
 {
     color:            rgb(0,0,0);
     border-color:     rgb(44,210,44);
-    background-color: rgb(64,220,64);
+    background-color: rgb(64,220,64,0.9);
 }
 
 div.place7,                 div.place8,                   div.place9,                   div.place10,    
@@ -249,7 +249,7 @@ div.place_restaurant7,      div.place_restaurant8,        div.place_restaurant9,
 {
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
-    background-color: rgb(120,220,120);
+    background-color: rgb(120,220,120,0.9);
 }
 table.place, td.place, div.place
 {
@@ -258,30 +258,30 @@ table.place, td.place, div.place
 /* ---------------------------------------- tag ------------------------------------------ */
 div.tag0
 {
-    color:            rgb(255, 160, 80);
-    border-color:     rgb(255, 160, 80);
-    background-color: rgb(255,255,255);
+    color:            rgb(160,160,160);
+    border-color:     rgb(255,220,140);
+    background-color: rgb(255,220,140,0.9);
 }
 
 div.tag1, div.tag2, div.tag3
 {
-    color:            rgb(255, 100, 24);
-    border-color:     rgb(255, 160, 80);
-    background-color: rgb(255,255,255);
+    color:            rgb(48,48,48);
+    border-color:     rgb(255,190,120);
+    background-color: rgb(255,190,120,0.9);
 }
 
 div.tag4, div.tag5, div.tag6
 {
     color:            rgb(0,0,0);
     border-color:     rgb(240, 140, 60);
-    background-color: rgb(255, 160, 80);
+    background-color: rgb(255, 160, 80,0.9);
 }
 
 div.tag7, div.tag8, div.tag9, div.tag10
 {
     color:            rgb(0,0,0);
     border-color:     rgb(255, 100, 24);
-    background-color: rgb(255, 128, 24);
+    background-color: rgb(255, 128, 24,0.9);
 }
 table.tag, td.tag, div.tag
 {

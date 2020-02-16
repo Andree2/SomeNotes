@@ -648,7 +648,6 @@ function IndexView()
                 var dayTableData = dayTimestamp in this.mDayData ? this.mDayData[dayTimestamp] : undefined;
 
                 var dayDate = new Date(dayTimestamp);
-                var tdHeaderClass = (dayTimestamp == todayTimestamp) ? 'dayHeaderToday' : 'dayHeaderSomeDay';
                 var showNewCode = BuildShowNewCall(dayDate, dayTimestamp, todayTimestamp, currentTime);
 
                 var divClass = '';
@@ -668,7 +667,7 @@ function IndexView()
 
                 code += '<div class="dayBody' + divClass + '" onclick="' + showNewCode + '">';
                 code += (dayDate.getMonth() == todayDate.getMonth()
-                    ? '<div class="dayHeader ' + tdHeaderClass + '" onclick="' + showNewCode + '">'
+                    ? '<div class="dayHeader" onclick="' + showNewCode + '">'
                     : '<div class="dayHeader dayHeaderOtherMonth" onclick="' + showNewCode + '">');
                 dateDay = dayDate.getDate();
                 code += dateDay;
