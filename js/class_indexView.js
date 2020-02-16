@@ -818,7 +818,7 @@ function IndexView()
         // Show edit box.
         this.mEditElementItemID = 0;
         var obj = document.getElementById('editElementContent');
-        obj.innerHTML = BuildNew("note", date, time);
+        obj.innerHTML = BuildNew("event", date, time);
         View.SetEditElementVisible(true);
     };
 
