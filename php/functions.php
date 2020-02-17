@@ -11,7 +11,7 @@ function ParseXMLInputStream($startElementHandler, $endElementHandler, $characte
 
     while ($data = fread($inputStream, 4096)) {
         if (!xml_parse($xmlParser, $data, feof($inputStream))) {
-            die(sprintf("ParseXMLInputStream(): XML error: %s at line %d",
+            exit(sprintf("ParseXMLInputStream(): XML error: %s at line %d",
                 xml_error_string(xml_get_error_code($xmlParser)),
                 xml_get_current_line_number($xmlParser)));
         }
