@@ -1,10 +1,9 @@
 ﻿﻿class ItemBarAllItems extends ItemBarBase
 {
-    constructor(variableName, divID, minImportance, initialSortColumn, initialSortAscending, firstItemAction)
+    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction)
     {
         super(variableName,
             divID,
-            minImportance,
             initialSortColumn,
             initialSortAscending,
             firstItemAction,

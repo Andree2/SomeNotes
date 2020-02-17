@@ -1,9 +1,8 @@
 ﻿﻿class ItemBarBase
 {
-    constructor(variableName, divID, minImportance, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
+    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
     {
         var mXMLDoc = null;
-        var mMinImportance = minImportance;
         var mFirstItem = null;
         var mVariableName = variableName;
         var mInitialSortColumn = initialSortColumn;
@@ -13,7 +12,6 @@
         var mDivTableId = mDivID + 'Table';
         var mDivTable;
         var mDivItems;
-        var mDivFilterImportance;
         // =============================================================================================
         // ================================= Private ===================================================
         // =============================================================================================
@@ -37,7 +35,6 @@
          * @brief Prints a hierarchically list of item boxes.
          *
          * @param nodes         The hierarchically structured input data.
-         * @param minImportance Only items with importance greater or equal to \p minImportance will be drawn.
          */
         function BuildBoxList(nodes)
         {
@@ -46,8 +43,6 @@
             for (var j = 0; j < nodes.length; j++)
             {
                 var importance = parseInt(nodes[j].getAttribute("importance"));
-                if (importance < mMinImportance)
-                    continue;
                 var text = nodes[j].getAttribute("text");
                 code += "<tr>";
                 code += "  <td class='itemBarDate'>"
@@ -84,12 +79,10 @@
             var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
             var divItemsId = mDivID + 'Items';
             var divFilterTextId = mDivID + 'FilterText';
-            var divFilterImportanceId = mDivID + 'FilterImportance';
             var divButtonId = mDivID + 'Button';
             var code = "<div>"
-                + "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:55%;'/>"
-                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:20%;'>Go</a></span>"
-                + "  <input id='" + divFilterImportanceId + "' type='number' min='0' max='10' value='" + mMinImportance + "' onchange='" + onInput + ";' style='width: 15%;'/>"
+                + "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:60%;'/>"
+                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:30%;'>Go</a></span>"
                 + "</div>"
                 + "<div id='" + divItemsId + "' class='itemBar'>"
                 + "</div>";
@@ -97,9 +90,7 @@
             divContent.innerHTML = code;
             mDivItems = document.getElementById(divItemsId);
             this.DivFilterText = document.getElementById(divFilterTextId);
-            mDivFilterImportance = document.getElementById(divFilterImportanceId);
-        }
-            ;
+        };
         // -------------------------------------------------------------------------------------------
         this.SetVisible = function(visible)
         {
@@ -118,7 +109,6 @@
         this.SetXMLDoc = function(xmlDoc)
         {
             mXMLDoc = xmlDoc;
-            mMinImportance = mDivFilterImportance.value;
             mDivItems.innerHTML = BuildHTMLItems();
             mDivTable = document.getElementById(mDivTableId);
             sorttable.makeSortable(mDivTable);
