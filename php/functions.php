@@ -39,11 +39,14 @@ function XMLHeader()
     header('content-type: text/xml; charset=utf-8');
 }
 
-function BuildColumnFilter($table, $filterparts)
+function BuildColumnFilter($table, $minImportance, $filterparts)
 {
     $filter = '';
+    if ($minImportance > 0) {
+        $filter .= "importance >= " . $minImportance;
+    }
     for ($i = 0; $i < count($filterparts); $i++) {
-        if ($i > 0) {
+        if ($filter != '') {
             $filter .= " AND";
         }
         $displayTextSearch = $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%'";

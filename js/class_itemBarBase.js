@@ -90,6 +90,7 @@
             divContent.innerHTML = code;
             mDivItems = document.getElementById(divItemsId);
             this.DivFilterText = document.getElementById(divFilterTextId);
+            this.IsVisible = false;
         };
         // -------------------------------------------------------------------------------------------
         this.SetVisible = function(visible)
@@ -104,6 +105,7 @@
                 mainDiv.style.visibility = 'hidden';
                 this.DivFilterText.value = '';
             }
+            this.IsVisible = visible;
         };
         // -------------------------------------------------------------------------------------------
         this.SetXMLDoc = function(xmlDoc)

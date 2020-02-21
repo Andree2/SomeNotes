@@ -399,6 +399,12 @@ function IndexView()
         return scroll;
     }
 
+    this.UpdateItemBars = function()
+    {
+        ItemBarAll.OnInput();
+        ItemBarLinks.OnInput();
+    }
+
     /**
      * Resets the view and loads the view for <date>.
      */

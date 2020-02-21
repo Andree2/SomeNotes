@@ -63,7 +63,7 @@ $date = date("Y-m-d", $timeStamp);
                 <div id="editElementContent" ></div>
             </div>
 
-            <div style="grid-column: 1; grid-row: 2;">
+            <div style="grid-column: 1; grid-row: 2 / 3;">
                 <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
                 <button onclick="ShowDate()">-></button>
                 <script type='text/Javascript'>
@@ -72,6 +72,9 @@ $date = date("Y-m-d", $timeStamp);
                         View.LoadView(new Date(date));
                     }
                 </script>
+            <div>
+                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.UpdateItemBars()'/>
+            </div>
             </div>
             <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 2;"></div>
             <div class="mainViewWeekDayHeader" style="grid-column: 3; grid-row: 2;">Mo</div>
@@ -82,10 +85,10 @@ $date = date("Y-m-d", $timeStamp);
             <div class="mainViewWeekDayHeader" style="grid-column: 8; grid-row: 2;">Sa</div>
             <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 2;">So</div>
 
-            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 3;">
+            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 4;">
                     ERROR: innerHTML of divSearch not set
             </div>
-            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3;">
+            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3 / 5;">
                 ERROR: innerHTML of divView not set
             </div>
         </table>

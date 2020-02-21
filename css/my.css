@@ -95,7 +95,7 @@ div.main {
     height:                100%;
     width:                 100%;
     display:               grid;
-    grid-template-rows:    auto 24px 1fr; 
+    grid-template-rows:    auto 24px 24px 1fr; 
     grid-template-columns: 260px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
     overflow:              hidden;
 }

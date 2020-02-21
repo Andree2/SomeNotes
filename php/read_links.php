@@ -5,21 +5,24 @@ require_once 'functions.php';
 
 define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
 
-function BuildFilter($table, $filterparts)
+function BuildFilter($table, $minImportance, $filterparts)
 {
-    if (count($filterparts) != 0) {
-        return " AND " . BuildColumnFilter($table, $filterparts);
+    $filter = BuildColumnFilter($table, $minImportance, $filterparts);
+    if ($filter == '') {
+        return '';
     }
-    return '';
+    return " AND " . $filter;
 }
 
 function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
         global $gFiltertext;
+        global $gMinImportance;
         global $gTable;
         global $gId;
         $gFiltertext = $attributes['FILTERTEXT'];
+        $gMinImportance = $attributes['MINIMPORTANCE'];
         $gTable = $attributes['TABLE'];
         $gId = $attributes['ID'];
     }
@@ -29,6 +32,7 @@ function endElement($parser, $name)
 {
     if ($name == 'ROW') {
         global $gFiltertext;
+        global $gMinImportance;
         global $gTable;
         global $gId;
         global $gOutput;
@@ -78,7 +82,7 @@ function endElement($parser, $name)
 
                 $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
 
-                $filter = BuildFilter($TABLE[$tableLinkName], $filterparts);
+                $filter = BuildFilter($TABLE[$tableLinkName], $gMinImportance, $filterparts);
                 $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()
                 . ",importance,category"
