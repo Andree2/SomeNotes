@@ -19,10 +19,12 @@ function startElement($parser, $name, $attributes)
     if ($name == 'ROW') {
         global $gFiltertext;
         global $gMinImportance;
+        global $gShowNotes;
         global $gTable;
         global $gId;
         $gFiltertext = $attributes['FILTERTEXT'];
         $gMinImportance = $attributes['MINIMPORTANCE'];
+        $gShowNotes = $attributes['SHOWNOTES'] == "true";
         $gTable = $attributes['TABLE'];
         $gId = $attributes['ID'];
     }
@@ -33,6 +35,7 @@ function endElement($parser, $name)
     if ($name == 'ROW') {
         global $gFiltertext;
         global $gMinImportance;
+        global $gShowNotes;
         global $gTable;
         global $gId;
         global $gOutput;
@@ -90,6 +93,9 @@ function endElement($parser, $name)
                 $resultLink = mysqli_query($DBLink, $query);
                 $rowLink = mysqli_fetch_row($resultLink);
                 if ($rowLink) {
+                    if ($tableLinkName == NOTE && !$gShowNotes) {
+                        continue;
+                    }
                     // Only show MAX_NUMBER_LINKED_EVENT_NOTES items of type 'event' and 'note'
                     if ($tableLinkName == EVENT || $tableLinkName == NOTE) {
                         if ($numberOfEventsNotes >= MAX_NUMBER_LINKED_EVENT_NOTES) {

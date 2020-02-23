@@ -454,7 +454,8 @@ function IndexView()
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
         var minImportance = $('#minimumImportance')[0].valueAsNumber;
-        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row dateStart="' + timestampStart + '" dateEnd="' + timestampEnd + '" minImportance="' + minImportance + '"/>';
+        var showNotes = $('#showNotes')[0].checked;
+        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row dateStart="' + timestampStart + '" dateEnd="' + timestampEnd + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '"/>';
 
         this.mAddingData = true;
         My.SendPOSTRequest(xmlHttp, "./php/read_view.php", xml, function()

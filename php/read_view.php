@@ -16,9 +16,11 @@ function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
         global $gMinImportance;
+        global $gShowNotes;
         global $gDateStart;
         global $gDateEnd;
         $gMinImportance = $attributes['MINIMPORTANCE'];
+        $gShowNotes = $attributes['SHOWNOTES'] == "true";
         $gDateStart = $attributes['DATESTART'];
         $gDateEnd = $attributes['DATEEND'];
     }
@@ -28,6 +30,7 @@ function endElement($parser, $name)
 {
     if ($name == 'ROW') {
         global $gMinImportance;
+        global $gShowNotes;
         global $gDateStart;
         global $gDateEnd;
         global $gOutput;
@@ -48,7 +51,7 @@ function endElement($parser, $name)
         // Post start and end date for which this view was requested.
         $gOutput .= '<row date_start="' . $gDateStart . '" date_end="' . $gDateEnd . '">';
 
-        // Select DAYs.
+        // Read DAYs.
         $query = "SELECT id,from_date,to_date,category FROM " . $TABLE[DAY]->GetTableName() . " WHERE from_date <= " . $dateEndSQL . " AND to_date >= " . $dateStartSQL;
         $result = mysqli_query($DBLink, $query);
         $gOutput .= '<table name="' . DAY . '">';
@@ -57,18 +60,20 @@ function endElement($parser, $name)
         }
         $gOutput .= '</table>';
 
-        // Select NOTEs.
-        $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . " WHERE date BETWEEN " . $dateStartSQL . " AND " . $dateEndSQL . $filter;
-        $result = mysqli_query($DBLink, $query);
-        $gOutput .= '<table name="' . NOTE . '">';
-        while ($row = mysqli_fetch_assoc($result)) {
-            $gOutput .= '<item id="' . $row['id'] . '" date="' . $row['date'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '">';
-            $gOutput .= "<title>" . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . "</title>";
-            $gOutput .= "</item>";
+        // Read NOTEs.
+        if ($gShowNotes) {
+            $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . " WHERE date BETWEEN " . $dateStartSQL . " AND " . $dateEndSQL . $filter;
+            $result = mysqli_query($DBLink, $query);
+            $gOutput .= '<table name="' . NOTE . '">';
+            while ($row = mysqli_fetch_assoc($result)) {
+                $gOutput .= '<item id="' . $row['id'] . '" date="' . $row['date'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '">';
+                $gOutput .= "<title>" . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . "</title>";
+                $gOutput .= "</item>";
+            }
+            $gOutput .= '</table>';
         }
-        $gOutput .= '</table>';
 
-        // Select EVENTs.
+        // Read EVENTs.
         $query = "SELECT id,title,from_time,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . " WHERE from_date <= " . $dateEndSQL . " AND to_date >= " . $dateStartSQL . $filter;
         $result = mysqli_query($DBLink, $query);
 
@@ -87,8 +92,8 @@ function endElement($parser, $name)
         }
         $gOutput .= '</table>';
 
-        // Select PERSONs.
-        // Selec persons which have birthday on this date.
+        // Read PERSONs.
+        // Select persons which have birthday on this date.
         $query = '';
         $dateMonthDayStart = date('md', $dateStartTimestampSQL);
         $dateMonthDayEnd = date('md', $dateEndTimestampSQL);

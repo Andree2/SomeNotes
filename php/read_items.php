@@ -20,8 +20,10 @@ function startElement($parser, $name, $attributes)
     if ($name == 'ROW') {
         global $gFiltertext;
         global $gMinImportance;
+        global $gShowNotes;
         $gFiltertext = $attributes['FILTERTEXT'];
         $gMinImportance = $attributes['MINIMPORTANCE'];
+        $gShowNotes = $attributes['SHOWNOTES'] == "true";
     }
 }
 
@@ -30,6 +32,7 @@ function endElement($parser, $name)
     if ($name == 'ROW') {
         global $gFiltertext;
         global $gMinImportance;
+        global $gShowNotes;
         global $gOutput;
         global $TABLE;
         global $DBLink;
@@ -69,11 +72,13 @@ function endElement($parser, $name)
         }
 
         // Read Notes
-        $filter = BuildFilter($TABLE[NOTE], $gMinImportance, $gFiltertext);
-        $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT 20";
-        $result = mysqli_query($DBLink, $query);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="note" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
+        if ($gShowNotes) {
+            $filter = BuildFilter($TABLE[NOTE], $gMinImportance, $gFiltertext);
+            $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT 20";
+            $result = mysqli_query($DBLink, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="note" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
+            }
         }
 
         $gOutput .= '</row>';

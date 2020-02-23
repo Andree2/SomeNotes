@@ -57,7 +57,6 @@ $date = date("Y-m-d", $timeStamp);
             }
         </script>
         <div class="main noSpaces">
-
             <div class="editArea" style="visibility: collapse;grid-area: 1 / 1 / 1 / 10;" id="editElement" >
                 <div id="divLinks" class="itemBar"></div>
                 <div id="editElementContent" ></div>
@@ -65,16 +64,18 @@ $date = date("Y-m-d", $timeStamp);
 
             <div style="grid-column: 1; grid-row: 2 / 3;">
                 <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
-                <button onclick="ShowDate()">-></button>
+                <span><a class='button' onclick="ShowDate()" href='#' style='width:30%;'>-></a></span>
                 <script type='text/Javascript'>
                     function ShowDate() {
                         var date = document.getElementById("viewDate").value;
                         View.LoadView(new Date(date));
                     }
                 </script>
-            <div>
-                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
-            </div>
+                <div>
+                    <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
+                    <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
+                    <label for="showNotes">Notes</label>
+                </div>
             </div>
             <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 2;"></div>
             <div class="mainViewWeekDayHeader" style="grid-column: 3; grid-row: 2;">Mo</div>

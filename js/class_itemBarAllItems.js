@@ -37,7 +37,8 @@
             else
             {
                 var minImportance = $('#minimumImportance')[0].valueAsNumber;
-                var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '" minImportance="' + minImportance + '"/>';
+                var showNotes = $('#showNotes')[0].checked;
+                var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '"/>';
 
                 My.SendPOSTRequest(xmlHttp, "./php/read_items.php", xml, function()
                 {
