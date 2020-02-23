@@ -73,7 +73,7 @@ $date = date("Y-m-d", $timeStamp);
                     }
                 </script>
             <div>
-                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.UpdateItemBars()'/>
+                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
             </div>
             </div>
             <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 2;"></div>

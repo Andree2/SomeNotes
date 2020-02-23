@@ -6,9 +6,9 @@ require_once 'functions.php';
 global $gFiltertext;
 global $gOutput;
 
-function BuildFilter($table, $minImportance, $filterparts)
+function BuildFilter($table, $minImportance, $filtertext)
 {
-    $filter = BuildColumnFilter($table, $minImportance, $filterparts);
+    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext);
     if ($filter == '') {
         return '';
     }
@@ -34,19 +34,18 @@ function endElement($parser, $name)
         global $TABLE;
         global $DBLink;
 
-        $gOutput = '';
-        $filterparts = preg_split('/\s+/', $gFiltertext, -1, PREG_SPLIT_NO_EMPTY);
+        $gOutput = '<row>';
 
         // Read Persons
-        $filter = BuildFilter($TABLE[PERSON], $gMinImportance, $filterparts);
-        $query = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 5";
+        $filter = BuildFilter($TABLE[PERSON], $gMinImportance, $gFiltertext);
+        $query = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 8";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="person" text="' . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . '"/>';
         }
 
         // Read Tags
-        $filter = BuildFilter($TABLE[TAG], $gMinImportance, $filterparts);
+        $filter = BuildFilter($TABLE[TAG], $gMinImportance, $gFiltertext);
         $query = "SELECT id,title,importance,category FROM " . $TABLE[TAG]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -54,7 +53,7 @@ function endElement($parser, $name)
         }
 
         // Read Places
-        $filter = BuildFilter($TABLE[PLACE], $gMinImportance, $filterparts);
+        $filter = BuildFilter($TABLE[PLACE], $gMinImportance, $gFiltertext);
         $query = "SELECT id,title,importance,category FROM " . $TABLE[PLACE]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -62,7 +61,7 @@ function endElement($parser, $name)
         }
 
         // Read Events
-        $filter = BuildFilter($TABLE[EVENT], $gMinImportance, $filterparts);
+        $filter = BuildFilter($TABLE[EVENT], $gMinImportance, $gFiltertext);
         $query = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . $filter . " ORDER BY from_date DESC LIMIT 40";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -70,12 +69,14 @@ function endElement($parser, $name)
         }
 
         // Read Notes
-        $filter = BuildFilter($TABLE[NOTE], $gMinImportance, $filterparts);
+        $filter = BuildFilter($TABLE[NOTE], $gMinImportance, $gFiltertext);
         $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT 20";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="note" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
         }
+
+        $gOutput .= '</row>';
     }
 }
 
@@ -88,6 +89,4 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 mysqli_close($DBLink);
 
 XMLHeader();
-echo '<row>';
 echo $gOutput;
-echo '</row>';

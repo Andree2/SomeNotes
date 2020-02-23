@@ -399,10 +399,11 @@ function IndexView()
         return scroll;
     }
 
-    this.UpdateItemBars = function()
+    this.GlobalFilterChanged = function()
     {
         ItemBarAll.OnInput();
         ItemBarLinks.OnInput();
+        View.LoadViewCurrentlyViewedTimestamp();
     }
 
     /**
@@ -452,11 +453,11 @@ function IndexView()
     {
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
-        url = "php/read_view.php";
-        url = url + "?dateStart=" + timestampStart;
-        url = url + "&dateEnd=" + timestampEnd;
-        url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = function()
+        var minImportance = $('#minimumImportance')[0].valueAsNumber;
+        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row dateStart="' + timestampStart + '" dateEnd="' + timestampEnd + '" minImportance="' + minImportance + '"/>';
+
+        this.mAddingData = true;
+        My.SendPOSTRequest(xmlHttp, "./php/read_view.php", xml, function()
         {
             if (xmlHttp.readyState == 4)
             {
@@ -464,11 +465,7 @@ function IndexView()
                 View.mAddingData = false;
                 View.RedrawView(goToDate);
             }
-        };
-        xmlHttp.open("GET", url, true);
-        //window.open(url) //For testing XML output
-        this.mAddingData = true;
-        xmlHttp.send(null);
+        });
     };
 
     this.OnEnterKeySearch = function(table, id)

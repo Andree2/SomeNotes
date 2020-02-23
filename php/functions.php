@@ -39,12 +39,19 @@ function XMLHeader()
     header('content-type: text/xml; charset=utf-8');
 }
 
-function BuildColumnFilter($table, $minImportance, $filterparts)
+function BuildGlobalFilter($minImportance)
 {
     $filter = '';
     if ($minImportance > 0) {
         $filter .= "importance >= " . $minImportance;
     }
+    return $filter;
+}
+
+function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
+{
+    $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
+    $filter = BuildGlobalFilter($minImportance);
     for ($i = 0; $i < count($filterparts); $i++) {
         if ($filter != '') {
             $filter .= " AND";

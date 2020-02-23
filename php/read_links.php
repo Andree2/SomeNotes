@@ -5,9 +5,9 @@ require_once 'functions.php';
 
 define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
 
-function BuildFilter($table, $minImportance, $filterparts)
+function BuildFilter($table, $minImportance, $filtertext)
 {
-    $filter = BuildColumnFilter($table, $minImportance, $filterparts);
+    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext);
     if ($filter == '') {
         return '';
     }
@@ -41,15 +41,13 @@ function endElement($parser, $name)
         global $TABLE_LINK;
         global $TABLE_NAME_FROM_ID;
 
-        $gOutput = '';
-        $filterparts = preg_split('/\s+/', $gFiltertext, -1, PREG_SPLIT_NO_EMPTY);
         $table = $TABLE[$gTable];
 
         // ------------------------- Read item -----------------------------
         $query = "SELECT " . $table->GetColumnDisplayText() . " FROM " . $table->GetTableName() . " WHERE id = $gId";
         $result = mysqli_query($DBLink, $query);
         $row = mysqli_fetch_row($result);
-        $gOutput .= '<row text="' . htmlspecialchars($row[0], ENT_QUOTES, "UTF-8") . '">';
+        $gOutput = '<row text="' . htmlspecialchars($row[0], ENT_QUOTES, "UTF-8") . '">';
 
         // ------------------------- Read linked items -----------------------------
         $query = "SELECT table2_id, table2_item_id FROM " . $TABLE_LINK->GetTableName()
@@ -82,7 +80,7 @@ function endElement($parser, $name)
 
                 $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
 
-                $filter = BuildFilter($TABLE[$tableLinkName], $gMinImportance, $filterparts);
+                $filter = BuildFilter($TABLE[$tableLinkName], $gMinImportance, $gFiltertext);
                 $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()
                 . ",importance,category"
@@ -104,6 +102,7 @@ function endElement($parser, $name)
             }
         }
 
+        $gOutput .= '</row>';
     }
 }
 
@@ -116,4 +115,3 @@ mysqli_close($DBLink);
 
 XMLHeader();
 echo $gOutput;
-echo '</row>';
