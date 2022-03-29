@@ -87,11 +87,11 @@ $date = date("Y-m-d", $timeStamp);
             <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 2;">So</div>
 
             <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 4;">
-                    ERROR: innerHTML of divSearch not set
+                ERROR: innerHTML of divSearch not set
             </div>
             <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3 / 5;">
                 ERROR: innerHTML of divView not set
             </div>
-        </table>
+        </div>
     </body>
 </html>

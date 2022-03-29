@@ -46,9 +46,15 @@ function MapView()
         LoadLinksAndSetSelectedElement(table, id, divClass);
     };
 
+    this.GlobalFilterChanged = function()
+    {
+        ItemBarLinks.OnInput();
+    }
+
     this.Initialize = function()
     {
         ItemBarLinks.Initialize();
+        ItemBarLinks.SetVisible(true);
 
         var map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(53.073666, 8.796378),
