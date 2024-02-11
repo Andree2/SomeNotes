@@ -41,12 +41,19 @@ table.day, td.day {
 /* ---------------------------------------- event ------------------------------------------ */
 div.event0
 {
-    color:            rgb(160,160,160);
+    color:            rgb(180,180,180);
+    border-color:     rgb(255,235,235);
+    background-color: rgba(255,235,235,0.9);
+}
+
+div.event1
+{
+    color:            rgb(140,140,140);
     border-color:     rgb(255,230,230);
     background-color: rgba(255,230,230,0.9);
 }
 
-div.event1, div.event2, div.event3
+div.event2, div.event3
 {
     color:            rgb(48,48,48);
     border-color:     rgb(255,190,190);
@@ -74,12 +81,19 @@ table.event, td.event
 /* -- event_others -- */
 div.event_others0
 {
-    color:            rgb(160,160,160);
+    color:            rgb(180,180,180);
     border-color:     rgb(236,236,236);
     background-color: rgba(236,236,236,0.9);
 }
 
-div.event_others1, div.event_others2, div.event_others3
+div.event_others1
+{
+    color:            rgb(140,140,140);
+    border-color:     rgb(230,230,230);
+    background-color: rgba(230,230,230,0.9);
+}
+
+div.event_others2, div.event_others3
 {
     color:            rgb(48,48,48);
     border-color:     rgb(200,200,200);
@@ -162,12 +176,19 @@ div.note_diary7, div.note_diary8, div.note_diary9, div.note_diary10
 /* ---------------------------------------- person ------------------------------------------ */
 div.person0
 {
-    color:            rgb(160,160,160);
-    border-color:     rgb(255,255,210);
-    background-color: rgb(255,255,210,0.9);
+    color:            rgb(180,180,180);
+    border-color:     rgb(255,255,220);
+    background-color: rgb(255,255,220,0.9);
 }
 
-div.person1, div.person2, div.person3
+div.person1
+{
+    color:            rgb(140,140,140);
+    border-color:     rgb(255,255,140);
+    background-color: rgb(255,255,140,0.9);
+}
+
+div.person2, div.person3
 {
     color:            rgb(48,48,48);
     border-color:     rgb(255,255,180);
