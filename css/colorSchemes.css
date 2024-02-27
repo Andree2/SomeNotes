@@ -121,7 +121,14 @@ div.note0
     background-color: rgb(230,230,255,0.9);
 }
 
-div.note1, div.note2, div.note3
+div.note1
+{
+    color:            rgb(130,130,130);
+    border-color:     rgb(210,210,255);
+    background-color: rgb(220,220,255,0.9);
+}
+
+div.note2, div.note3
 {
     color:            rgb(48,48,48);
     border-color:     rgb(190,190,255);
@@ -153,7 +160,14 @@ div.note_diary0
     background-color: rgb(235,255,235,0.9);
 }
 
-div.note_diary1, div.note_diary2, div.note_diary3
+div.note_diary1
+{
+    color:            rgb(130,130,130);
+    border-color:     rgb(210,255,210);
+    background-color: rgb(225,255,225,0.9);
+}
+
+div.note_diary2, div.note_diary3
 {
     color:            rgb(48,48,48);
     border-color:     rgb(190,255,190);
@@ -172,6 +186,41 @@ div.note_diary7, div.note_diary8, div.note_diary9, div.note_diary10
     color:            rgb(0,0,0);
     border-color:     rgb(0,160,0);
     background-color: rgb(130,255,130,0.9);
+}
+/* -- note_diary_others -- */
+div.note_diary_others0
+{
+    color:            rgb(160,160,160);
+    border-color:     rgb(230, 245, 245);
+    background-color: rgba(235, 245, 245, 0.9);
+}
+
+div.note_diary_others0
+{
+    color:            rgb(130,130,130);
+    border-color:     rgb(210, 245, 245);
+    background-color: rgba(220, 245, 245, 0.9);
+}
+
+div.note_diary_others2, div.note_diary_others3
+{
+    color:            rgb(48,48,48);
+    border-color:     rgb(190, 230, 245);
+    background-color: rgba(200, 245, 245, 0.9);
+}
+
+div.note_diary_others4, div.note_diary_others5, div.note_diary_others6
+{
+    color:            rgb(0,0,0);
+    border-color:     rgb(150, 245, 245);
+    background-color: rgba(170, 245, 245, 0.9);
+}
+
+div.note_diary_others7, div.note_diary_others8, div.note_diary_others9, div.note_diary_others10
+{
+    color:            rgb(0,0,0);
+    border-color:     rgb(0, 160, 160);
+    background-color: rgba(130, 245, 235, 0.9);
 }
 /* ---------------------------------------- person ------------------------------------------ */
 div.person0
