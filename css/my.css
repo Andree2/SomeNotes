@@ -66,8 +66,7 @@ div.absolute {
 
 div.editArea {
     display:               grid;
-    grid-template-columns: 260px 1fr;
-    height:                340px;
+    grid-template-columns: 260px 800px;
 }
 
 div.itemBar {
@@ -95,8 +94,8 @@ div.main {
     height:                100%;
     width:                 100%;
     display:               grid;
-    grid-template-rows:    auto 24px 48px 1fr; 
-    grid-template-columns: 260px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-rows:    24px 48px 1fr; 
+    grid-template-columns: 260px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto; 
     overflow:              hidden;
 }
 
@@ -212,13 +211,13 @@ table.noSpaces td{
 }
 
 table.window {
-    padding:            0px;
-    margin:             0px;
-    background-color:   #E0E0E0;
-    border-color:       #A0A0A0;
-    border-style:       solid;
-    border-collapse:    collapse;
-    border-width:       1px;
+    padding:           0px;
+    margin:            0px;
+    background-color:  #E0E0E0;
+    border-color:      #A0A0A0;
+    border-style:      solid;
+    border-collapse:   collapse;
+    border-width:      1px;
     width:             100%;
 }
 
@@ -264,6 +263,9 @@ tr.windowBar {
     height:           32px;
 }
 
+tr.windowContent {
+    height:           auto;
+}
 
 /* ---------------------------------------- td ----------------------------------------------- */
 

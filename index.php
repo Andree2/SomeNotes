@@ -57,12 +57,7 @@ $date = date("Y-m-d", $timeStamp);
             }
         </script>
         <div class="main noSpaces">
-            <div class="editArea" style="visibility: collapse;grid-area: 1 / 1 / 1 / 10;" id="editElement" >
-                <div id="divLinks" class="itemBar"></div>
-                <div id="editElementContent" ></div>
-            </div>
-
-            <div style="grid-column: 1; grid-row: 2 / 3;">
+            <div style="grid-column: 1; grid-row: 1 / 2;">
                 <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
                 <span><a class='button' onclick="ShowDate()" href='#' style='width:30%;'>-></a></span>
                 <script type='text/Javascript'>
@@ -77,20 +72,25 @@ $date = date("Y-m-d", $timeStamp);
                     <label for="showNotes">Notes</label>
                 </div>
             </div>
-            <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 2;"></div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 3; grid-row: 2;">Mo</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 4; grid-row: 2;">Di</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 5; grid-row: 2;">Mi</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 6; grid-row: 2;">Do</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 7; grid-row: 2;">Fr</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 8; grid-row: 2;">Sa</div>
-            <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 2;">So</div>
+            <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 1;"></div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 3; grid-row: 1;">Mo</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 4; grid-row: 1;">Di</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 5; grid-row: 1;">Mi</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 6; grid-row: 1;">Do</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 7; grid-row: 1;">Fr</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 8; grid-row: 1;">Sa</div>
+            <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 1;">So</div>
 
-            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 4;">
+            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 3;">
                 ERROR: innerHTML of divSearch not set
             </div>
-            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 3 / 5;">
+            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 2 / 4;">
                 ERROR: innerHTML of divView not set
+            </div>
+
+            <div class="editArea" style="visibility: collapse;grid-column: 10 / 10; grid-row: 1 / 4;" id="editElement" >
+                <div id="divLinks" class="itemBar"></div>
+                <div id="editElementContent"></div>
             </div>
         </div>
     </body>
