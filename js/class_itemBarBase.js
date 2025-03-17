@@ -95,14 +95,8 @@
         // -------------------------------------------------------------------------------------------
         this.SetVisible = function(visible)
         {
-            var mainDiv = document.getElementById(mDivID);
-            if (visible)
+            if (!visible)
             {
-                mainDiv.style.display = 'grid';
-            }
-            else
-            {
-                mainDiv.style.display = 'none';
                 this.DivFilterText.value = '';
             }
             this.IsVisible = visible;
