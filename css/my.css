@@ -66,7 +66,14 @@ div.absolute {
 
 div.editArea {
     display:               grid;
-    grid-template-columns: 260px 800px;
+    grid-column:           10;
+    grid-row:              1 / 4;
+    grid-template-columns: 320px 800px;
+    grid-template-rows:    1fr;
+}
+
+div.linkBar {
+    grid-template-rows:    auto 1fr;
 }
 
 div.itemBar {

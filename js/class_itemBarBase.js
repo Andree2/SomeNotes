@@ -98,11 +98,11 @@
             var mainDiv = document.getElementById(mDivID);
             if (visible)
             {
-                mainDiv.style.visibility = 'visible';
+                mainDiv.style.display = 'grid';
             }
             else
             {
-                mainDiv.style.visibility = 'hidden';
+                mainDiv.style.display = 'none';
                 this.DivFilterText.value = '';
             }
             this.IsVisible = visible;

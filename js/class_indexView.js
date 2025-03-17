@@ -62,8 +62,6 @@ function IndexView()
     // The distance in pixels from the current content border at which new content will be loaded during scrolling.
     this.mWeekScrollLoadLimit = 0;
 
-    this.mEditAreaWidth = 0;
-
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
@@ -298,8 +296,6 @@ function IndexView()
         ItemBarAll.Initialize();
         ItemBarLinks.Initialize();
 
-        // Store current element of edit area (which is determined by my/mobile style)
-        this.mEditAreaWidth = $('#editElement').width();
         this.SetEditElementVisible(false);
 
         $("#divView").scroll(function(e)
@@ -780,7 +776,6 @@ function IndexView()
 
     this.SetEditElementVisible = function(visible)
     {
-        var editElement = document.getElementById('editElement');
         mEditElementVisible = visible;
 
         // Hide links and search bar. They will be loaded again when an edit 
@@ -789,14 +784,12 @@ function IndexView()
 
         if (visible)
         {
-            editElement.style.visibility = 'visible';
-            editElement.style.width = this.mEditAreaWidth;
+            editElement.style.display = 'grid';
             $('#divSearchButton').html('Link');
         }
         else
         {
-            editElement.style.visibility = 'collapse';
-            editElement.style.width = '0px';
+            editElement.style.display = 'none';
             $('#divSearchButton').html('Go');
         }
         return false; // Do not follow href after this.

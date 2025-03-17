@@ -88,8 +88,8 @@ $date = date("Y-m-d", $timeStamp);
                 ERROR: innerHTML of divView not set
             </div>
 
-            <div class="editArea" style="visibility: collapse;grid-column: 10 / 10; grid-row: 1 / 4;" id="editElement" >
-                <div id="divLinks" class="itemBar"></div>
+            <div class="editArea" id="editElement" >
+                <div id="divLinks" class="itemBar linkBar"></div>
                 <div id="editElementContent"></div>
             </div>
         </div>

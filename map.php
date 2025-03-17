@@ -40,7 +40,7 @@ require_once 'passes.php';
                     <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
                     <label for="showNotes">Notes</label>
                 </div>
-                <div id="divLinks" class="itemBar"></div>
+                <div id="divLinks" class="itemBar linkBar"></div>
             </div>
             <div id="map"></div>
         </div>
