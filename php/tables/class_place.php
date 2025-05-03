@@ -16,18 +16,23 @@ class Place extends Table
         return 8;
     }
 
-    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    public function GetPostDataSQLFormat($columnValueMap)
     {
-        if ($column == 'IMPORTANCE'
-            || $column == 'LATITUDE'
-            || $column == 'LONGITUDE') {
-            if ($value == '') {
-                return 'NULL';
+        $columnValueMapSql = [];
+        foreach ($columnValueMap as $column => $value) {
+            if ($column == 'IMPORTANCE'
+                || $column == 'LATITUDE'
+                || $column == 'LONGITUDE') {
+                if ($value == '') {
+                    $columnValueMapSql[$column] = 'NULL';
+                } else {
+                    $columnValueMapSql[$column] = $value;
+                }
             } else {
-                return $value;
+                $columnValueMapSql[$column] = '\'' . addslashes($value) . '\'';
             }
         }
-        return '\'' . addslashes($value) . '\'';
+        return $columnValueMapSql;
     }
 
     public function GetTableName()
@@ -40,7 +45,10 @@ class Place extends Table
         return "SELECT id,created,last_changed,importance,category,title,address,latitude,longitude FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
-    public function EchoXMLRow($row)
+    /**
+     * Puts out the row read from the SQL row as XML.
+     */
+    public function EchoXMLReadRow($row)
     {
         echo '<row id="' . $row['id'] . '" table="' . $this->GetName() . '" created="' . $row['created'] . '" last_changed="' . $row['last_changed'] . '" importance="' . $row['importance'] . '" latitude="' . $row['latitude'] . '" longitude="' . $row['longitude'] . '">';
         echo "  <title>" . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . "</title>";

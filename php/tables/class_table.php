@@ -21,7 +21,7 @@ abstract class Table
         return 0;
     }
 
-    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    public function GetPostDataSQLFormat($columnValueMap)
     {
         return '';
     }
@@ -36,7 +36,10 @@ abstract class Table
         return '';
     }
 
-    public function EchoXMLRow($row)
+    /**
+     * Puts out the row read from the SQL row as XML.
+     */
+    public function EchoXMLReadRow($row)
     {
         return '';
     }

@@ -70,7 +70,7 @@ function Place()
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         var latitude_longitude = ParseInputLatitudeLongitude();
         xml = '<row table="place"' + (id == '' ? '' : ' id="' + id + '"') + '>'

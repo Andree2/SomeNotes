@@ -45,7 +45,7 @@ function Day()
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         xml = '<row table="day"' + (id == '' ? '' : ' id="' + id + '"') + '>'
             + '  <from_date>' + document.getElementById('input_day_from_date').value + '</from_date>'

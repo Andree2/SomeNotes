@@ -59,7 +59,7 @@
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         datetimeParts = document.getElementById('input_note_datetime').value.split("T");
         xml = '<row table="note"' + (id == '' ? '' : ' id="' + id + '"') + '>'

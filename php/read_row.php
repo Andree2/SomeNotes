@@ -14,6 +14,6 @@ XMLHeader();
 
 // ID is unique, there should only be one result.
 $row = mysqli_fetch_assoc($result);
-$TABLE[$table]->EchoXMLRow($row);
+$TABLE[$table]->EchoXMLReadRow($row);
 
 mysqli_close($DBLink);

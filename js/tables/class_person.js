@@ -87,7 +87,7 @@
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         xml = '<row table="person"' + (id == '' ? '' : ' id="' + id + '"') + '>'
             + '  <display_name>' + My.HtmlSpecialChars(document.getElementById('input_person_display_name').value) + '</display_name>'

@@ -15,13 +15,16 @@ function startElement($parser, $name, $attributes)
     if ($name == 'ROW') {
         global $gQueryID;
         global $gQueryTable;
-        $gQueryTable = $attributes['TABLE'];
-        $gQueryID    = $attributes['ID'];
+        global $gColumnValueMap;
+        $gQueryTable     = $attributes['TABLE'];
+        $gQueryID        = $attributes['ID'];
+        $gColumnValueMap = [];
     }
 }
 
 function endElement($parser, $name)
 {
+    global $gColumnValueMap;
     global $gQueryList;
     global $gQueryTable;
     global $gDate;
@@ -30,11 +33,19 @@ function endElement($parser, $name)
 
     if ($name == 'ROW') {
         global $gQueryID;
-        $query = 'UPDATE ' . $TABLE["$gQueryTable"]->GetTableName() . " SET last_changed=NOW()$gQueryList WHERE id = $gQueryID";
+
+        $columnValueMapSql = $TABLE["$gQueryTable"]->GetPostDataSQLFormat($gColumnValueMap);
+        $queryList         = '';
+        foreach ($columnValueMapSql as $column => $value) {
+            $queryList .= ",$column=" . $value;
+        }
+
+        // Update row
+        $query = 'UPDATE ' . $TABLE["$gQueryTable"]->GetTableName() . " SET last_changed=NOW()$queryList WHERE id = $gQueryID";
         mysqli_query($DBLink, $query);
     } else {
         global $gItemContent;
-        $gQueryList .= ",$name=" . $TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);
+        $gColumnValueMap[$name] = $gItemContent;
         if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
             $gDate = $gItemContent;
         }
@@ -51,7 +62,7 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 
 mysqli_close($DBLink);
 
-//TODO: Do not only send table and ID, but send whole object (see read_row.php, EchoXMLRow)
+// TODO: Do not only send table and ID, but send whole object (see read_row.php, EchoXMLReadRow)
 // and directly call BuildEdit in javascript->OnStateChanged
 
 XMLHeader();

@@ -14,28 +14,36 @@ function startElement($parser, $name, $attributes)
 
     if ($name == 'ROW') {
         global $gQueryTable;
-        $gQueryTable = $attributes['TABLE'];
+        global $gColumnValueMap;
+        $gQueryTable     = $attributes['TABLE'];
+        $gColumnValueMap = [];
     }
 }
 
 function endElement($parser, $name)
 {
-    global $gValueList;
-    global $gColumnList;
+    global $gColumnValueMap;
     global $gQueryTable;
     global $TABLE;
     global $query;
     global $DBLink;
 
     if ($name == 'ROW') {
+        $columnValueMapSql = $TABLE["$gQueryTable"]->GetPostDataSQLFormat($gColumnValueMap);
+        $columnList        = '';
+        $valueList         = '';
+        foreach ($columnValueMapSql as $column => $value) {
+            $columnList .= "," . $column;
+            $valueList .= "," . $value;
+        }
+
         // Insert row (ID will be generated where necessary).
-        $query = 'INSERT INTO ' . $TABLE["$gQueryTable"]->GetTableName() . " (CREATED,LAST_CHANGED$gColumnList) VALUES (NOW(),NOW()$gValueList)";
+        $query = 'INSERT INTO ' . $TABLE["$gQueryTable"]->GetTableName() . " (CREATED,LAST_CHANGED$columnList) VALUES (NOW(),NOW()$valueList)";
         mysqli_query($DBLink, $query);
     } else {
         global $gItemContent;
         global $gDate;
-        $gColumnList .= "," . $name;
-        $gValueList .= "," . $TABLE["$gQueryTable"]->GetPostDataSQLFormat($gItemContent, $name, $TABLE);
+        $gColumnValueMap[$name] = $gItemContent;
         if ($name == $TABLE["$gQueryTable"]->GetColumnDate()) {
             $gDate = $gItemContent;
         }
@@ -50,8 +58,8 @@ function characterData($parser, $data)
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
 
-//TODO: Do not only send table and ID, but send whole object (see read_row.php, EchoXMLRow)
-// and direclty call BuildEdit in javascript->OnStateChanged
+// TODO: Do not only send table and ID, but send whole object (see read_row.php, EchoXMLReadRow)
+// and directly call BuildEdit in javascript->OnStateChanged
 XMLHeader();
 echo '<row table="' . $gQueryTable . '" id="' . mysqli_insert_id($DBLink) . '"';
 

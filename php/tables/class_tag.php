@@ -16,16 +16,21 @@ class Tag extends Table
         return 6;
     }
 
-    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    public function GetPostDataSQLFormat($columnValueMap)
     {
-        if ($column == 'IMPORTANCE') {
-            if ($value == '') {
-                return 'NULL';
+        $columnValueMapSql = [];
+        foreach ($columnValueMap as $column => $value) {
+            if ($column == 'IMPORTANCE') {
+                if ($value == '') {
+                    $columnValueMapSql[$column] = 'NULL';
+                } else {
+                    $columnValueMapSql[$column] = $value;
+                }
             } else {
-                return $value;
+                $columnValueMapSql[$column] = '\'' . addslashes($value) . '\'';
             }
         }
-        return '\'' . addslashes($value) . '\'';
+        return $columnValueMapSql;
     }
 
     public function GetTableName()
@@ -38,7 +43,10 @@ class Tag extends Table
         return "SELECT id,created,last_changed,importance,category,title,text,induced_category FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
-    public function EchoXMLRow($row)
+    /**
+     * Puts out the row read from the SQL row as XML.
+     */
+    public function EchoXMLReadRow($row)
     {
         echo '<row id="' . $row['id'] . '" table="' . $this->GetName() . '" created="' . $row['created'] . '" last_changed="' . $row['last_changed'] . '" importance="' . $row['importance'] . '">';
         echo "<category>" . htmlspecialchars($row['category'], ENT_QUOTES, "UTF-8") . "</category>";

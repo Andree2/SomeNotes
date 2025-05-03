@@ -17,19 +17,24 @@ class Person extends Table
         return 5;
     }
 
-    public function GetPostDataSQLFormat($value, $column, $tableGlobals)
+    public function GetPostDataSQLFormat($columnValueMap)
     {
-        if ($column == 'BIRTHDAY_DAY'
-            || $column == 'BIRTHDAY_MONTH'
-            || $column == 'BIRTHDAY_YEAR'
-            || $column == 'IMPORTANCE') {
-            if ($value == '') {
-                return 'NULL';
+        $columnValueMapSql = [];
+        foreach ($columnValueMap as $column => $value) {
+            if ($column == 'BIRTHDAY_DAY'
+                || $column == 'BIRTHDAY_MONTH'
+                || $column == 'BIRTHDAY_YEAR'
+                || $column == 'IMPORTANCE') {
+                if ($value == '') {
+                    $columnValueMapSql[$column] = 'NULL';
+                } else {
+                    $columnValueMapSql[$column] = $value;
+                }
             } else {
-                return $value;
+                $columnValueMapSql[$column] = '\'' . addslashes($value) . '\'';
             }
         }
-        return '\'' . addslashes($value) . '\'';
+        return $columnValueMapSql;
     }
 
     public function GetTableName()
@@ -42,7 +47,10 @@ class Person extends Table
         return "SELECT id,created,last_changed,importance,category,display_name,first_name,middle_name,last_name,birthday_day,birthday_month,birthday_year,sex,text FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
-    public function EchoXMLRow($row)
+    /**
+     * Puts out the row read from the SQL row as XML.
+     */
+    public function EchoXMLReadRow($row)
     {
         echo '<row id="' . $row['id'] . '" table="' . $this->GetName() . '" created="' . $row['created'] . '" last_changed="' . $row['last_changed'] . '" birthday_day="' . $row['birthday_day'] . '" birthday_month="' . $row['birthday_month'] . '" birthday_year="' . $row['birthday_year'] . '" importance="' . $row['importance'] . '">';
         echo "  <display_name>" . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . "</display_name>";

@@ -64,7 +64,7 @@
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         fromDatetimeParts = document.getElementById('input_event_from_datetime').value.split("T");
         toDatetimeParts = document.getElementById('input_event_to_datetime').value.split("T");

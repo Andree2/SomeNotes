@@ -57,7 +57,7 @@
         return true;
     };
     // ---------------------------------------------------------------------------------------------
-    this.GetRow = function(id)
+    this.GetPOSTRequestRow = function(id)
     {
         xml = '<row table="tag"' + (id == '' ? '' : ' id="' + id + '"') + '>'
             + '  <title>' + My.HtmlSpecialChars(document.getElementById('input_tag_title').value) + '</title>'

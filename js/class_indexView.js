@@ -210,10 +210,10 @@ function IndexView()
     {
         ItemBarLinks.LoadLinks(table, id, function(_)
         {
-            
+
             $('#divLinks').css("visibility", "visible");
             ItemBarLinks.SetVisible(true);
-            
+
             mainDiv.style.display = 'grid';
         });
     }
@@ -248,7 +248,7 @@ function IndexView()
                     // Update view if the link has changed item display properties.
                     var xmlDoc = this.responseXML;
                     var categoryOrPlaceModified = xmlDoc.firstChild.getAttribute("category_or_place_modified");
-                    if (categoryOrPlaceModified == 1) 
+                    if (categoryOrPlaceModified == 1)
                     {
                         View.LoadViewCurrentlyViewedTimestamp();
                     }
@@ -870,7 +870,7 @@ function IndexView()
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return false;
         // Build parameter string
-        var xml = Table[table].GetRow(id);
+        var xml = Table[table].GetPOSTRequestRow(id);
         if (saveAndClose)
         {
             My.SendPOSTRequest(xmlHttp, "./php/edit.php", xml, OnStateChangedSubmitClose);
@@ -891,7 +891,7 @@ function IndexView()
         var xmlHttp = My.GetXMLHttpObject();
         if (xmlHttp == null) return;
         // Build parameter string
-        var xml = Table[table].GetRow('');
+        var xml = Table[table].GetPOSTRequestRow('');
         if (saveAndClose)
         {
             My.SendPOSTRequest(xmlHttp, "./php/new.php", xml, OnStateChangedSubmitClose);
