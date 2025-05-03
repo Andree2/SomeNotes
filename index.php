@@ -1,12 +1,12 @@
 <?php
-require_once 'php/functions.php';
-require_once 'php/constants.php';
+    require_once 'php/functions.php';
+    require_once 'php/constants.php';
 
-$timeStamp = time();
-if (!empty($_GET['date'])) {
-    $timeStamp = $_GET['date'];
-}
-$date = date("Y-m-d", $timeStamp);
+    $timeStamp = time();
+    if (! empty($_GET['date'])) {
+        $timeStamp = $_GET['date'];
+    }
+    $date = date("Y-m-d", $timeStamp);
 ?>
 <html>
     <link rel="stylesheet" href="css/my.css" type="text/css" >

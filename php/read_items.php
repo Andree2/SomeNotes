@@ -21,9 +21,9 @@ function startElement($parser, $name, $attributes)
         global $gFiltertext;
         global $gMinImportance;
         global $gShowNotes;
-        $gFiltertext = $attributes['FILTERTEXT'];
+        $gFiltertext    = $attributes['FILTERTEXT'];
         $gMinImportance = $attributes['MINIMPORTANCE'];
-        $gShowNotes = $attributes['SHOWNOTES'] == "true";
+        $gShowNotes     = $attributes['SHOWNOTES'] == "true";
     }
 }
 
@@ -41,7 +41,7 @@ function endElement($parser, $name)
 
         // Read Persons
         $filter = BuildFilter($TABLE[PERSON], $gMinImportance, $gFiltertext);
-        $query = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 8";
+        $query  = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 8";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="person" text="' . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . '"/>';
@@ -49,7 +49,7 @@ function endElement($parser, $name)
 
         // Read Tags
         $filter = BuildFilter($TABLE[TAG], $gMinImportance, $gFiltertext);
-        $query = "SELECT id,title,importance,category FROM " . $TABLE[TAG]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
+        $query  = "SELECT id,title,importance,category FROM " . $TABLE[TAG]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="tag" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
@@ -57,7 +57,7 @@ function endElement($parser, $name)
 
         // Read Places
         $filter = BuildFilter($TABLE[PLACE], $gMinImportance, $gFiltertext);
-        $query = "SELECT id,title,importance,category FROM " . $TABLE[PLACE]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
+        $query  = "SELECT id,title,importance,category FROM " . $TABLE[PLACE]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT 3";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="place" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
@@ -65,7 +65,7 @@ function endElement($parser, $name)
 
         // Read Events
         $filter = BuildFilter($TABLE[EVENT], $gMinImportance, $gFiltertext);
-        $query = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . $filter . " ORDER BY from_date DESC LIMIT 40";
+        $query  = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . $filter . " ORDER BY from_date DESC LIMIT 40";
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['from_date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="event" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
@@ -74,7 +74,7 @@ function endElement($parser, $name)
         // Read Notes
         if ($gShowNotes) {
             $filter = BuildFilter($TABLE[NOTE], $gMinImportance, $gFiltertext);
-            $query = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT 20";
+            $query  = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT 20";
             $result = mysqli_query($DBLink, $query);
             while ($row = mysqli_fetch_assoc($result)) {
                 $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="note" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';

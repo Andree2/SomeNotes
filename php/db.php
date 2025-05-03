@@ -7,7 +7,7 @@ if (mysqli_connect_errno()) {
     $error = mysqli_connect_error();
     exit("Failed to connect to MySQL: " . $error);
 }
-if (!mysqli_set_charset($DBLink, 'utf8')) {
+if (! mysqli_set_charset($DBLink, 'utf8')) {
     exit("Error setting charset to utf8: " . mysqli_error($DBLink));
 }
 

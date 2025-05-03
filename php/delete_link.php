@@ -11,9 +11,9 @@ function startElement($parser, $name, $attributes)
         global $gQueryID2;
         global $gQueryTable2;
         $gQueryTable1 = $attributes['TABLE1'];
-        $gQueryID1 = $attributes['ID1'];
+        $gQueryID1    = $attributes['ID1'];
         $gQueryTable2 = $attributes['TABLE2'];
-        $gQueryID2 = $attributes['ID2'];
+        $gQueryID2    = $attributes['ID2'];
     }
 }
 

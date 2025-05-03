@@ -13,9 +13,9 @@ function startElement($parser, $name, $attributes)
     global $table1ItemID;
     global $table2Name;
     global $table2ItemID;
-    $table1Name = $attributes['TABLE1'];
+    $table1Name   = $attributes['TABLE1'];
     $table1ItemID = $attributes['TABLE1_ITEM_ID'];
-    $table2Name = $attributes['TABLE2'];
+    $table2Name   = $attributes['TABLE2'];
     $table2ItemID = $attributes['TABLE2_ITEM_ID'];
 }
 
@@ -49,14 +49,14 @@ function endElement($parser, $name)
     }
 
     if ($table1->GetID() > $table2->GetID()) {
-        $temp = $table1;
-        $table1 = $table2;
-        $table2 = $temp;
-        $temp = $table1ItemID;
+        $temp         = $table1;
+        $table1       = $table2;
+        $table2       = $temp;
+        $temp         = $table1ItemID;
         $table1ItemID = $table2ItemID;
         $table2ItemID = $temp;
     } else if ($table1->GetID() == $table2->GetID() && $table1ItemID > $table2ItemID) {
-        $temp = $table1ItemID;
+        $temp         = $table1ItemID;
         $table1ItemID = $table2ItemID;
         $table2ItemID = $temp;
     }
@@ -95,9 +95,9 @@ function setCategoryFromTag($tagTable, $tagItemID, $targetTable, $targetItemID)
     global $query;
 
     // Otherwise, get the tag and see if it has a induced category
-    $query = "SELECT induced_category FROM " . $TABLE[TAG]->GetTableName() . " WHERE id = $tagItemID";
+    $query  = "SELECT induced_category FROM " . $TABLE[TAG]->GetTableName() . " WHERE id = $tagItemID";
     $result = mysqli_query($DBLink, $query);
-    $row = mysqli_fetch_assoc($result);
+    $row    = mysqli_fetch_assoc($result);
 
     if ($row['induced_category'] == '') {
         return;

@@ -4,11 +4,11 @@ require_once 'db.php';
 require_once 'functions.php';
 
 $table = $_GET['table'];
-$id = $_GET['id'];
+$id    = $_GET['id'];
 
 $tableNameTemp = $TABLE[$table]->GetTableName();
-$query = $TABLE[$table]->GetQueryReadRow($id);
-$result = mysqli_query($DBLink, $query);
+$query         = $TABLE[$table]->GetQueryReadRow($id);
+$result        = mysqli_query($DBLink, $query);
 
 XMLHeader();
 

@@ -16,7 +16,7 @@ function startElement($parser, $name, $attributes)
         global $gQueryID;
         global $gQueryTable;
         $gQueryTable = $attributes['TABLE'];
-        $gQueryID = $attributes['ID'];
+        $gQueryID    = $attributes['ID'];
     }
 }
 

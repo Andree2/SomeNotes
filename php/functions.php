@@ -5,12 +5,12 @@ function ParseXMLInputStream($startElementHandler, $endElementHandler, $characte
     $xmlParser = xml_parser_create();
     xml_set_element_handler($xmlParser, $startElementHandler, $endElementHandler);
     xml_set_character_data_handler($xmlParser, $characterDataHandler);
-    if (!($inputStream = fopen("php://input", "r"))) {
+    if (! ($inputStream = fopen("php://input", "r"))) {
         die("ParseXMLInputStream(): Could not open XML input.");
     }
 
     while ($data = fread($inputStream, 4096)) {
-        if (!xml_parse($xmlParser, $data, feof($inputStream))) {
+        if (! xml_parse($xmlParser, $data, feof($inputStream))) {
             exit(sprintf("ParseXMLInputStream(): XML error: %s at line %d",
                 xml_error_string(xml_get_error_code($xmlParser)),
                 xml_get_current_line_number($xmlParser)));
@@ -51,7 +51,7 @@ function BuildGlobalFilter($minImportance)
 function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
 {
     $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
-    $filter = BuildGlobalFilter($minImportance);
+    $filter      = BuildGlobalFilter($minImportance);
     for ($i = 0; $i < count($filterparts); $i++) {
         if ($filter != '') {
             $filter .= " AND";
