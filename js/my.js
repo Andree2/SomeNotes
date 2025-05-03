@@ -187,7 +187,13 @@
             diverse: "Divers",
             female: "Weiblich",
             male: "Männlich",
-            unknown: "Unkebannt"
+            unknown: "Unkebannt",
+            dog_female: "Hündin",
+            dog_male: "Hund (männlich)",
+            cat_female: "Katze (weiblich)",
+            cat_male: "Kater",
+            horse_female: "Pferd (Stute)",
+            horse_male: "Pferd (Hengst)"
         };
         return sexes;
     }
