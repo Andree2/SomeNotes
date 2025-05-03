@@ -180,4 +180,15 @@
         };
         return categories;
     }
+    // -------------------------------------------------------------------------------------------	
+    this.GetPersonSexesDisplayText = function()
+    {
+        var sexes = {
+            diverse: "Divers",
+            female: "Weiblich",
+            male: "Männlich",
+            unknown: "Unkebannt"
+        };
+        return sexes;
+    }
 };
