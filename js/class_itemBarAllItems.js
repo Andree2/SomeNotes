@@ -7,14 +7,14 @@
             initialSortColumn,
             initialSortAscending,
             firstItemAction,
-            function(table, id, text, divClass, width, height)
+            function(table, id, text, divClass, linkInfoNodes)
             {
-                // Create boxes for a certain day
+                // Create boxes for a certain item
                 return "  <td class='itemBarItem'>"
                     + '<div class="smallBox itemBarItem ' + divClass + '"'
                     + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>'
                     + "  </td>"
-                    + "  <td class='itemBarDeleteLink'></td>";
+                    + "  <td class='itemBarLinkAction'></td>";
             });
 
         // =============================================================================================

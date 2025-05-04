@@ -1,4 +1,4 @@
-﻿﻿class ItemBarBase
+﻿class ItemBarBase
 {
     constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
     {
@@ -23,18 +23,15 @@
                 + "     <tr>";
             code += "       <th class='itemBarDate'>Date</th>";
             code += "       <th class='itemBarItem'>Item</th>";
-            code += "       <th class='itemBarDeleteLink'></th>";
+            code += "       <th class='itemBarLinkAction'></th>";
             code += "     </tr>";
             code += BuildBoxList(mXMLDoc.firstChild.childNodes);
             code += "</table>";
             return code;
-        }
-        ;
+        };
         // -------------------------------------------------------------------------------------------
         /**
-         * @brief Prints a hierarchically list of item boxes.
-         *
-         * @param nodes         The hierarchically structured input data.
+         * @brief Prints a list of item boxes from an <item> list, with potential <linkInfo> children.
          */
         function BuildBoxList(nodes)
         {
@@ -42,29 +39,30 @@
             var code = '';
             for (var j = 0; j < nodes.length; j++)
             {
-                var importance = parseInt(nodes[j].getAttribute("importance"));
-                var text = nodes[j].getAttribute("text");
+                var node = nodes[j];
+
+                if (node.nodeName != "item") continue;
+
+                var importance = parseInt(node.getAttribute("importance"));
+                var text = node.getAttribute("text");
                 code += "<tr>";
                 code += "  <td class='itemBarDate'>"
-                    + nodes[j].getAttribute("date")
+                    + node.getAttribute("date")
                     + "  </td>";
-                var table = nodes[j].getAttribute("table");
-                var id = nodes[j].getAttribute("id");
+                var table = node.getAttribute("table");
+                var id = node.getAttribute("id");
                 if (mFirstItem == null)
                 {
                     mFirstItem = [table, id];
                 }
-                var category = nodes[j].getAttribute("category");
-                code += buildRow(table, id, text, category + importance);
+                var category = node.getAttribute("category");
+                code += buildRow(table, id, text, category + importance, node.childNodes);
                 code += "</tr>";
-                if (nodes[j].hasChildNodes())
-                {
-                    code += BuildBoxList(nodes[j].childNodes);
-                }
             }
+
             return code;
-        }
-        ;
+
+        };
         // =============================================================================================
         // ================================= Privileged ================================================
         // =============================================================================================

@@ -52,11 +52,11 @@ function endElement($parser, $name)
         $row     = mysqli_fetch_row($result);
         $gOutput = '<row text="' . htmlspecialchars($row[0], ENT_QUOTES, "UTF-8") . '">';
 
-        // ------------------------- Read linked items -----------------------------
-        $query = "SELECT table2_id, table2_item_id FROM " . $TABLE_LINK->GetTableName()
+        // ------------------------- Read links -----------------------------
+        $query = "SELECT id,table2_id, table2_item_id FROM " . $TABLE_LINK->GetTableName()
         . " WHERE table1_id = " . $table->GetID() . " AND table1_item_id = $gId ORDER BY table2_item_id DESC";
         $result = mysqli_query($DBLink, $query);
-        $query  = "SELECT table1_id, table1_item_id FROM " . $TABLE_LINK->GetTableName()
+        $query  = "SELECT id,table1_id, table1_item_id FROM " . $TABLE_LINK->GetTableName()
         . " WHERE table2_id = " . $table->GetID() . " AND table2_item_id = $gId ORDER BY table1_item_id DESC";
         $result2 = mysqli_query($DBLink, $query);
 
@@ -79,17 +79,21 @@ function endElement($parser, $name)
                         continue;
                     }
                 }
-                $tableLinkName = $TABLE_NAME_FROM_ID[$row[0]];
+                $linkId        = $row[0];
+                $tableId       = $row[1];
+                $itemId        = $row[2];
+                $tableLinkName = $TABLE_NAME_FROM_ID[$tableId];
 
                 $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
 
                 $filter = BuildFilter($TABLE[$tableLinkName], $gMinImportance, $gFiltertext);
-                $query  = "SELECT "
+                // Read linked item
+                $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()
                 . ",importance,category"
                 . ($hasDate ? "," . $TABLE[$tableLinkName]->GetColumnDate() : "")
                 . " FROM "
-                . $TABLE[$tableLinkName]->GetTableName() . " WHERE id = $row[1]" . $filter;
+                . $TABLE[$tableLinkName]->GetTableName() . " WHERE id = $itemId" . $filter;
                 $resultLink = mysqli_query($DBLink, $query);
                 $rowLink    = mysqli_fetch_row($resultLink);
                 if ($rowLink) {
@@ -103,7 +107,13 @@ function endElement($parser, $name)
                         }
                         ++$numberOfEventsNotes;
                     }
-                    $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $row[1] . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '" />';
+
+                    // Read link info
+                    $linkInfo = '<linkInfo type="parent_child" text="test" />';
+
+                    $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
+                    $gOutput .= $linkInfo;
+                    $gOutput .= '</item>';
                 }
             }
         }

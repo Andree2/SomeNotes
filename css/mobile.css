@@ -50,7 +50,7 @@
         width: 88px; 
     }
     
-    td.itemBarDeleteLink {
+    td.itemBarLinkAction {
         min-width: 10px;
         width: 10px; 
     }
@@ -65,7 +65,7 @@
         width: 88px; 
     }
 
-    th.itemBarDeleteLink {
+    th.itemBarLinkAction {
         max-width: 10px;
         width: 10px; 
     }

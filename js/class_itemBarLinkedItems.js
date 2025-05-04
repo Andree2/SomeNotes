@@ -10,15 +10,27 @@
             initialSortColumn,
             initialSortAscending,
             firstItemAction,
-            function(table, id, text, divClass, width, height)
+            function(table, id, text, divClass, linkInfoNodes)
             {
-                // Create boxes for a certain day
-                return '  <td>'
-                    + '<div class="smallBox itemBarItem ' + divClass + '"'
-                    + ' onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>'
+                // Create box for an item
+                var code = '  <td>'
+                    + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>';
+
+                for (var j = 0; j < linkInfoNodes.length; j++)
+                {
+                    var linkInfoNode = linkInfoNodes[j];
+
+                    if (linkInfoNode.nodeName != "linkInfo") continue;
+
+                    var text = linkInfoNode.getAttribute("text");
+                    code += '     <div class="linkInfo">' + My.HtmlSpecialChars(text) + '</div>'
+                }
+
+                return code
                     + "  </td>"
                     + "  <td>"
-                    + "    <a class='delete' onclick='return View.SubmitDeleteLink(\"" + mItemTable + "\", " + mItemId + ", \"" + table + "\", " + id + ")' href='#' style='width: 100%;'>x</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo()' href='#' style='width: 100%;'>+</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(\"" + mItemTable + "\", " + mItemId + ", \"" + table + "\", " + id + ")' href='#' style='width: 100%;'>x</a>"
                     + "  </td>";
             });
         // =============================================================================================

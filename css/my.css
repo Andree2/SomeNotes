@@ -11,13 +11,13 @@ a {
     color:           #000000;
 }
 
-a.delete {
+a.linkAction {
     color:         #808080;
     padding-left:  2px;
     padding-right: 2px;
 }
 
-a.delete:hover {
+a.linkAction:hover {
     color:         #000000;
 }
 
@@ -74,6 +74,12 @@ div.editArea {
 
 div.linkBar {
     grid-template-rows:    auto 1fr;
+}
+
+div.linkInfo {
+    color:         #404040;
+    padding-left:  8px;
+    padding-right: 8px;
 }
 
 div.itemBar {
@@ -310,7 +316,7 @@ td.itemBarItem {
     width: 160px; 
 }
 
-td.itemBarDeleteLink {
+td.itemBarLinkAction {
     min-width: 20px;
     max-width: 20px;
     width: 20px; 
@@ -329,7 +335,7 @@ th.itemBarItem {
     width: 160px; 
 }
 
-th.itemBarDeleteLink {
+th.itemBarLinkAction {
     min-width: 20px;
     max-width: 20px;
     width: 20px; 
