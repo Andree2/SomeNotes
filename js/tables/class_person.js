@@ -23,9 +23,9 @@
             + "  <tr>"
             + "    <td>Birthday</td>"
             + "    <td>"
-            + "      <input id='input_person_birthday_day'   name='input_person_birthday_day'    type='text' value='" + birthdayDay + "' maxLength='2' size='1'/>"
-            + "      <input id='input_person_birthday_month' name='input_person_birthday_month'  type='text' value='" + birthdayMonth + "' maxLength='2' size='1'/>"
-            + "      <input id='input_person_birthday_year'  name='input_person_birthday_year'   type='text' value='" + birthdayYear + "' maxLength='4' size='2'/>"
+            + "      <input id='input_person_birth_day'   name='input_person_birth_day'    type='text' value='" + birthdayDay + "' maxLength='2' size='1'/>"
+            + "      <input id='input_person_birth_month' name='input_person_birth_month'  type='text' value='" + birthdayMonth + "' maxLength='2' size='1'/>"
+            + "      <input id='input_person_birth_year'  name='input_person_birth_year'   type='text' value='" + birthdayYear + "' maxLength='4' size='2'/>"
             + "    </td>"
             + "    <td class='noWrap'>Sex</td>"
             + "    <td>"
@@ -63,9 +63,9 @@
             My.FirstChildNodeValuesToString(item.getElementsByTagName("first_name")),
             My.FirstChildNodeValuesToString(item.getElementsByTagName("middle_name")),
             My.FirstChildNodeValuesToString(item.getElementsByTagName("last_name")),
-            item.getAttribute("birthday_day"),
-            item.getAttribute("birthday_month"),
-            item.getAttribute("birthday_year"),
+            item.getAttribute("birth_day"),
+            item.getAttribute("birth_month"),
+            item.getAttribute("birth_year"),
             My.FirstChildNodeValuesToString(item.getElementsByTagName("sex")),
             My.FirstChildNodeValuesToString(item.getElementsByTagName("text")),
             item.getAttribute("importance"),
@@ -94,9 +94,9 @@
             + '  <first_name>' + My.HtmlSpecialChars(document.getElementById('input_person_first_name').value) + '</first_name>'
             + '  <middle_name>' + My.HtmlSpecialChars(document.getElementById('input_person_middle_name').value) + '</middle_name>'
             + '  <last_name>' + My.HtmlSpecialChars(document.getElementById('input_person_last_name').value) + '</last_name>'
-            + '  <birthday_day>' + document.getElementById('input_person_birthday_day').value + '</birthday_day>'
-            + '  <birthday_month>' + document.getElementById('input_person_birthday_month').value + '</birthday_month>'
-            + '  <birthday_year>' + document.getElementById('input_person_birthday_year').value + '</birthday_year>'
+            + '  <birth_day>' + document.getElementById('input_person_birth_day').value + '</birth_day>'
+            + '  <birth_month>' + document.getElementById('input_person_birth_month').value + '</birth_month>'
+            + '  <birth_year>' + document.getElementById('input_person_birth_year').value + '</birth_year>'
             + '  <sex>' + document.getElementById('input_person_sex').value + '</sex>'
             + '  <text>' + My.HtmlSpecialChars(document.getElementById('input_person_text').value) + '</text>'
             + '  <importance>' + document.getElementById('input_person_importance').value + '</importance>'

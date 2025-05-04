@@ -101,15 +101,15 @@ function endElement($parser, $name)
         function EchoPersonData($row, $currentYear)
         {
             global $gOutput;
-            $gOutput .= '<item id="' . $row['id'] . '" date="' . strval($currentYear) . '-' . $row['birthday_month'] . '-' . $row['birthday_day'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '">';
-            $gOutput .= "<text>" . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . ($row['birthday_year'] == '' ? '' : ' (' . strval($currentYear - $row['birthday_year']) . ')') . "</text>";
+            $gOutput .= '<item id="' . $row['id'] . '" date="' . strval($currentYear) . '-' . $row['birth_month'] . '-' . $row['birth_day'] . '" importance="' . $row['importance'] . '" category="' . $row['category'] . '">';
+            $gOutput .= "<text>" . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . ($row['birth_year'] == '' ? '' : ' (' . strval($currentYear - $row['birth_year']) . ')') . "</text>";
             $gOutput .= '</item>';
         }
 
         $gOutput .= '<table name="person">';
         if ($dateMonthDayStart <= $dateMonthDayEnd) {
             // Boths date lie in the same year.
-            $query       = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birthday_month * 100 + birthday_day) BETWEEN " . $dateMonthDayStart . " AND " . $dateMonthDayEnd . $filter;
+            $query       = "SELECT id,display_name,birth_day,birth_month,birth_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birth_month * 100 + birth_day) BETWEEN " . $dateMonthDayStart . " AND " . $dateMonthDayEnd . $filter;
             $currentYear = date('Y', $dateStartTimestampSQL);
             $result      = mysqli_query($DBLink, $query);
             while ($row = mysqli_fetch_assoc($result)) {
@@ -117,13 +117,13 @@ function endElement($parser, $name)
             }
         } else {
             // dateEnd lies in the year after dateEnd
-            $query       = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birthday_month * 100 + birthday_day) >= " . $dateMonthDayStart . $filter;
+            $query       = "SELECT id,display_name,birth_day,birth_month,birth_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birth_month * 100 + birth_day) >= " . $dateMonthDayStart . $filter;
             $currentYear = date('Y', $dateStartTimestampSQL);
             $result      = mysqli_query($DBLink, $query);
             while ($row = mysqli_fetch_assoc($result)) {
                 EchoPersonData($row, $currentYear);
             }
-            $query       = "SELECT id,display_name,birthday_day,birthday_month,birthday_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birthday_month * 100 + birthday_day) <= " . $dateMonthDayEnd . $filter;
+            $query       = "SELECT id,display_name,birth_day,birth_month,birth_year,importance,category FROM " . $TABLE[PERSON]->GetTableName() . " WHERE (birth_month * 100 + birth_day) <= " . $dateMonthDayEnd . $filter;
             $currentYear = date('Y', $dateEndTimestampSQL);
             $result      = mysqli_query($DBLink, $query);
             while ($row = mysqli_fetch_assoc($result)) {

@@ -21,9 +21,9 @@ class Person extends Table
     {
         $columnValueMapSql = [];
         foreach ($columnValueMap as $column => $value) {
-            if ($column == 'BIRTHDAY_DAY'
-                || $column == 'BIRTHDAY_MONTH'
-                || $column == 'BIRTHDAY_YEAR'
+            if ($column == 'BIRTH_DAY'
+                || $column == 'BIRTH_MONTH'
+                || $column == 'BIRTH_YEAR'
                 || $column == 'IMPORTANCE') {
                 if ($value == '') {
                     $columnValueMapSql[$column] = 'NULL';
@@ -44,7 +44,7 @@ class Person extends Table
 
     public function GetQueryReadRow($id)
     {
-        return "SELECT id,created,last_changed,importance,category,display_name,first_name,middle_name,last_name,birthday_day,birthday_month,birthday_year,sex,text FROM " . $this->GetTableName() . " WHERE id = $id";
+        return "SELECT id,created,last_changed,importance,category,display_name,first_name,middle_name,last_name,birth_day,birth_month,birth_year,sex,text FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
     /**
@@ -52,7 +52,7 @@ class Person extends Table
      */
     public function EchoXMLReadRow($row)
     {
-        echo '<row id="' . $row['id'] . '" table="' . $this->GetName() . '" created="' . $row['created'] . '" last_changed="' . $row['last_changed'] . '" birthday_day="' . $row['birthday_day'] . '" birthday_month="' . $row['birthday_month'] . '" birthday_year="' . $row['birthday_year'] . '" importance="' . $row['importance'] . '">';
+        echo '<row id="' . $row['id'] . '" table="' . $this->GetName() . '" created="' . $row['created'] . '" last_changed="' . $row['last_changed'] . '" birth_day="' . $row['birth_day'] . '" birth_month="' . $row['birth_month'] . '" birth_year="' . $row['birth_year'] . '" importance="' . $row['importance'] . '">';
         echo "  <display_name>" . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . "</display_name>";
         echo "  <first_name>" . htmlspecialchars($row['first_name'], ENT_QUOTES, "UTF-8") . "</first_name>";
         echo "  <middle_name>" . htmlspecialchars($row['middle_name'], ENT_QUOTES, "UTF-8") . "</middle_name>";
