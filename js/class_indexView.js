@@ -210,11 +210,8 @@ function IndexView()
     {
         ItemBarLinks.LoadLinks(table, id, function(_)
         {
-
             $('#divLinks').css("visibility", "visible");
             ItemBarLinks.SetVisible(true);
-
-            mainDiv.style.display = 'grid';
         });
     }
 
