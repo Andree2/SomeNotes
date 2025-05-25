@@ -22,11 +22,16 @@ function endElement($parser, $name)
     global $DBLink;
 
     if ($name == 'ROW') {
-        $query = 'DELETE FROM ' . $TABLE["$gQueryTable"]->GetTableName() . " WHERE id = $gQueryID LIMIT 1";
-        mysqli_query($DBLink, $query);
+        $delelteItemQuery = 'DELETE FROM ' . $TABLE["$gQueryTable"]->GetTableName() . " WHERE id = $gQueryID LIMIT 1";
+        mysqli_query($DBLink, $delelteItemQuery);
+
         // Delete links.
-        $query = 'DELETE FROM ' . $TABLE_LINK->GetTableName() . ' WHERE (table1_id = ' . $TABLE["$gQueryTable"]->GetID() . " AND table1_item_id = $gQueryID) OR (table2_id = " . $TABLE["$gQueryTable"]->GetID() . " AND table2_item_id = $gQueryID)";
-        mysqli_query($DBLink, $query);
+        $readLinksQuery  = 'SELECT id FROM ' . $TABLE_LINK->GetTableName() . ' WHERE (table1_id = ' . $TABLE["$gQueryTable"]->GetID() . " AND table1_item_id = $gQueryID) OR (table2_id = " . $TABLE["$gQueryTable"]->GetID() . " AND table2_item_id = $gQueryID)";
+        $readLinksResult = mysqli_query($DBLink, $readLinksQuery);
+
+        while ($linkRow = mysqli_fetch_row($readLinksResult)) {
+            DeleteLink($linkRow[0]);
+        }
     }
 }
 

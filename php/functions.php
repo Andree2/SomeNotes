@@ -65,3 +65,16 @@ function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
     }
     return $filter;
 }
+
+function DeleteLink($linkId)
+{
+    global $TABLE_LINK;
+    global $TABLE_LINKINFO;
+    global $DBLink;
+
+    $query = "DELETE FROM " . $TABLE_LINK->GetTableName() . " WHERE id = " . $linkId;
+    mysqli_query($DBLink, $query);
+    // Delete link info.
+    $query = 'DELETE FROM ' . $TABLE_LINKINFO->GetTableName() . ' WHERE link_id = ' . $linkId;
+    mysqli_query($DBLink, $query);
+}

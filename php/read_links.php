@@ -112,8 +112,7 @@ function endElement($parser, $name)
                     $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
 
                     // Read link info
-                    $readLinkInfoQuery = "SELECT id,type,text FROM " . $TABLE_LINKINFO->GetTableName()
-                        . " WHERE link_id = " . $linkId;
+                    $readLinkInfoQuery  = "SELECT id,type,text FROM " . $TABLE_LINKINFO->GetTableName() . " WHERE link_id = " . $linkId;
                     $readLinkInfoResult = mysqli_query($DBLink, $readLinkInfoQuery);
 
                     while ($linkInfoRow = mysqli_fetch_row($readLinkInfoResult)) {
