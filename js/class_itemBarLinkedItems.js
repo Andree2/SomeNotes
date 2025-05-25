@@ -29,7 +29,7 @@
                 return code
                     + "  </td>"
                     + "  <td class='itemBarLinkAction'>"
-                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo()' href='#' style='width: 100%;'>+</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#' style='width: 100%;'>+</a>"
                     + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#' style='width: 100%;'>x</a>"
                     + "  </td>";
             });

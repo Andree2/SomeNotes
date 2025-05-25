@@ -842,7 +842,7 @@ function IndexView()
         {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return false;
-            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row id="' + linkId + '"/>';
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row link_id="' + linkId + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/delete_link.php", xml, function()
             {
                 if (xmlHttp.readyState == 4)
@@ -855,6 +855,25 @@ function IndexView()
                 }
             });
         }
+        return false; // Do not follow href after this.
+    };
+
+    this.SubmitAddLinkInfo = function(linkId)
+    {
+        var xmlHttp = My.GetXMLHttpObject();
+        if (xmlHttp == null) return false;
+        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row link_id="' + linkId + '"/>';
+        My.SendPOSTRequest(xmlHttp, "./php/new_linkinfo.php", xml, function()
+        {
+            if (xmlHttp.readyState == 4)
+            {
+                // Update divLink
+                if (View.GetEditElementVisible())
+                {
+                    LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
+                }
+            }
+        });
         return false; // Do not follow href after this.
     };
 

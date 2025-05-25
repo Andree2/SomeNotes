@@ -42,6 +42,7 @@ function endElement($parser, $name)
         global $TABLE;
         global $DBLink;
         global $TABLE_LINK;
+        global $TABLE_LINKINFO;
         global $TABLE_NAME_FROM_ID;
 
         $table = $TABLE[$gTable];
@@ -108,11 +109,17 @@ function endElement($parser, $name)
                         ++$numberOfEventsNotes;
                     }
 
-                    // Read link info
-                    $linkInfo = '<linkInfo type="parent_child" text="' . $linkId . '" />';
-
                     $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
-                    $gOutput .= $linkInfo;
+
+                    // Read link info
+                    $readLinkInfoQuery = "SELECT id,type,text FROM " . $TABLE_LINKINFO->GetTableName()
+                        . " WHERE link_id = " . $linkId;
+                    $readLinkInfoResult = mysqli_query($DBLink, $readLinkInfoQuery);
+
+                    while ($linkInfoRow = mysqli_fetch_row($readLinkInfoResult)) {
+                        $gOutput .= '<linkInfo id="' . $linkInfoRow[0] . '" type="' . $linkInfoRow[1] . '" text="' . $linkInfoRow[2] . '" />';
+                    }
+
                     $gOutput .= '</item>';
                 }
             }

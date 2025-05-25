@@ -7,7 +7,7 @@ function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
         global $gQueryID;
-        $gQueryID = $attributes['ID'];
+        $gQueryID = $attributes['LINK_ID'];
     }
 }
 
