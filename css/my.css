@@ -319,7 +319,8 @@ td.itemBarItem {
 td.itemBarLinkAction {
     min-width: 20px;
     max-width: 20px;
-    width: 20px; 
+    width: 20px;
+    vertical-align: top;
 }
 /* ---------------------------------------- th ----------------------------------------------- */
 
@@ -338,7 +339,8 @@ th.itemBarItem {
 th.itemBarLinkAction {
     min-width: 20px;
     max-width: 20px;
-    width: 20px; 
+    width: 20px;
+    vertical-align: top;
 }
 
 /* --------------------------------------------------------------------------------------- */

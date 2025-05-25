@@ -7,7 +7,7 @@
             initialSortColumn,
             initialSortAscending,
             firstItemAction,
-            function(table, id, text, divClass, linkInfoNodes)
+            function(table, id, text, divClass, linkId, linkInfoNodes)
             {
                 // Create boxes for a certain item
                 return "  <td class='itemBarItem'>"

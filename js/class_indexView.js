@@ -835,14 +835,14 @@ function IndexView()
         return false; // Do not follow href after this.
     };
 
-    this.SubmitDeleteLink = function(table1, id1, table2, id2)
+    this.SubmitDeleteLink = function(linkId)
     {
         var confirmDelete = confirm("Really delete link?");
         if (confirmDelete)
         {
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null) return false;
-            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table1="' + table1 + '" id1="' + id1 + '" table2="' + table2 + '" id2="' + id2 + '"/>';
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row id="' + linkId + '"/>';
             My.SendPOSTRequest(xmlHttp, "./php/delete_link.php", xml, function()
             {
                 if (xmlHttp.readyState == 4)

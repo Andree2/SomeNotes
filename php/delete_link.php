@@ -6,30 +6,19 @@ require_once 'functions.php';
 function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
-        global $gQueryID1;
-        global $gQueryTable1;
-        global $gQueryID2;
-        global $gQueryTable2;
-        $gQueryTable1 = $attributes['TABLE1'];
-        $gQueryID1    = $attributes['ID1'];
-        $gQueryTable2 = $attributes['TABLE2'];
-        $gQueryID2    = $attributes['ID2'];
+        global $gQueryID;
+        $gQueryID = $attributes['ID'];
     }
 }
 
 function endElement($parser, $name)
 {
-    global $gQueryID1;
-    global $gQueryTable1;
-    global $gQueryID2;
-    global $gQueryTable2;
+    global $gQueryID;
     global $TABLE;
-    global $TABLE_LINK;
     global $DBLink;
 
     if ($name == 'ROW') {
-        $query = "DELETE FROM " . $TABLE_LINK->GetTableName() . " WHERE (table1_id = " . $TABLE["$gQueryTable1"]->GetID() . " AND table1_item_id = $gQueryID1 AND table2_id = " . $TABLE["$gQueryTable2"]->GetID() . " AND table2_item_id = $gQueryID2) OR (table1_id = " . $TABLE["$gQueryTable2"]->GetID() . " AND table1_item_id = $gQueryID2 AND table2_id = " . $TABLE["$gQueryTable1"]->GetID() . " AND table2_item_id = $gQueryID1)";
-        mysqli_query($DBLink, $query);
+        DeleteLink($gQueryID);
     }
 }
 
@@ -37,9 +26,21 @@ function characterData($parser, $data)
 {
 }
 
+function DeleteLink($linkId)
+{
+    global $TABLE_LINK;
+    global $DBLink;
+
+    $query = "DELETE FROM " . $TABLE_LINK->GetTableName() . " WHERE id = " . $linkId;
+    mysqli_query($DBLink, $query);
+    // Delete link info.
+    $query = 'DELETE FROM ' . $TABLE_LINKINFO->GetTableName() . ' WHERE link_id = ' . $linkId;
+    mysqli_query($DBLink, $query);
+}
+
 ParseXMLInputStream("startElement", "endElement", "characterData");
 
 mysqli_close($DBLink);
 
 XMLHeader();
-echo '<row table1="' . $gQueryTable1 . '" id1="' . $gQueryID1 . ' table2="' . $gQueryTable2 . '" id2="' . $gQueryID2 . '"/>';
+echo '<row id="' . $gQueryID . '"/>';

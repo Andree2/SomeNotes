@@ -51,12 +51,13 @@
                     + "  </td>";
                 var table = node.getAttribute("table");
                 var id = node.getAttribute("id");
+                var linkId = node.getAttribute("linkId");
                 if (mFirstItem == null)
                 {
                     mFirstItem = [table, id];
                 }
                 var category = node.getAttribute("category");
-                code += buildRow(table, id, text, category + importance, node.childNodes);
+                code += buildRow(table, id, text, category + importance, linkId, node.childNodes);
                 code += "</tr>";
             }
 

@@ -10,10 +10,10 @@
             initialSortColumn,
             initialSortAscending,
             firstItemAction,
-            function(table, id, text, divClass, linkInfoNodes)
+            function(table, id, text, divClass, linkId, linkInfoNodes)
             {
                 // Create box for an item
-                var code = '  <td>'
+                var code = "  <td class='itemBarItem'>"
                     + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>';
 
                 for (var j = 0; j < linkInfoNodes.length; j++)
@@ -28,9 +28,9 @@
 
                 return code
                     + "  </td>"
-                    + "  <td>"
+                    + "  <td class='itemBarLinkAction'>"
                     + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo()' href='#' style='width: 100%;'>+</a>"
-                    + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(\"" + mItemTable + "\", " + mItemId + ", \"" + table + "\", " + id + ")' href='#' style='width: 100%;'>x</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#' style='width: 100%;'>x</a>"
                     + "  </td>";
             });
         // =============================================================================================

@@ -109,9 +109,9 @@ function endElement($parser, $name)
                     }
 
                     // Read link info
-                    $linkInfo = '<linkInfo type="parent_child" text="test" />';
+                    $linkInfo = '<linkInfo type="parent_child" text="' . $linkId . '" />';
 
-                    $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
+                    $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
                     $gOutput .= $linkInfo;
                     $gOutput .= '</item>';
                 }
