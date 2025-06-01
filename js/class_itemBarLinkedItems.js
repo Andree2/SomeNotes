@@ -22,15 +22,21 @@
 
                     if (linkInfoNode.nodeName != "linkInfo") continue;
 
-                    var text = linkInfoNode.getAttribute("text");
-                    code += '     <div class="linkInfo">' + My.HtmlSpecialChars(text) + '</div>'
+                    var linkInfoId = linkInfoNode.getAttribute("id");
+                    var linkInfoText = linkInfoNode.getAttribute("text");
+                    var linkInfoType = linkInfoNode.getAttribute("type");
+                    code += "     <div class='linkInfo'>"
+                        + "<div>" + linkInfoType + "</div>"
+                        + "<div>" + My.HtmlSpecialChars(linkInfoText) + "</div>"
+                        + "<a class='linkAction' onclick='return View.SubmitDeleteLinkInfo(" + linkInfoId + ")' href='#'>x</a>"
+                        + "</div>"
                 }
 
                 return code
                     + "  </td>"
                     + "  <td class='itemBarLinkAction'>"
-                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#' style='width: 100%;'>+</a>"
-                    + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#' style='width: 100%;'>x</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#'>+</a>"
+                    + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#'>x</a>"
                     + "  </td>";
             });
         // =============================================================================================

@@ -78,8 +78,9 @@ div.linkBar {
 
 div.linkInfo {
     color:         #404040;
+    display:        grid;
+    grid-template-columns: 1fr 1fr 10px;
     padding-left:  8px;
-    padding-right: 8px;
 }
 
 div.itemBar {

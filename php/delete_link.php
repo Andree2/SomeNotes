@@ -6,19 +6,18 @@ require_once 'functions.php';
 function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
-        global $gQueryID;
-        $gQueryID = $attributes['LINK_ID'];
+        global $gLinkId;
+        $gLinkId = $attributes['LINK_ID'];
     }
 }
 
 function endElement($parser, $name)
 {
-    global $gQueryID;
-    global $TABLE;
+    global $gLinkId;
     global $DBLink;
 
     if ($name == 'ROW') {
-        DeleteLink($gQueryID);
+        DeleteLink($gLinkId);
     }
 }
 
@@ -31,4 +30,4 @@ ParseXMLInputStream("startElement", "endElement", "characterData");
 mysqli_close($DBLink);
 
 XMLHeader();
-echo '<row id="' . $gQueryID . '"/>';
+echo '<row id="' . $gLinkId . '"/>';

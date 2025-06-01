@@ -74,7 +74,8 @@ function DeleteLink($linkId)
 
     $query = "DELETE FROM " . $TABLE_LINK->GetTableName() . " WHERE id = " . $linkId;
     mysqli_query($DBLink, $query);
-    // Delete link info.
+
+    // Delete related link infos.
     $query = 'DELETE FROM ' . $TABLE_LINKINFO->GetTableName() . ' WHERE link_id = ' . $linkId;
     mysqli_query($DBLink, $query);
 }

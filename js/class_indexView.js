@@ -858,6 +858,29 @@ function IndexView()
         return false; // Do not follow href after this.
     };
 
+    this.SubmitDeleteLinkInfo = function(linkInfoId)
+    {
+        var confirmDelete = confirm("Really delete link info?");
+        if (confirmDelete)
+        {
+            var xmlHttp = My.GetXMLHttpObject();
+            if (xmlHttp == null) return false;
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row linkinfo_id="' + linkInfoId + '"/>';
+            My.SendPOSTRequest(xmlHttp, "./php/delete_linkinfo.php", xml, function()
+            {
+                if (xmlHttp.readyState == 4)
+                {
+                    // Update divLink
+                    if (View.GetEditElementVisible())
+                    {
+                        LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
+                    }
+                }
+            });
+        }
+        return false; // Do not follow href after this.
+    };
+
     this.SubmitAddLinkInfo = function(linkId)
     {
         var xmlHttp = My.GetXMLHttpObject();
