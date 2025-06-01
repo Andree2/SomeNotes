@@ -14,7 +14,7 @@ function Day()
             + "    <td class='fillTable'>"
             + "      <select id='input_day_category' name='input_day_category' size='20' class='fillCell'>";
         var categories = My.GetDayCategoriesDisplayText();
-        for (key in categories)
+        for (var key in categories)
         {
             output += "        <option value='" + key + "' " + (category == key ? "selected='selected'" : "") + ">" + categories[key] + "</option>"
         };

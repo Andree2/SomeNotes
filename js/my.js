@@ -179,7 +179,18 @@
             day_parental_leave: "Elternzeit"
         };
         return categories;
-    }
+    };
+    // -------------------------------------------------------------------------------------------	
+    this.GetLinkInfoTypesDisplayText = function()
+    {
+        var linkInfoTypes = {
+            home_address: "Wohnort",
+            parent_child: "Eltern/Kind",
+            relationship: "Beziehung",
+            married: "Verheiratet"
+        };
+        return linkInfoTypes;
+    };
     // -------------------------------------------------------------------------------------------	
     this.GetPersonSexesDisplayText = function()
     {
@@ -196,5 +207,5 @@
             horse_male: "Pferd (Hengst)"
         };
         return sexes;
-    }
+    };
 };

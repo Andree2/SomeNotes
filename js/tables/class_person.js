@@ -31,7 +31,7 @@
             + "    <td>"
             + "      <select id='input_person_sex' name='input_person_sex' size='1'>";
         var sexes = My.GetPersonSexesDisplayText();
-        for (key in sexes)
+        for (var key in sexes)
         {
             output += "        <option value='" + key + "' " + (sex == key ? "selected='selected'" : "") + ">" + sexes[key] + "</option>"
         };

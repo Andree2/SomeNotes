@@ -16,20 +16,30 @@
                 var code = "  <td class='itemBarItem'>"
                     + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>';
 
-                for (var j = 0; j < linkInfoNodes.length; j++)
+                if (linkInfoNodes.length > 0)
                 {
-                    var linkInfoNode = linkInfoNodes[j];
+                    var linkInfoTypes = My.GetLinkInfoTypesDisplayText();
+                    for (var j = 0; j < linkInfoNodes.length; j++)
+                    {
+                        var linkInfoNode = linkInfoNodes[j];
 
-                    if (linkInfoNode.nodeName != "linkInfo") continue;
+                        if (linkInfoNode.nodeName != "linkInfo") continue;
 
-                    var linkInfoId = linkInfoNode.getAttribute("id");
-                    var linkInfoText = linkInfoNode.getAttribute("text");
-                    var linkInfoType = linkInfoNode.getAttribute("type");
-                    code += "     <div class='linkInfo'>"
-                        + "<div>" + linkInfoType + "</div>"
-                        + "<div>" + My.HtmlSpecialChars(linkInfoText) + "</div>"
-                        + "<a class='linkAction' onclick='return View.SubmitDeleteLinkInfo(" + linkInfoId + ")' href='#'>x</a>"
-                        + "</div>"
+                        var linkInfoId = linkInfoNode.getAttribute("id");
+                        var linkInfoText = linkInfoNode.getAttribute("text");
+                        var linkInfoType = linkInfoNode.getAttribute("type");
+                        code += "     <div class='linkInfo'>";
+                        // Drop-down for categories                        
+                        code += "     <select id='input_linkinfo_type_" + j + "' size='1'>";
+                        for (var key in linkInfoTypes)
+                        {
+                            code += "        <option value='" + key + "' " + (linkInfoType == key ? "selected='selected'" : "") + ">" + linkInfoTypes[key] + "</option>";
+                        };
+                        code += "      </select>";
+                        code += "<div>" + My.HtmlSpecialChars(linkInfoText) + "</div>"
+                            + "<a class='linkAction' onclick='return View.SubmitDeleteLinkInfo(" + linkInfoId + ")' href='#'>x</a>"
+                            + "</div>";
+                    }
                 }
 
                 return code
@@ -48,7 +58,7 @@
             mItemId = itemId;
             this.SetXMLDoc(xmlDoc);
         }
-
+        // -------------------------------------------------------------------------------------------
         this.LoadLinks = function(table, id, onReadyStateChange)
         {
             var xmlHttp = My.GetXMLHttpObject();
