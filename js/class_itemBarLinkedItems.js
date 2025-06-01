@@ -29,14 +29,8 @@
                         var linkInfoText = linkInfoNode.getAttribute("text");
                         var linkInfoType = linkInfoNode.getAttribute("type");
                         code += "     <div class='linkInfo'>";
-                        // Drop-down for categories                        
-                        code += "     <select id='input_linkinfo_type_" + j + "' size='1'>";
-                        for (var key in linkInfoTypes)
-                        {
-                            code += "        <option value='" + key + "' " + (linkInfoType == key ? "selected='selected'" : "") + ">" + linkInfoTypes[key] + "</option>";
-                        };
-                        code += "      </select>";
-                        code += "<div>" + My.HtmlSpecialChars(linkInfoText) + "</div>"
+                        code += "<div class='" + divClass + "'>" + My.HtmlSpecialChars(linkInfoTypes[linkInfoType]) + "</div>"
+                        code += "<div class='" + divClass + "'>" + My.HtmlSpecialChars(linkInfoText) + "</div>"
                             + "<a class='linkAction' onclick='return View.SubmitDeleteLinkInfo(" + linkInfoId + ")' href='#'>x</a>"
                             + "</div>";
                     }
@@ -45,10 +39,11 @@
                 return code
                     + "  </td>"
                     + "  <td class='itemBarLinkAction'>"
-                    + "    <a class='linkAction' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#'>+</a>"
+                    + "    <a class='linkAction' onclick='return View.ShowAddLinkInfo(" + linkId + ")' href='#'>+</a>"
                     + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#'>x</a>"
                     + "  </td>";
-            });
+            },
+            "<div id='editLinkInfo'></div>");
         // =============================================================================================
         // ================================= Privileged ================================================
         // =============================================================================================

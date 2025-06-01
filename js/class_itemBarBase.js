@@ -1,6 +1,6 @@
 ﻿class ItemBarBase
 {
-    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
+    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow, topContent)
     {
         var mXMLDoc = null;
         var mFirstItem = null;
@@ -18,7 +18,7 @@
         // -------------------------------------------------------------------------------------------
         function BuildHTMLItems()
         {
-            var code = ""
+            var code = topContent
                 + "     <table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
                 + "     <tr>";
             code += "       <th class='itemBarDate'>Date</th>";

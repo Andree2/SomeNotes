@@ -813,6 +813,25 @@ function IndexView()
         xmlHttp.send(null);
     };
 
+    this.ShowAddLinkInfo = function(linkId)
+    {
+        var obj = document.getElementById('editLinkInfo');
+        // Drop-down for categories                        
+        var linkInfoTypes = My.GetLinkInfoTypesDisplayText();
+        var code = "     <div class='linkInfoAdd'><select id='input_linkinfo_type' size='1'>";
+        for (var key in linkInfoTypes)
+        {
+            code += "        <option value='" + key + "' >" + linkInfoTypes[key] + "</option>";
+        };
+        code += "      </select>";
+        // Link info text
+        code += " <input id='input_linkinfo_text' value='' maxLength='255' class='fillCell'/>"
+            + "   <a class='button' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#'>Add</a>"
+            + "  </div>"
+        obj.innerHTML = code;
+        return false; // Do not follow href after this.
+    }
+
     this.ShowNew = function(date, time)
     {
         // Show edit box.
@@ -858,6 +877,29 @@ function IndexView()
         return false; // Do not follow href after this.
     };
 
+    this.SubmitAddLinkInfo = function(linkId)
+    {
+        var linkText = My.HtmlSpecialChars(document.getElementById('input_linkinfo_text').value);
+
+        var xmlHttp = My.GetXMLHttpObject();
+        if (xmlHttp == null) return false;
+        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row link_id="' + linkId + '" text="' + linkText + '">'
+            + '  <type>' + document.getElementById('input_linkinfo_type').value + '</type>'
+            + '</row>';
+        My.SendPOSTRequest(xmlHttp, "./php/new_linkinfo.php", xml, function()
+        {
+            if (xmlHttp.readyState == 4)
+            {
+                // Update divLink
+                if (View.GetEditElementVisible())
+                {
+                    LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
+                }
+            }
+        });
+        return false; // Do not follow href after this.
+    };
+
     this.SubmitDeleteLinkInfo = function(linkInfoId)
     {
         var confirmDelete = confirm("Really delete link info?");
@@ -878,25 +920,6 @@ function IndexView()
                 }
             });
         }
-        return false; // Do not follow href after this.
-    };
-
-    this.SubmitAddLinkInfo = function(linkId)
-    {
-        var xmlHttp = My.GetXMLHttpObject();
-        if (xmlHttp == null) return false;
-        var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row link_id="' + linkId + '"/>';
-        My.SendPOSTRequest(xmlHttp, "./php/new_linkinfo.php", xml, function()
-        {
-            if (xmlHttp.readyState == 4)
-            {
-                // Update divLink
-                if (View.GetEditElementVisible())
-                {
-                    LoadLinksAndShowBar(View.mEditElementTable, View.mEditElementItemID);
-                }
-            }
-        });
         return false; // Do not follow href after this.
     };
 

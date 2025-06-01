@@ -5,30 +5,40 @@ require_once 'functions.php';
 
 function startElement($parser, $name, $attributes)
 {
-    if ($name != 'ROW') {
-        return;
-    }
+    global $gItemContent;
+    $gItemContent = '';
 
-    global $gLinkId;
-    $gLinkId = $attributes['LINK_ID'];
+    if ($name == 'ROW') {
+        global $gLinkId;
+        global $gText;
+        $gLinkId = $attributes['LINK_ID'];
+        $gText   = $attributes['TEXT'];
+    }
 }
 
 function endElement($parser, $name)
 {
-    if ($name != 'ROW') {
-        return;
+    if ($name == 'ROW') {
+        global $gLinkId;
+        global $gText;
+        global $gType;
+        global $TABLE_LINKINFO;
+        global $DBLink;
+
+        $query = 'INSERT INTO ' . $TABLE_LINKINFO->GetTableName() . " (CREATED,LINK_ID,LAST_CHANGED,TYPE,TEXT) VALUES (NOW()," . $gLinkId . ",NOW(),'" . $gType . "','" . $gText . "')";
+        mysqli_query($DBLink, $query);
+    } else if ($name == 'TYPE') {
+        global $gItemContent;
+        global $gType;
+
+        $gType = $gItemContent;
     }
-
-    global $gLinkId;
-    global $TABLE_LINKINFO;
-    global $DBLink;
-
-    $query = 'INSERT INTO ' . $TABLE_LINKINFO->GetTableName() . " (CREATED,LINK_ID,LAST_CHANGED,TYPE,TEXT) VALUES (NOW()," . $gLinkId . ",NOW(),'home_address','linkInfoText')";
-    mysqli_query($DBLink, $query);
 }
 
 function characterData($parser, $data)
 {
+    global $gItemContent;
+    $gItemContent .= $data;
 }
 
 ParseXMLInputStream("startElement", "endElement", "characterData");
