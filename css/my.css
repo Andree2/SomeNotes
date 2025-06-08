@@ -67,9 +67,9 @@ div.absolute {
 div.editArea {
     display:               grid;
     grid-column:           10;
-    grid-row:              1 / 4;
+    grid-row:              1 / 5;
     grid-template-columns: 320px 800px;
-    grid-template-rows:    1fr;
+    grid-template-rows:    auto 1fr;
 }
 
 div.linkBar {
@@ -83,16 +83,23 @@ div.linkInfo {
     padding-left:  8px;
 }
 
-div.linkInfoAdd {
+div.editLinkInfo {
     display:        grid;
-    grid-template-columns: 1fr 1fr 40px;
+    grid-template-columns: 120px 120px 1fr 40px;
+    overflow-y:         clip;
 }
 
-div.itemBar {
+div.mainBackground {
     background-color:   #E0E0E0;
     border-color:       #B0B0B0;
-    border-style:       solid;
-    border-width:       1px;
+}
+
+div.itemBarHeader {
+    overflow:           hidden;
+    overflow-y:         clip;
+}
+
+div.itemBarItems {
     overflow:           hidden;
     overflow-y:         auto;
 }
@@ -113,13 +120,15 @@ div.main {
     height:                100%;
     width:                 100%;
     display:               grid;
-    grid-template-rows:    24px 48px 1fr; 
+    grid-template-rows:    24px 48px 64px 1fr; 
     grid-template-columns: 260px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto; 
     overflow:              hidden;
 }
 
 div.mainView {
     display:               grid;
+    grid-column:           2 / 10;
+    grid-row:              2 / 5;
     grid-auto-rows:        240px; 
     grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     overflow-y:            auto; 

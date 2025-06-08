@@ -12,9 +12,11 @@
             firstItemAction,
             function(table, id, text, divClass, linkId, linkInfoNodes)
             {
+                var linkText = My.HtmlSpecialChars(text);
+
                 // Create box for an item
                 var code = "  <td class='itemBarItem'>"
-                    + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(text) + '</div>';
+                    + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(linkText) + '</div>';
 
                 if (linkInfoNodes.length > 0)
                 {
@@ -39,11 +41,10 @@
                 return code
                     + "  </td>"
                     + "  <td class='itemBarLinkAction'>"
-                    + "    <a class='linkAction' onclick='return View.ShowAddLinkInfo(" + linkId + ")' href='#'>+</a>"
+                    + "    <a class='linkAction' onclick='return View.ShowAddLinkInfo(" + linkId + ", \"" + linkText + "\")' href='#'>+</a>"
                     + "    <a class='linkAction' onclick='return View.SubmitDeleteLink(" + linkId + ")' href='#'>x</a>"
                     + "  </td>";
-            },
-            "<div id='editLinkInfo'></div>");
+            });
         // =============================================================================================
         // ================================= Privileged ================================================
         // =============================================================================================

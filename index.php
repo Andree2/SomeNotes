@@ -57,7 +57,7 @@
             }
         </script>
         <div class="main noSpaces">
-            <div style="grid-column: 1; grid-row: 1 / 2;">
+            <div class="mainBackground" style="grid-column: 1; grid-row: 1 / 3;">
                 <input type="date" id="viewDate" name="viewDate" value='<?php echo $date; ?>'>
                 <span><a class='button' onclick="ShowDate()" href='#' style='width:30%;'>-></a></span>
                 <script type='text/Javascript'>
@@ -81,16 +81,17 @@
             <div class="mainViewWeekDayHeader" style="grid-column: 8; grid-row: 1;">Sa</div>
             <div class="mainViewWeekDayHeader" style="grid-column: 9; grid-row: 1;">So</div>
 
-            <div id="divSearch" class="itemBar" style="grid-column: 1; grid-row: 3;">
-                ERROR: innerHTML of divSearch not set
-            </div>
-            <div id="divView" class="mainView" style="grid-column: 2 / 10; grid-row: 2 / 4;">
+            <div id="divSearchHeader" class="itemBarHeader mainBackground" style="grid-column: 1; grid-row: 3;"></div>
+            <div id="divSearchItems" class="itemBarItems mainBackground" style="grid-column: 1; grid-row: 4;"></div>
+            <div id="divView" class="mainView">
                 ERROR: innerHTML of divView not set
             </div>
 
             <div class="editArea" id="editElement" >
-                <div id="divLinks" class="itemBar linkBar"></div>
-                <div id="editElementContent"></div>
+                <div id="divLinksHeader" class="linkBar itemBarHeader mainBackground" style="grid-column: 1; grid-row: 1;"></div>
+                <div id="editLinkInfo" class="editLinkInfo mainBackground" style="grid-column: 2; grid-row: 1;"></div>
+                <div id="divLinksItems" class="linkBar itemBarItems mainBackground" style="grid-column: 1; grid-row: 2;"></div>
+                <div id="editElementContent" style="grid-column: 2; grid-row: 2;"></div>
             </div>
         </div>
     </body>

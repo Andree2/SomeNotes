@@ -1,6 +1,6 @@
 ﻿class ItemBarBase
 {
-    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow, topContent)
+    constructor(variableName, divID, initialSortColumn, initialSortAscending, firstItemAction, buildRow)
     {
         var mXMLDoc = null;
         var mFirstItem = null;
@@ -18,9 +18,8 @@
         // -------------------------------------------------------------------------------------------
         function BuildHTMLItems()
         {
-            var code = topContent
-                + "     <table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
-                + "     <tr>";
+            var code = "<table class='sortable' id='" + mDivTableId + "' style='width: 100%;'>"
+                + "  <tr>";
             code += "       <th class='itemBarDate'>Date</th>";
             code += "       <th class='itemBarItem'>Item</th>";
             code += "       <th class='itemBarLinkAction'></th>";
@@ -76,18 +75,17 @@
             var onInput = mVariableName + '.OnInput()';
             var onKeyPress = mVariableName + '.OnKeyPress(event)';
             var executeFirstItemAction = mVariableName + '.ExecuteFirstItemAction()';
-            var divItemsId = mDivID + 'Items';
             var divFilterTextId = mDivID + 'FilterText';
             var divButtonId = mDivID + 'Button';
-            var code = "<div>"
-                + "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:60%;'/>"
-                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:30%;'>Go</a></span>"
-                + "</div>"
-                + "<div id='" + divItemsId + "' class='itemBar'>"
-                + "</div>";
-            var divContent = document.getElementById(mDivID);
-            divContent.innerHTML = code;
+
+            var divHeaderId = mDivID + 'Header';
+            var divBarHeader = document.getElementById(divHeaderId);
+            divBarHeader.innerHTML = "  <input id='" + divFilterTextId + "' type='search' oninput='" + onInput + ";' onkeypress='" + onKeyPress + ";' style='width:60%;'/>"
+                + "  <span><a class='button' id='" + divButtonId + "' onclick='" + executeFirstItemAction + "' href='#' style='width:30%;'>Go</a></span>";
+
+            var divItemsId = mDivID + 'Items';
             mDivItems = document.getElementById(divItemsId);
+
             this.DivFilterText = document.getElementById(divFilterTextId);
             this.IsVisible = false;
         };

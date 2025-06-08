@@ -210,9 +210,12 @@ function IndexView()
     {
         ItemBarLinks.LoadLinks(table, id, function(_)
         {
-            $('#divLinks').css("visibility", "visible");
+            $('#divLinksHeader').css("visibility", "visible");
+            $('#divLinksItems').css("visibility", "visible");
             ItemBarLinks.SetVisible(true);
         });
+
+        document.getElementById('editLinkInfo').innerHTML = '';
     }
 
     /**
@@ -782,7 +785,8 @@ function IndexView()
 
         // Hide links and search bar. They will be loaded again when an edit 
         // view is shown.
-        $('#divLinks').css("visibility", "hidden");
+        $('#divLinksHeader').css("visibility", "hidden");
+        $('#divLinksItems').css("visibility", "hidden");
         ItemBarLinks.SetVisible(false);
 
         if (visible)
@@ -813,12 +817,12 @@ function IndexView()
         xmlHttp.send(null);
     };
 
-    this.ShowAddLinkInfo = function(linkId)
+    this.ShowAddLinkInfo = function(linkId, linkText)
     {
         var obj = document.getElementById('editLinkInfo');
         // Drop-down for categories                        
         var linkInfoTypes = My.GetLinkInfoTypesDisplayText();
-        var code = "     <div class='linkInfoAdd'><select id='input_linkinfo_type' size='1'>";
+        var code = "<span>" + linkText + "</span><select id='input_linkinfo_type' size='1'>";
         for (var key in linkInfoTypes)
         {
             code += "        <option value='" + key + "' >" + linkInfoTypes[key] + "</option>";
@@ -826,8 +830,7 @@ function IndexView()
         code += "      </select>";
         // Link info text
         code += " <input id='input_linkinfo_text' value='' maxLength='255' class='fillCell'/>"
-            + "   <a class='button' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#'>Add</a>"
-            + "  </div>"
+            + "   <a class='button' onclick='return View.SubmitAddLinkInfo(" + linkId + ")' href='#'>Add</a>";
         obj.innerHTML = code;
         return false; // Do not follow href after this.
     }
