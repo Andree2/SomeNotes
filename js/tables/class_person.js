@@ -3,7 +3,7 @@
     // =============================================================================================
     // ================================= Private ===================================================
     // =============================================================================================
-    function BuildEditTable(displayName, firstName, middleName, lastName, birthDay, birthMonth, birthYear, deathDay, deathMonth, deathYear, sex, text, importance, category)
+    function BuildEditTable(displayName, firstName, middleName, lastName, birthDay, birthMonth, birthYear, birthEstimated, deathDay, deathMonth, deathYear, sex, text, importance, category)
     {
         var output = ""
             + "  <tr>"
@@ -26,6 +26,15 @@
             + "      <input id='input_person_birth_day'   name='input_person_birth_day'    type='text' value='" + birthDay + "' maxLength='2' size='1'/>"
             + "      <input id='input_person_birth_month' name='input_person_birth_month'  type='text' value='" + birthMonth + "' maxLength='2' size='1'/>"
             + "      <input id='input_person_birth_year'  name='input_person_birth_year'   type='text' value='" + birthYear + "' maxLength='4' size='2'/>"
+            + "      <input id='input_person_birth_estimated'  name='input_person_birth_estimated' type='checkbox'" + (birthEstimated == "0" ? '' : ' checked') + "/><label for='input_person_birth_estimated'>Year estimated</label>"
+            + "    </td>"
+            + "  </tr>"
+            + "  <tr>"
+            + "    <td>Death</td>"
+            + "    <td>"
+            + "      <input id='input_person_death_day'   name='input_person_death_day'    type='text' value='" + deathDay + "' maxLength='2' size='1'/>"
+            + "      <input id='input_person_death_month' name='input_person_death_month'  type='text' value='" + deathMonth + "' maxLength='2' size='1'/>"
+            + "      <input id='input_person_death_year'  name='input_person_death_year'   type='text' value='" + deathYear + "' maxLength='4' size='2'/>"
             + "    </td>"
             + "    <td class='noWrap'>Sex</td>"
             + "    <td>"
@@ -37,14 +46,6 @@
         };
         return output
             + "      </select>"
-            + "    </td>"
-            + "  </tr>"
-            + "  <tr>"
-            + "    <td>Death</td>"
-            + "    <td>"
-            + "      <input id='input_person_death_day'   name='input_person_death_day'    type='text' value='" + deathDay + "' maxLength='2' size='1'/>"
-            + "      <input id='input_person_death_month' name='input_person_death_month'  type='text' value='" + deathMonth + "' maxLength='2' size='1'/>"
-            + "      <input id='input_person_death_year'  name='input_person_death_year'   type='text' value='" + deathYear + "' maxLength='4' size='2'/>"
             + "    </td>"
             + "  </tr>"
             + "    <td>Text</td>"
@@ -74,6 +75,7 @@
             item.getAttribute("birth_day"),
             item.getAttribute("birth_month"),
             item.getAttribute("birth_year"),
+            item.getAttribute("birth_estimated"),
             item.getAttribute("death_day"),
             item.getAttribute("death_month"),
             item.getAttribute("death_year"),
@@ -85,7 +87,7 @@
     // ---------------------------------------------------------------------------------------------	
     this.BuildNew = function(date, time)
     {
-        return BuildEditTable("", "", "", "", "", "", "", "", "", "", "", "", 1, "");
+        return BuildEditTable("", "", "", "", "", "", "", 0, "", "", "", "", "", 1, "");
     };
     // ---------------------------------------------------------------------------------------------
     this.CheckEditNewInput = function(form)
@@ -100,6 +102,7 @@
     // ---------------------------------------------------------------------------------------------
     this.GetPOSTRequestRow = function(id)
     {
+        var birth_estimated = document.getElementById('input_person_birth_estimated').checked ? 1 : 0;
         xml = '<row table="person"' + (id == '' ? '' : ' id="' + id + '"') + '>'
             + '  <display_name>' + My.HtmlSpecialChars(document.getElementById('input_person_display_name').value) + '</display_name>'
             + '  <first_name>' + My.HtmlSpecialChars(document.getElementById('input_person_first_name').value) + '</first_name>'
@@ -108,6 +111,7 @@
             + '  <birth_day>' + document.getElementById('input_person_birth_day').value + '</birth_day>'
             + '  <birth_month>' + document.getElementById('input_person_birth_month').value + '</birth_month>'
             + '  <birth_year>' + document.getElementById('input_person_birth_year').value + '</birth_year>'
+            + '  <birth_estimated>' + birth_estimated + '</birth_estimated>'
             + '  <death_day>' + document.getElementById('input_person_death_day').value + '</death_day>'
             + '  <death_month>' + document.getElementById('input_person_death_month').value + '</death_month>'
             + '  <death_year>' + document.getElementById('input_person_death_year').value + '</death_year>'
