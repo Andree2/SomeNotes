@@ -16,7 +16,7 @@
 
                 // Create box for an item
                 var code = "  <td class='itemBarItem'>"
-                    + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + My.HtmlSpecialChars(linkText) + '</div>';
+                    + '     <div class="smallBox itemBarItem ' + divClass + '" onmouseup="View.OnMouseUpBox(event, \'' + table + '\', ' + id + ', \'' + divClass + '\')">' + linkText + '</div>';
 
                 if (linkInfoNodes.length > 0)
                 {
