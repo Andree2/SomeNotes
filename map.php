@@ -32,17 +32,16 @@
     </head>
 
     <body>
-        <div class="mapView" style="grid-column: 1 / 10; grid-row: 1;">
-            <div >
-                <div id="selectedElement">Please select an item</div>
-                <div>
-                    <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
-                    <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
-                    <label for="showNotes">Notes</label>
-                </div>
-                <div id="divLinks" class="itemBar linkBar"></div>
+        <div class="mapView">
+            <div id="selectedElement" class="mainBackground" style="grid-column: 1; grid-row: 1;">Please select an item</div>
+            <div class="mainBackground" style="grid-column: 1; grid-row: 2;">
+                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
+                <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
+                <label for="showNotes">Notes</label>
             </div>
-            <div id="map"></div>
+            <div id="divLinksHeader" class="linkBar itemBarHeader mainBackground" style="grid-column: 1; grid-row: 3;"></div>
+            <div id="divLinksItems" class="linkBar itemBarItems mainBackground" style="grid-column: 1; grid-row: 4;"></div>
+            <div id="map"  style="grid-column: 2; grid-row: 1 / 5;"></div>
         </div>
         <script type="text/javascript">
 

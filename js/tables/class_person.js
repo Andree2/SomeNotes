@@ -26,6 +26,8 @@
             + "      <input id='input_person_birth_day'   name='input_person_birth_day'    type='text' value='" + birthDay + "' maxLength='2' size='1'/>"
             + "      <input id='input_person_birth_month' name='input_person_birth_month'  type='text' value='" + birthMonth + "' maxLength='2' size='1'/>"
             + "      <input id='input_person_birth_year'  name='input_person_birth_year'   type='text' value='" + birthYear + "' maxLength='4' size='2'/>"
+            + "    </td>"
+            + "    <td colspan='2'>"
             + "      <input id='input_person_birth_estimated'  name='input_person_birth_estimated' type='checkbox'" + (birthEstimated == "0" ? '' : ' checked') + "/><label for='input_person_birth_estimated'>Year estimated</label>"
             + "    </td>"
             + "  </tr>"
@@ -36,8 +38,8 @@
             + "      <input id='input_person_death_month' name='input_person_death_month'  type='text' value='" + deathMonth + "' maxLength='2' size='1'/>"
             + "      <input id='input_person_death_year'  name='input_person_death_year'   type='text' value='" + deathYear + "' maxLength='4' size='2'/>"
             + "    </td>"
-            + "    <td class='noWrap'>Sex</td>"
-            + "    <td>"
+            + "    <td class='noWrap' colspan='2'>"
+            + "      <span>Sex</div>"
             + "      <select id='input_person_sex' name='input_person_sex' size='1'>";
         var sexes = My.GetPersonSexesDisplayText();
         for (var key in sexes)
