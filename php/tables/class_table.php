@@ -36,6 +36,11 @@ abstract class Table
         return '';
     }
 
+    public function CreateQueryFilterMatches($filterText)
+    {
+        return '';
+    }
+
     /**
      * Puts out the row read from the SQL row as XML.
      */

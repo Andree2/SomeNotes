@@ -5,9 +5,9 @@ require_once 'functions.php';
 
 define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
 
-function BuildFilter($table, $minImportance, $filtertext)
+function BuildLinksFilter($table, $minImportance, $filtertext)
 {
-    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext);
+    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext, false);
     if ($filter == '') {
         return '';
     }
@@ -87,7 +87,7 @@ function endElement($parser, $name)
 
                 $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
 
-                $filter = BuildFilter($TABLE[$tableLinkName], $gMinImportance, $gFiltertext);
+                $filter = BuildLinksFilter($TABLE[$tableLinkName], $gMinImportance, $gFiltertext);
                 // Read linked item
                 $query = "SELECT "
                 . $TABLE[$tableLinkName]->GetColumnDisplayText()

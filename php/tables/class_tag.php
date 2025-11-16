@@ -43,6 +43,11 @@ class Tag extends Table
         return "SELECT id,created,last_changed,importance,category,title,text,induced_category FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
+    public function CreateQueryContentFilterMatches($filterText)
+    {
+        return "TEXT LIKE '%" . $filterText . "%'";
+    }
+
     /**
      * Puts out the row read from the SQL row as XML.
      */

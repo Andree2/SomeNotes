@@ -51,6 +51,11 @@ class Event extends Table
         return "SELECT id,created,last_changed,importance,category,title,text,from_date,from_time,to_date,to_time FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
+    public function CreateQueryContentFilterMatches($filterText)
+    {
+        return "TEXT LIKE '%" . $filterText . "%' OR FROM_DATE LIKE '%" . $filterText . "%' OR TO_DATE LIKE '%" . $filterText . "%'";
+    }
+
     /**
      * Puts out the row read from the SQL row as XML.
      */

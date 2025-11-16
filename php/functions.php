@@ -48,19 +48,24 @@ function BuildGlobalFilter($minImportance)
     return $filter;
 }
 
-function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
+function BuildGlobalAndTextFilter($table, $minImportance, $filtertext, $contentSearch)
 {
+    // Text separated by whitespace are considered different filter parts
     $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
     $filter      = BuildGlobalFilter($minImportance);
+
     for ($i = 0; $i < count($filterparts); $i++) {
         if ($filter != '') {
             $filter .= " AND";
         }
-        $displayTextSearch = $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%'";
-        if ($table->GetColumnDate() == '') {
-            $filter .= " " . $displayTextSearch;
+
+        // All filter parts must be present in the search
+        if ($contentSearch) {
+            // Search item content
+            $filter .= " (" . $table->CreateQueryContentFilterMatches($filterparts[$i]) . ")";
         } else {
-            $filter .= " (" . $displayTextSearch . " OR " . $table->GetColumnDate() . " LIKE '%" . $filterparts[$i] . "%')";
+            // Search only display text
+            $filter .= " (" . $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%')";
         }
     }
     return $filter;

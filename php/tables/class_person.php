@@ -52,6 +52,11 @@ class Person extends Table
         return "SELECT id,created,last_changed,importance,category,display_name,first_name,middle_name,last_name,birth_day,birth_month,birth_year,birth_estimated,death_day,death_month,death_year,sex,text FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
+    public function CreateQueryContentFilterMatches($filterText)
+    {
+        return "TEXT LIKE '%" . $filterText . "%'";
+    }
+
     /**
      * Puts out the row read from the SQL row as XML.
      */
