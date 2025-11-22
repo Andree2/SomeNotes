@@ -48,7 +48,7 @@ function BuildGlobalFilter($minImportance)
     return $filter;
 }
 
-function BuildGlobalAndTextFilter($table, $minImportance, $filtertext, $contentSearch)
+function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
 {
     // Text separated by whitespace are considered different filter parts
     $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
@@ -58,15 +58,7 @@ function BuildGlobalAndTextFilter($table, $minImportance, $filtertext, $contentS
         if ($filter != '') {
             $filter .= " AND";
         }
-
-        // All filter parts must be present in the search
-        if ($contentSearch) {
-            // Search item content
-            $filter .= " (" . $table->CreateQueryContentFilterMatches($filterparts[$i]) . ")";
-        } else {
-            // Search only display text
-            $filter .= " (" . $table->GetColumnDisplayText() . " LIKE '%" . $filterparts[$i] . "%')";
-        }
+        $filter .= " (" . $table->CreateQueryFilterMatches($filterparts[$i]) . ")";
     }
     return $filter;
 }

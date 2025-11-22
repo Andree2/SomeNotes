@@ -45,9 +45,9 @@ class Place extends Table
         return "SELECT id,created,last_changed,importance,category,title,address,latitude,longitude FROM " . $this->GetTableName() . " WHERE id = $id";
     }
 
-    public function CreateQueryContentFilterMatches($filterText)
+    public function CreateQueryFilterMatches($filterText)
     {
-        return "ADDRESS LIKE '%" . $filterText . "%'";
+        return "TITLE LIKE '%" . $filterText . "%' OR ADDRESS LIKE '%" . $filterText . "%'";
     }
 
     /**
