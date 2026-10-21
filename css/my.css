@@ -95,6 +95,19 @@ div.mainBackground {
     border-color:       #B0B0B0;
 }
 
+.globalFilters {
+    display:     flex;
+    align-items: center;
+}
+
+.filterSetting {
+    display:        flex;
+    flex:           1;
+    flex-direction: column;
+    align-items:    flex-start;
+    min-width:      0;
+}
+
 div.itemBarHeader {
     overflow:           hidden;
     overflow-y:         clip;
@@ -121,7 +134,7 @@ div.main {
     height:                100%;
     width:                 100%;
     display:               grid;
-    grid-template-rows:    24px 48px 64px 1fr; 
+    grid-template-rows:    24px 64px 64px 1fr; 
     grid-template-columns: 320px 24px 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto; 
     overflow:              hidden;
 }

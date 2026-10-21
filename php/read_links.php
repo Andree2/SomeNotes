@@ -3,8 +3,6 @@ require_once 'constants.php';
 require_once 'db.php';
 require_once 'functions.php';
 
-define('MAX_NUMBER_LINKED_EVENT_NOTES', 40);
-
 function BuildLinksFilter($table, $minImportance, $filtertext)
 {
     $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext, false);
@@ -20,11 +18,13 @@ function startElement($parser, $name, $attributes)
         global $gFiltertext;
         global $gMinImportance;
         global $gShowNotes;
+        global $gMaxItemsCount;
         global $gTable;
         global $gId;
         $gFiltertext    = $attributes['FILTERTEXT'];
         $gMinImportance = $attributes['MINIMPORTANCE'];
         $gShowNotes     = $attributes['SHOWNOTES'] == "true";
+        $gMaxItemsCount = NormalizeMaxItemsCount(isset($attributes['MAXITEMSCOUNT']) ? $attributes['MAXITEMSCOUNT'] : null);
         $gTable         = $attributes['TABLE'];
         $gId            = $attributes['ID'];
     }
@@ -36,6 +36,7 @@ function endElement($parser, $name)
         global $gFiltertext;
         global $gMinImportance;
         global $gShowNotes;
+        global $gMaxItemsCount;
         global $gTable;
         global $gId;
         global $gOutput;
@@ -63,7 +64,7 @@ function endElement($parser, $name)
 
         // TODO: Evtl. mit optimizer hint? ... WITH (INDEX (index_name))
 
-        $numberOfEventsNotes = 0;
+        $itemsCountByType = [];
         if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
             $resultEmpty = false;
 
@@ -101,13 +102,14 @@ function endElement($parser, $name)
                     if ($tableLinkName == NOTE && ! $gShowNotes) {
                         continue;
                     }
-                    // Only show MAX_NUMBER_LINKED_EVENT_NOTES items of type 'event' and 'note'
-                    if ($tableLinkName == EVENT || $tableLinkName == NOTE) {
-                        if ($numberOfEventsNotes >= MAX_NUMBER_LINKED_EVENT_NOTES) {
-                            continue;
-                        }
-                        ++$numberOfEventsNotes;
+                    // Apply the maximum independently to each linked item type.
+                    if (! isset($itemsCountByType[$tableLinkName])) {
+                        $itemsCountByType[$tableLinkName] = 0;
                     }
+                    if ($itemsCountByType[$tableLinkName] >= $gMaxItemsCount) {
+                        continue;
+                    }
+                    ++$itemsCountByType[$tableLinkName];
 
                     $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
 

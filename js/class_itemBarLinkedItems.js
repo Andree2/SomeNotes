@@ -57,6 +57,9 @@
         // -------------------------------------------------------------------------------------------
         this.LoadLinks = function(table, id, onReadyStateChange)
         {
+            var maxItemsInput = $('#maxItemsCount')[0];
+            if (!maxItemsInput.reportValidity()) return;
+            var maxItemsCount = maxItemsInput.valueAsNumber;
             var xmlHttp = My.GetXMLHttpObject();
             if (xmlHttp == null)
                 return;
@@ -64,7 +67,7 @@
             var filterText = this.DivFilterText.value;
             var minImportance = $('#minimumImportance')[0].valueAsNumber;
             var showNotes = $('#showNotes')[0].checked;
-            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '" filtertext="' + filterText + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '"/>';
+            var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row table="' + table + '" id="' + id + '" filtertext="' + filterText + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '" maxItemsCount="' + maxItemsCount + '"/>';
 
             My.SendPOSTRequest(xmlHttp, "./php/read_links.php", xml, function()
             {

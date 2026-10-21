@@ -36,9 +36,12 @@
             }
             else
             {
+                var maxItemsInput = $('#maxItemsCount')[0];
+                if (!maxItemsInput.reportValidity()) return;
+                var maxItemsCount = maxItemsInput.valueAsNumber;
                 var minImportance = $('#minimumImportance')[0].valueAsNumber;
                 var showNotes = $('#showNotes')[0].checked;
-                var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '"/>';
+                var xml = '<?xml version="1.0" encoding="utf-8"?>\n<row filtertext="' + filterText + '" minImportance="' + minImportance + '" showNotes="' + showNotes + '" maxItemsCount="' + maxItemsCount + '"/>';
 
                 My.SendPOSTRequest(xmlHttp, "./php/read_items.php", xml, function()
                 {

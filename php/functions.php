@@ -39,6 +39,14 @@ function XMLHeader()
     header('content-type: text/xml; charset=utf-8');
 }
 
+function NormalizeMaxItemsCount($maxItemsCount)
+{
+    $maxItemsCount = filter_var($maxItemsCount, FILTER_VALIDATE_INT, [
+        'options' => ['min_range' => 1, 'max_range' => 99999],
+    ]);
+    return $maxItemsCount === false ? 40 : $maxItemsCount;
+}
+
 function BuildGlobalFilter($minImportance)
 {
     $filter = '';

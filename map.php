@@ -34,10 +34,19 @@
     <body>
         <div class="mapView">
             <div id="selectedElement" class="mainBackground" style="grid-column: 1; grid-row: 1;">Please select an item</div>
-            <div class="mainBackground" style="grid-column: 1; grid-row: 2;">
-                <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
-                <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
-                <label for="showNotes">Notes</label>
+            <div class="mainBackground globalFilters" style="grid-column: 1; grid-row: 2;">
+                <span class="filterSetting">
+                    <label for="maxItemsCount">Importance</label>
+                    <input id='minimumImportance' type='number' min='0' max='10' step='1' value='0' onchange='View.GlobalFilterChanged()'/>
+                </span>
+                <span class="filterSetting">
+                    <label for="showNotes">Notes</label>
+                    <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
+                </span>
+                <span class="filterSetting">
+                    <label for="maxItemsCount">Items</label>
+                    <input id='maxItemsCount' type='number' min='1' max='99999' value='40' required onchange='if (this.reportValidity()) View.GlobalFilterChanged()'/>
+                </span>
             </div>
             <div id="divLinksHeader" class="linkBar itemBarHeader mainBackground" style="grid-column: 1; grid-row: 3;"></div>
             <div id="divLinksItems" class="linkBar itemBarItems mainBackground" style="grid-column: 1; grid-row: 4;"></div>

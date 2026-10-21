@@ -4,7 +4,7 @@
 
     $timeStamp = time();
     if (! empty($_GET['date'])) {
-        $timeStamp = $_GET['date'];
+    $timeStamp = $_GET['date'];
     }
     $date = date("Y-m-d", $timeStamp);
 ?>
@@ -66,10 +66,19 @@
                         View.LoadView(new Date(date));
                     }
                 </script>
-                <div>
-                    <input id='minimumImportance' type='number' min='0' max='10' value='0' onchange='View.GlobalFilterChanged()'/>
-                    <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
-                    <label for="showNotes">Notes</label>
+                <div class="globalFilters">
+                    <span class="filterSetting">
+                        <label for="maxItemsCount">Importance</label>
+                        <input id='minimumImportance' type='number' min='0' max='10' step='1' value='0' onchange='View.GlobalFilterChanged()'/>
+                    </span>
+                    <span class="filterSetting">
+                        <label for="showNotes">Notes</label>
+                        <input id='showNotes' type='checkbox' checked='true' onchange='View.GlobalFilterChanged()'/>
+                    </span>
+                    <span class="filterSetting">
+                        <label for="maxItemsCount">Items</label>
+                        <input id='maxItemsCount' type='number' min='1' max='99999' value='40' required onchange='if (this.reportValidity()) View.GlobalFilterChanged()'/>
+                    </span>
                 </div>
             </div>
             <div class="noSpaces monthBarTopFill" style="grid-column: 2; grid-row: 1;"></div>
