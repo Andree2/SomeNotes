@@ -56,19 +56,40 @@ function BuildGlobalFilter($minImportance)
     return $filter;
 }
 
-function BuildGlobalAndTextFilter($table, $minImportance, $filtertext)
+// Build the shared WHERE and ORDER BY clauses. Additional filters are internal SQL predicates.
+function BuildItemQuerySuffix($table, $minImportance, $filtertext, $additionalFilter = '')
 {
-    // Text separated by whitespace are considered different filter parts
-    $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
-    $filter      = BuildGlobalFilter($minImportance);
+    global $DBLink;
 
-    for ($i = 0; $i < count($filterparts); $i++) {
-        if ($filter != '') {
-            $filter .= " AND";
-        }
-        $filter .= " (" . $table->CreateQueryFilterMatches($filterparts[$i]) . ")";
+    $filters = [];
+    $globalFilter = BuildGlobalFilter($minImportance);
+    if ($globalFilter != '') {
+        $filters[] = $globalFilter;
     }
-    return $filter;
+    if ($additionalFilter != '') {
+        $filters[] = "(" . $additionalFilter . ")";
+    }
+
+    $filterparts = preg_split('/\s+/', $filtertext, -1, PREG_SPLIT_NO_EMPTY);
+    $displayTextMatches = [];
+    foreach ($filterparts as $filterpart) {
+        $filterpart = mysqli_real_escape_string($DBLink, $filterpart);
+        $filters[] = "(" . $table->CreateQueryFilterMatches($filterpart) . ")";
+        $displayTextMatches[] = "CASE WHEN " . $table->GetColumnDisplayText()
+            . " LIKE '%" . $filterpart . "%' THEN 1 ELSE 0 END";
+    }
+
+    $order = [];
+    if (count($displayTextMatches) > 0) {
+        $order[] = "(" . implode(" + ", $displayTextMatches) . ") DESC";
+    }
+    $order[] = "importance DESC";
+    if ($table->GetName() == EVENT || $table->GetName() == NOTE) {
+        $order[] = $table->GetColumnDate() . " DESC";
+    }
+
+    return (count($filters) > 0 ? " WHERE " . implode(" AND ", $filters) : '')
+        . " ORDER BY " . implode(", ", $order);
 }
 
 function DeleteLink($linkId)

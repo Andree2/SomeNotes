@@ -6,15 +6,6 @@ require_once 'functions.php';
 global $gFiltertext;
 global $gOutput;
 
-function BuildItemsFilter($table, $minImportance, $filtertext)
-{
-    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext);
-    if ($filter == '') {
-        return '';
-    }
-    return " WHERE " . $filter;
-}
-
 function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
@@ -46,32 +37,32 @@ function endElement($parser, $name)
     $gOutput = '<row>';
 
     // Read Persons
-    $filter = BuildItemsFilter($TABLE[PERSON], $gMinImportance, $gFiltertext);
-    $query  = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT " . $gMaxItemsCount;
+    $querySuffix = BuildItemQuerySuffix($TABLE[PERSON], $gMinImportance, $gFiltertext);
+    $query  = "SELECT id,display_name,importance,category FROM " . $TABLE[PERSON]->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
     $result = mysqli_query($DBLink, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="person" text="' . htmlspecialchars($row['display_name'], ENT_QUOTES, "UTF-8") . '"/>';
     }
 
     // Read Tags
-    $filter = BuildItemsFilter($TABLE[TAG], $gMinImportance, $gFiltertext);
-    $query  = "SELECT id,title,importance,category FROM " . $TABLE[TAG]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT " . $gMaxItemsCount;
+    $querySuffix = BuildItemQuerySuffix($TABLE[TAG], $gMinImportance, $gFiltertext);
+    $query  = "SELECT id,title,importance,category FROM " . $TABLE[TAG]->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
     $result = mysqli_query($DBLink, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="tag" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
     }
 
     // Read Places
-    $filter = BuildItemsFilter($TABLE[PLACE], $gMinImportance, $gFiltertext);
-    $query  = "SELECT id,title,importance,category FROM " . $TABLE[PLACE]->GetTableName() . $filter . " ORDER BY importance DESC LIMIT " . $gMaxItemsCount;
+    $querySuffix = BuildItemQuerySuffix($TABLE[PLACE], $gMinImportance, $gFiltertext);
+    $query  = "SELECT id,title,importance,category FROM " . $TABLE[PLACE]->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
     $result = mysqli_query($DBLink, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $gOutput .= '<item category="' . $row['category'] . '" date="" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="place" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
     }
 
     // Read Events
-    $filter = BuildItemsFilter($TABLE[EVENT], $gMinImportance, $gFiltertext);
-    $query  = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . $filter . " ORDER BY from_date DESC LIMIT " . $gMaxItemsCount;
+    $querySuffix = BuildItemQuerySuffix($TABLE[EVENT], $gMinImportance, $gFiltertext);
+    $query  = "SELECT id,title,from_date,to_date,to_time,importance,category FROM " . $TABLE[EVENT]->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
     $result = mysqli_query($DBLink, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['from_date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="event" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';
@@ -79,8 +70,8 @@ function endElement($parser, $name)
 
     // Read Notes
     if ($gShowNotes) {
-        $filter = BuildItemsFilter($TABLE[NOTE], $gMinImportance, $gFiltertext);
-        $query  = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $filter . " ORDER BY date DESC  LIMIT " . $gMaxItemsCount;
+        $querySuffix = BuildItemQuerySuffix($TABLE[NOTE], $gMinImportance, $gFiltertext);
+        $query  = "SELECT id,date,title,importance,category FROM " . $TABLE[NOTE]->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
         $result = mysqli_query($DBLink, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $gOutput .= '<item category="' . $row['category'] . '" date="' . $row['date'] . '" id="' . $row['id'] . '" importance="' . $row['importance'] . '" table="note" text="' . htmlspecialchars($row['title'], ENT_QUOTES, "UTF-8") . '"/>';

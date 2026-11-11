@@ -52,7 +52,7 @@
         {
             mItemTable = itemTable;
             mItemId = itemId;
-            this.SetXMLDoc(xmlDoc);
+            this.SetXMLDoc(xmlDoc, true);
         }
         // -------------------------------------------------------------------------------------------
         this.LoadLinks = function(table, id, onReadyStateChange)

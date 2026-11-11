@@ -99,13 +99,13 @@
             this.IsVisible = visible;
         };
         // -------------------------------------------------------------------------------------------
-        this.SetXMLDoc = function(xmlDoc)
+        this.SetXMLDoc = function(xmlDoc, preserveOrder = false)
         {
             mXMLDoc = xmlDoc;
             mDivItems.innerHTML = BuildHTMLItems();
             mDivTable = document.getElementById(mDivTableId);
             sorttable.makeSortable(mDivTable);
-            if (mInitialSortColumn >= 0)
+            if (!preserveOrder && mInitialSortColumn >= 0)
             {
                 sorttable.sortByColumn(mDivTable, mInitialSortColumn, mInitialSortAscending);
             }

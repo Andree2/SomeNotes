@@ -3,15 +3,6 @@ require_once 'constants.php';
 require_once 'db.php';
 require_once 'functions.php';
 
-function BuildLinksFilter($table, $minImportance, $filtertext)
-{
-    $filter = BuildGlobalAndTextFilter($table, $minImportance, $filtertext, false);
-    if ($filter == '') {
-        return '';
-    }
-    return " AND " . $filter;
-}
-
 function startElement($parser, $name, $attributes)
 {
     if ($name == 'ROW') {
@@ -62,65 +53,42 @@ function endElement($parser, $name)
         . " WHERE table2_id = " . $table->GetID() . " AND table2_item_id = $gId ORDER BY table1_item_id DESC";
         $result2 = mysqli_query($DBLink, $query);
 
-        // TODO: Evtl. mit optimizer hint? ... WITH (INDEX (index_name))
+        // Gather both link directions before ranking and limiting each item type.
+        $linksByType = [];
+        foreach ([$result, $result2] as $linkResult) {
+            while ($row = mysqli_fetch_row($linkResult)) {
+                $tableLinkName = $TABLE_NAME_FROM_ID[$row[1]];
+                if ($tableLinkName == NOTE && ! $gShowNotes) {
+                    continue;
+                }
+                $linksByType[$tableLinkName][(int) $row[2]][] = (int) $row[0];
+            }
+        }
 
-        $itemsCountByType = [];
-        if (mysqli_num_rows($result) != 0 || mysqli_num_rows($result2) != 0) {
-            $resultEmpty = false;
-
-            while (true) {
-                if ($resultEmpty) {
-                    $row = mysqli_fetch_row($result2);
-                    if ($row == false) {
+        foreach ($linksByType as $tableLinkName => $linksByItem) {
+            $linkedTable = $TABLE[$tableLinkName];
+            $hasDate = ($linkedTable->GetColumnDate() != '');
+            $itemIds = implode(',', array_map('intval', array_keys($linksByItem)));
+            $querySuffix = BuildItemQuerySuffix($linkedTable, $gMinImportance, $gFiltertext, "id IN (" . $itemIds . ")");
+            $query = "SELECT id," . $linkedTable->GetColumnDisplayText() . " AS item_text,importance,category"
+                . ($hasDate ? "," . $linkedTable->GetColumnDate() . " AS item_date" : "")
+                . " FROM " . $linkedTable->GetTableName() . $querySuffix . " LIMIT " . $gMaxItemsCount;
+            $resultItems = mysqli_query($DBLink, $query);
+            $itemsCount = 0;
+            while ($itemsCount < $gMaxItemsCount && ($item = mysqli_fetch_assoc($resultItems))) {
+                // Preserve each link and its metadata, including multiple links to the same item.
+                foreach ($linksByItem[$item['id']] as $linkId) {
+                    if ($itemsCount >= $gMaxItemsCount) {
                         break;
                     }
-                } else {
-                    $row = mysqli_fetch_row($result);
-                    if ($row == false) {
-                        $resultEmpty = true;
-                        continue;
-                    }
-                }
-                $linkId        = $row[0];
-                $tableId       = $row[1];
-                $itemId        = $row[2];
-                $tableLinkName = $TABLE_NAME_FROM_ID[$tableId];
+                    ++$itemsCount;
+                    $gOutput .= '<item category="' . $item['category'] . '" date="' . ($hasDate ? $item['item_date'] : "") . '" id="' . $item['id'] . '" importance="' . $item['importance'] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($item['item_text'], ENT_QUOTES, "UTF-8") . '">';
 
-                $hasDate = ($TABLE[$tableLinkName]->GetColumnDate() != '');
-
-                $filter = BuildLinksFilter($TABLE[$tableLinkName], $gMinImportance, $gFiltertext);
-                // Read linked item
-                $query = "SELECT "
-                . $TABLE[$tableLinkName]->GetColumnDisplayText()
-                . ",importance,category"
-                . ($hasDate ? "," . $TABLE[$tableLinkName]->GetColumnDate() : "")
-                . " FROM "
-                . $TABLE[$tableLinkName]->GetTableName() . " WHERE id = $itemId" . $filter;
-                $resultLink = mysqli_query($DBLink, $query);
-                $rowLink    = mysqli_fetch_row($resultLink);
-                if ($rowLink) {
-                    if ($tableLinkName == NOTE && ! $gShowNotes) {
-                        continue;
-                    }
-                    // Apply the maximum independently to each linked item type.
-                    if (! isset($itemsCountByType[$tableLinkName])) {
-                        $itemsCountByType[$tableLinkName] = 0;
-                    }
-                    if ($itemsCountByType[$tableLinkName] >= $gMaxItemsCount) {
-                        continue;
-                    }
-                    ++$itemsCountByType[$tableLinkName];
-
-                    $gOutput .= '<item category="' . $rowLink[2] . '" date="' . ($hasDate ? $rowLink[3] : "") . '" id="' . $itemId . '" importance="' . $rowLink[1] . '" linkId="' . $linkId . '" table="' . $tableLinkName . '" text="' . htmlspecialchars($rowLink[0], ENT_QUOTES, "UTF-8") . '">';
-
-                    // Read link info
                     $readLinkInfoQuery  = "SELECT id,type,text FROM " . $TABLE_LINKINFO->GetTableName() . " WHERE link_id = " . $linkId;
                     $readLinkInfoResult = mysqli_query($DBLink, $readLinkInfoQuery);
-
                     while ($linkInfoRow = mysqli_fetch_row($readLinkInfoResult)) {
                         $gOutput .= '<linkInfo id="' . $linkInfoRow[0] . '" type="' . $linkInfoRow[1] . '" text="' . $linkInfoRow[2] . '" />';
                     }
-
                     $gOutput .= '</item>';
                 }
             }
